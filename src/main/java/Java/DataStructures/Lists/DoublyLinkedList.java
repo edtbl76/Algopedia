@@ -1,4 +1,4 @@
-package DataStructures.Lists;
+package Java.DataStructures.Lists;
 
 public class DoublyLinkedList {
 

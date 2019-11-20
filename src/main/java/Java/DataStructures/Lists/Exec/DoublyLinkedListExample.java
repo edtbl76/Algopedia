@@ -1,6 +1,6 @@
-package DataStructures.Lists.Exec;
+package Java.DataStructures.Lists.Exec;
 
-import DataStructures.Lists.DoublyLinkedList;
+import Java.DataStructures.Lists.DoublyLinkedList;
 
 public class DoublyLinkedListExample {
     public static void main(String[] args) {

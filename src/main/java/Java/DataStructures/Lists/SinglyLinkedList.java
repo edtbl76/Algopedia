@@ -1,4 +1,4 @@
-package DataStructures.Lists;
+package Java.DataStructures.Lists;
 
 /**
  * Standard LinkedList impl

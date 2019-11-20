@@ -1,6 +1,6 @@
-package DataStructures.Lists.Exec;
+package Java.DataStructures.Lists.Exec;
 
-import DataStructures.Lists.SinglyLinkedList;
+import Java.DataStructures.Lists.SinglyLinkedList;
 
 public class SinglyLinkedListExample {
 
