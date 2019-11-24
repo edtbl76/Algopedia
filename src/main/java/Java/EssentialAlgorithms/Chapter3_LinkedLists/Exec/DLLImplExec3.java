@@ -2,38 +2,25 @@ package Java.EssentialAlgorithms.Chapter3_LinkedLists.Exec;
 
 import Java.EssentialAlgorithms.Chapter3_LinkedLists.DoublyLinkedListImpl;
 
-import java.util.Arrays;
-
-public class DLLImplExec2 {
+public class DLLImplExec3 {
     public static void main(String[] args) {
-        DoublyLinkedListImpl<Integer> list = new DoublyLinkedListImpl<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
-        System.out.println("Size: " + list.size() + " Content: [" + list + "]");
+        DoublyLinkedListImpl<Integer> list = new DoublyLinkedListImpl<>();
+        assert list.isEmpty();
 
-        // DeleteAtHead
-        list.deleteAtHead();
+        // Sorting Inserts
+        list.insertSorted(5);
         System.out.println("Size: " + list.size() + " Content: [" + list + "]");
-
-        // DeleteAtTail
-        list.deleteAtTail();
+        list.insertSorted(1);
         System.out.println("Size: " + list.size() + " Content: [" + list + "]");
-
-        // delete() middle
-        list.delete(4);
+        list.insertSorted(7);
         System.out.println("Size: " + list.size() + " Content: [" + list + "]");
-
-        // delete() head
-        list.delete(2);
+        list.insertSorted(2);
         System.out.println("Size: " + list.size() + " Content: [" + list + "]");
-
-        // delete() tail
-        list.delete(9);
+        list.insertSorted(9);
         System.out.println("Size: " + list.size() + " Content: [" + list + "]");
-
-        // clear
+        list.insertSorted(8);
+        System.out.println("Size: " + list.size() + " Content: [" + list + "]");
         list.clear();
-        System.out.println("Size: " + list.size() + " Content: [" + list + "]");
-
-
-
+        assert list.isEmpty();
     }
 }

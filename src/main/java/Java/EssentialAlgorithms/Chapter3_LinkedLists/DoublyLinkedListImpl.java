@@ -1,8 +1,10 @@
 package Java.EssentialAlgorithms.Chapter3_LinkedLists;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-public class DoublyLinkedListImpl<E extends Comparable<E>> {
+public class DoublyLinkedListImpl<E extends Comparable<E>>  {
 
     private int size = 0;
     private Cell<E> head;
@@ -166,6 +168,74 @@ public class DoublyLinkedListImpl<E extends Comparable<E>> {
         size++;
     }
 
+    // =========== SORTING
+    public DoublyLinkedListImpl<E> selectionSort() {
+        DoublyLinkedListImpl<E> sorted = new DoublyLinkedListImpl<>();
+
+        // set current to the first element of THIS list.
+        Cell<E> current = head;
+
+        // No nulls or tail.
+        while (current.getNext() != null && current.getNext() != tail) {
+
+            /*
+                before_best is the cell before the largest value.
+                best_value is the best_value.
+                best is the "best cell"
+             */
+            Cell<E> before_best = current;
+            E best_value = before_best.getNext().getData();
+            Cell<E> best = current;
+
+            // best is the "best so far" It's really just a pointer to current.
+            while (best.getNext() != null && best.getNext() != tail) {
+
+                /*
+                    This updates our new best_value field, based on comparator.
+                    - this also updates before_best, because it only changes when best_value does.
+                 */
+                if (best.getNext().getData().compareTo(best_value) > 0) {
+                    before_best= best;
+                    best_value = before_best.getNext().getData();
+                }
+                best = best.getNext();
+
+            }
+            /*
+                If we get this far, we have the best value. Swapping in place is possible but hard to track.
+                (personally... one solution in a DLL is to  insert the new values at the tail and put a marker in front
+                of the new value that blocks the while loops from continuing. However, this might break the other
+                insertion logic.
+             */
+            delete(best_value);
+            sorted.insertAtHead(best_value);
+
+        }
+        return sorted;
+    }
+
+    // ========== COPYING
+
+    /**
+     * Demos DLLImplExec4. - Kind of straight forward. Some of these work by returning just the sentinel, and
+     * tracking what's been added.
+     *
+     * In this case, I built a new list here. and insertAtTail the data.
+     */
+    public DoublyLinkedListImpl<E> copy() {
+        DoublyLinkedListImpl<E> copyList = new DoublyLinkedListImpl<>();
+        Cell<E> last_added = copyList.head;
+
+        Cell<E> current = head.getNext();
+        while (current != tail) {
+            last_added = current;
+            copyList.insertAtTail(last_added.getData());
+            current = current.getNext();
+        }
+        last_added.setNext(tail);
+        return copyList;
+    }
+
 
     // ========= DELETE
     public void deleteAtHead() {
@@ -259,4 +329,44 @@ public class DoublyLinkedListImpl<E extends Comparable<E>> {
 
     }
 
+    // ======= ITERATORS
+
+
+    /**
+     * This is for DDLImplyExec5
+     * @return
+     */
+    public Iterator<E> iterator() {
+        return new DoublyLinkedListIterator();
+    }
+
+
+    class DoublyLinkedListIterator implements Iterator<E> {
+
+        private Cell<E> current;
+
+        public DoublyLinkedListIterator() {
+            // Skip head Sentinel
+            current = head.getNext();
+        }
+
+        public E next() {
+            if (current == null)
+                throw new NoSuchElementException();
+
+            E temp = current.getData();
+            current = current.getNext();
+            return temp;
+        }
+
+        public boolean hasNext() {
+            // Stop before we hit the tail sentinel.
+            return current != tail;
+        }
+
+        @Override
+        public void remove() {
+            delete(current.getData());
+        }
+    }
 }

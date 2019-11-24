@@ -1,6 +1,11 @@
 package Java.DataStructures.Lists;
 
+import java.util.List;
+
 public class CircularLinkedList<E> {
+    public <T> CircularLinkedList(List<T> asList) {
+    }
+
     static class Node<E>  {
         E data;
         Node<E> next;
