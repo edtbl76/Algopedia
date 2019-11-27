@@ -73,7 +73,7 @@ public class SparseArray<T> {
         head.setNext(null);
     }
 
-    private T get(int row, int col) {
+    public T get(int row, int col) {
         Entry entry = getEntry(row, col, false);
         if (entry == null)
             return default_value;
@@ -81,7 +81,7 @@ public class SparseArray<T> {
         return entry.getValue();
     }
 
-    private void set(int row, int col, T value) {
+    public void set(int row, int col, T value) {
         if (value.equals(default_value))
             removeEntry(row, col);
         else {

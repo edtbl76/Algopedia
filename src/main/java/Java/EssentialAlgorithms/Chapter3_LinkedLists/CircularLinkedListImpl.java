@@ -1,10 +1,12 @@
 package Java.EssentialAlgorithms.Chapter3_LinkedLists;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class CircularLinkedListImpl<E> {
 
+    /**
+     * This is not a circular linked list.
+     */
     private int size = 0;
     private Node<E> head;
 
