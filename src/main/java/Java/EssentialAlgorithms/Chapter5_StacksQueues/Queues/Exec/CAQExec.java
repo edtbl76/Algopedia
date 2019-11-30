@@ -1,6 +1,6 @@
 package Java.EssentialAlgorithms.Chapter5_StacksQueues.Queues.Exec;
 
-import Java.EssentialAlgorithms.Chapter5_StacksQueues.Queues.ArrayQueue;
+import Java.EssentialAlgorithms.Chapter5_StacksQueues.Queues.CircularArrayQueue;
 import Java.EssentialAlgorithms.Utils.ExecUtils;
 
 import java.util.stream.IntStream;

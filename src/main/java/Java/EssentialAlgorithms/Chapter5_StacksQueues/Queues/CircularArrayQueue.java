@@ -1,4 +1,4 @@
-package Java.EssentialAlgorithms.Chapter5_StacksQueues.Queues.Exec;
+package Java.EssentialAlgorithms.Chapter5_StacksQueues.Queues;
 
 public class CircularArrayQueue<E> {
     private E[] values;
@@ -6,7 +6,7 @@ public class CircularArrayQueue<E> {
     private int last;
     private int size = 0;
 
-    CircularArrayQueue(int size) {
+    public CircularArrayQueue(int size) {
         this.values = (E[])new Object[size];
         this.next = 0;
         this.last = 0;
@@ -28,7 +28,7 @@ public class CircularArrayQueue<E> {
         this.last = last;
     }
 
-    void enqueue(E value) {
+    public void enqueue(E value) {
         // This is the difference between a circular and non circular queue
         int marker = (getNext() + 1) % this.values.length;
         if(marker == getLast())
@@ -39,7 +39,7 @@ public class CircularArrayQueue<E> {
         size++;
     }
 
-    E dequeue() {
+    public E dequeue() {
         if (getNext() == getLast())
             throw new ArrayIndexOutOfBoundsException();
 
