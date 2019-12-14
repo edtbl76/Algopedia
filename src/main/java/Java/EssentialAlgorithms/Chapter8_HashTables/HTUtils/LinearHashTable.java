@@ -1,6 +1,6 @@
 package Java.EssentialAlgorithms.Chapter8_HashTables.HTUtils;
 
-public class HashTable_LinearProbe {
+public class LinearHashTable {
 
     private int entries;
     private int used;
@@ -9,12 +9,12 @@ public class HashTable_LinearProbe {
 
     private DataNugget[] table;
 
-    HashTable_LinearProbe() {
+    LinearHashTable() {
         this.used = 0;
         sequences = new ProbeCounter();
     }
 
-    public HashTable_LinearProbe(int entries) {
+    public LinearHashTable(int entries) {
         this();
         this.entries = entries;
         table = new DataNugget[this.entries];

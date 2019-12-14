@@ -1,6 +1,6 @@
 package Java.EssentialAlgorithms.Chapter8_HashTables.HTUtils;
 
-public class HashTable_QuadraticProbe {
+public class QuadraticHashTable {
 
     private int entries;
     private int used;
@@ -9,12 +9,12 @@ public class HashTable_QuadraticProbe {
 
     private DataNugget[] table;
 
-    HashTable_QuadraticProbe() {
+    QuadraticHashTable() {
         this.used = 0;
         sequences = new ProbeCounter();
     }
 
-    public HashTable_QuadraticProbe(int entries) {
+    public QuadraticHashTable(int entries) {
         this();
         this.entries = entries;
         table = new DataNugget[this.entries];

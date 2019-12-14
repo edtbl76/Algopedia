@@ -1,6 +1,6 @@
 package Java.EssentialAlgorithms.Chapter8_HashTables;
 
-import Java.EssentialAlgorithms.Chapter8_HashTables.HTUtils.HashTable_SortedChain;
+import Java.EssentialAlgorithms.Chapter8_HashTables.HTUtils.SortedChainHashTable;
 import Java.EssentialAlgorithms.Utils.ExecUtils;
 
 public class ChainedHTEExample2_Sorted {
@@ -8,7 +8,7 @@ public class ChainedHTEExample2_Sorted {
     public static void main(String[] args) {
         int size = ExecUtils.getRandom(8, 4);
         System.out.println("Creating a sorted chain HT with " + size + " buckets");
-        HashTable_SortedChain table = new HashTable_SortedChain(size);
+        SortedChainHashTable table = new SortedChainHashTable(size);
 
         int items = ExecUtils.getRandom(size - 1, 1);
         System.out.println("Adding " + items + " nodes");

@@ -1,7 +1,7 @@
 package Java.EssentialAlgorithms.Chapter8_HashTables;
 
 
-import Java.EssentialAlgorithms.Chapter8_HashTables.HTUtils.HashTable_QuadraticProbe;
+import Java.EssentialAlgorithms.Chapter8_HashTables.HTUtils.QuadraticHashTable;
 import Java.EssentialAlgorithms.Utils.ExecUtils;
 
 public class QuadraticProbeExample1 {
@@ -9,7 +9,7 @@ public class QuadraticProbeExample1 {
     public static void main(String[] args) {
 
         int size = ExecUtils.getRandom(10, 4);
-        HashTable_QuadraticProbe table = new HashTable_QuadraticProbe(size);
+        QuadraticHashTable table = new QuadraticHashTable(size);
         System.out.println("Created HT with " + size + " slots.");
 
         // Different than linear probe. set maximum to be the size - 1 so that I won't overflow

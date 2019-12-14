@@ -1,18 +1,18 @@
 package Java.EssentialAlgorithms.Chapter8_HashTables.HTUtils;
 
-public class HashTable_SortedChain {
+public class SortedChainHashTable {
 
     private int buckets;
     private int used;
     private Node[] list;
     private ProbeCounter sequences;
 
-    HashTable_SortedChain() {
+    SortedChainHashTable() {
         this.used = 0;
         this.sequences = new ProbeCounter();
     }
 
-    public HashTable_SortedChain(int buckets) {
+    public SortedChainHashTable(int buckets) {
         this();
         this.buckets = buckets;
         list = new Node[buckets];

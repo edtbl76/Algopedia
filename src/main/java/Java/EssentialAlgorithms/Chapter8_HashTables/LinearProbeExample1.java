@@ -1,7 +1,7 @@
 package Java.EssentialAlgorithms.Chapter8_HashTables;
 
 
-import Java.EssentialAlgorithms.Chapter8_HashTables.HTUtils.HashTable_LinearProbe;
+import Java.EssentialAlgorithms.Chapter8_HashTables.HTUtils.LinearHashTable;
 import Java.EssentialAlgorithms.Utils.ExecUtils;
 
 public class LinearProbeExample1 {
@@ -11,7 +11,7 @@ public class LinearProbeExample1 {
         // build our HT
         int table_size = ExecUtils.getRandom(10,1);
         System.out.println("Initializing HT of size " + table_size);
-        HashTable_LinearProbe table = new HashTable_LinearProbe(table_size);
+        LinearHashTable table = new LinearHashTable(table_size);
 
         // add some data
         int keys_to_add = ExecUtils.getRandom(10, 1);

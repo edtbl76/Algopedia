@@ -1,6 +1,6 @@
 package Java.EssentialAlgorithms.Chapter8_HashTables.HTUtils;
 
-public class HashTable_Chained {
+public class ChainedHashTable {
 
     private int buckets;
     private int used;
@@ -8,12 +8,12 @@ public class HashTable_Chained {
     private ProbeCounter sequences;
 
 
-    HashTable_Chained() {
+    ChainedHashTable() {
         this.used = 0;
         sequences = new ProbeCounter();
     }
 
-    public HashTable_Chained(int buckets) {
+    public ChainedHashTable(int buckets) {
         this();
         this.buckets = buckets;
         list = new Node[buckets];

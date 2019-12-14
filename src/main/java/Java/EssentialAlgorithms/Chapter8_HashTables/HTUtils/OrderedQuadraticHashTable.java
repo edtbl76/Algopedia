@@ -15,7 +15,7 @@ public class OrderedQuadraticHashTable {
         probes = new ProbeCounter();
     }
 
-    OrderedQuadraticHashTable(int entries) {
+    public OrderedQuadraticHashTable(int entries) {
         this();
         this.entries = entries;
         table = new DataNugget[entries];

@@ -1,6 +1,6 @@
 package Java.EssentialAlgorithms.Chapter8_HashTables;
 
-import Java.EssentialAlgorithms.Chapter8_HashTables.HTUtils.HashTable_Chained;
+import Java.EssentialAlgorithms.Chapter8_HashTables.HTUtils.ChainedHashTable;
 import Java.EssentialAlgorithms.Utils.ExecUtils;
 
 public class ChainedHTExample1 {
@@ -8,7 +8,7 @@ public class ChainedHTExample1 {
 
         int size = ExecUtils.getRandom(10, 4);
         System.out.println("Creating Chained HashTable with " + size + " buckets");
-        HashTable_Chained table = new HashTable_Chained(size);
+        ChainedHashTable table = new ChainedHashTable(size);
 
         int items = ExecUtils.getRandom(50 , 1);
         System.out.println("Adding " + items + " Node(s)");

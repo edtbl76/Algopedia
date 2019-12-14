@@ -113,8 +113,8 @@ public class DoubleHashedHashTable {
         int max_len = 0;
         int key = min_value;
         while(key < max_value + 1) {
-
             get(key);
+            probes.incr();
             if (max_len < probes.get())
                 max_len = probes.get();
             key++;
@@ -129,6 +129,7 @@ public class DoubleHashedHashTable {
         while (key < max_value + 1) {
             get(key);
             total += probes.get();
+            key++;
         }
         return total / (max_value - min_value + 1.0);
     }

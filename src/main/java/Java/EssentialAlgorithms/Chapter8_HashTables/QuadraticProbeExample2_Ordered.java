@@ -1,5 +1,6 @@
-package Java.EssentialAlgorithms.Chapter8_HashTables.HTUtils;
+package Java.EssentialAlgorithms.Chapter8_HashTables;
 
+import Java.EssentialAlgorithms.Chapter8_HashTables.HTUtils.OrderedQuadraticHashTable;
 import Java.EssentialAlgorithms.Utils.ExecUtils;
 
 public class QuadraticProbeExample2_Ordered {
