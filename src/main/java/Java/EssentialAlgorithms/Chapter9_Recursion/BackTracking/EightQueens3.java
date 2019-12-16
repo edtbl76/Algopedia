@@ -6,11 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
+
+/*
+    Perf Drop
+
+    29 ~ 2 - 3 seconds
+    30 ~ 77 seconds
+ */
 public class EightQueens3 {
 
     // set my vars
-    static int dimension = ExecUtils.getRandom(32, 4);
-    //static int dimension = 30;
+    //static int dimension = ExecUtils.getRandom(32, 4);
+    static int dimension = 29;
     static List<List<Boolean>> boolyboard = new ArrayList<>();
     static List<List<Integer>> attacks = new ArrayList<>();
 
@@ -18,6 +26,7 @@ public class EightQueens3 {
 
         setupBoard();
 
+        System.out.println("Dimensions: " + dimension);
         long start = System.nanoTime();
         if (solve(0, 0))
             printBoard();

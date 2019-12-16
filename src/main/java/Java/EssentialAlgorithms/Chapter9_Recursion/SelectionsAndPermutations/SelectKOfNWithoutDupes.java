@@ -4,68 +4,70 @@ import Java.EssentialAlgorithms.Utils.ExecUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
-public class SelectKOfNWithDupes {
+public class SelectKOfNWithoutDupes {
 
     public static void main(String[] args) {
 
-        int k = ExecUtils.getRandom(10, 1);
-        int n = ExecUtils.getRandom(10, 1);
+        //int k = ExecUtils.getRandom(10, 1);
+        //int n = ExecUtils.getRandom(10, 1);
 
+        int k = 10;
+        int n = 20;
         List<List<String>> results = new ArrayList<>();
         List<String> items = populate(n);
 
+
         int[] selections = new int[k];
-
         System.out.println("Initial: " + items);
-        System.out.println("k: " + k + " n: " + n);
 
+        // first select
+        long start = System.nanoTime();
         select(0, selections, items, results);
+        long end = System.nanoTime();
+
+        // print it out
         print(results);
-        System.out.println("K: " + k + "\nN: " + n + "\nTotal: " + results.size());
+        System.out.println("K: " + k);
+        System.out.println("N: " + n);
+        System.out.println("TotalResults: " + results.size());
+        System.out.println("Elapsed Time: " + TimeUnit.NANOSECONDS.toMillis(end - start));
+
     }
 
-    /**
-     *
-     * @param index         gives the index of the item in the selection that the this recursive call
-     *                      to the algo should set.
-     * @param selections    array to hold indices of items
-     *                      EX: if selections has 2 entries of 8 and 9, the selection includes the
-     *                      items w/ indices 8 and 9
-     * @param items         array of items from which selections should be made
-     * @param results       list of list of items representing the complete selections.
-     */
-    static void select(int index, int[] selections, List<String> items, List<List<String>> results) {
+    private static void select(int index, int[] selections, List<String> items, List<List<String>> results) {
 
         List<String> result = new ArrayList<>();
         if (index == selections.length) {
-            for (Integer selection : selections) {
+            for (Integer selection : selections)
                 result.add(items.get(selection));
-            }
             results.add(result);
         } else {
             int start = 0;
-            if (index > 0) {
-                start = selections[index - 1];
-            }
+            /*
+                NOTE: Here is the without duplicates trick.
+                Remember. if start == target, then we will evaluate matches of our target in our final solution.
+                However, if we set start to be "+ 1", we won't evaluate matches.
+             */
+            if (index > 0)
+                start = selections[index - 1] + 1;
             for (int i = start; i < items.size(); i++) {
                 selections[index] = i;
                 select(index + 1, selections, items, results);
             }
-
         }
     }
 
-    static void print(List<List<String>> lists) {
+    private static void print(List<List<String>> lists) {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < lists.size(); i++) {
+        for (int i = 0; i < lists.size(); i++) {
             sb.append(lists.get(i)).append("\t\t");
 
             if ((i + 1) % 8 == 0)
                 sb.append('\n');
         }
-
         System.out.println(sb);
     }
 
@@ -75,5 +77,4 @@ public class SelectKOfNWithDupes {
                 value -> list.add(String.valueOf(ExecUtils.getRandom(max_size * 2, 1))));
         return list;
     }
-
 }

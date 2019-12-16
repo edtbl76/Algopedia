@@ -7,9 +7,15 @@ import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
+/*
+    Perf drop
+    7 ~ 11 seconds
+    8 ~
+ */
 public class KnightsTour3 {
     //static int dimension = ExecUtils.getRandom(8, 5);
-    static int dimension = 7;
+    static int dimension = 6;
 
     static List<List<Integer>> move = new ArrayList<>();
     static List<List<List<Point>>> legalMoves = new ArrayList<>();
