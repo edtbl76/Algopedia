@@ -10,8 +10,10 @@ public class SelectKOfNWithDupes {
 
     public static void main(String[] args) {
 
-        int k = ExecUtils.getRandom(10, 1);
-        int n = ExecUtils.getRandom(10, 1);
+        //int k = ExecUtils.getRandom(10, 1);
+        //int n = ExecUtils.getRandom(10, 1);
+        int k = 10;
+        int n = 29;
 
         List<List<String>> results = new ArrayList<>();
         List<String> items = populate(n);

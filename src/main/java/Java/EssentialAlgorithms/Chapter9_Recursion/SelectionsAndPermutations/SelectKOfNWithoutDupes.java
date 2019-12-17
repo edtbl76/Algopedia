@@ -15,7 +15,7 @@ public class SelectKOfNWithoutDupes {
         //int n = ExecUtils.getRandom(10, 1);
 
         int k = 10;
-        int n = 20;
+        int n = 29;
         List<List<String>> results = new ArrayList<>();
         List<String> items = populate(n);
 
