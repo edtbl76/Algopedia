@@ -8,8 +8,8 @@ project_root = os.path.dirname(project_root)  # Go up one level to the project r
 sys.path.insert(0, project_root)
 
 # Import the test classes directly
-from python.tests.data_structures.test_node import TestNode
-from python.tests.data_structures.test_linked_list import TestLinkedList
+from tests.data_structures.test_node import TestNode
+from tests.data_structures.test_linked_list import TestLinkedList
 
 if __name__ == '__main__':
     # Create a test suite with the test classes

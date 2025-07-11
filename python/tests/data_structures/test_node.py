@@ -1,5 +1,5 @@
 import unittest
-from python.data_structures.Node import Node
+from data_structures.Node import Node
 
 class TestNode(unittest.TestCase):
     def test_init(self):
