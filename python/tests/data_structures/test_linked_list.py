@@ -86,5 +86,69 @@ class TestLinkedList(unittest.TestCase):
         ll.remove_node(20)  # 20 is not in the list
         self.assertEqual(ll.get_head(), original_head)  # Head should remain unchanged
 
+    def test_swap_node(self):
+        """Test swap_node method"""
+        # Test swapping nodes in the middle of the list
+        ll = LinkedList(5)
+        ll.insert_start(10)
+        ll.insert_start(15)
+        ll.insert_start(20)
+        # Now the list is: 20 -> 15 -> 10 -> 5
+
+        ll.swap_node(15, 10)
+        # After swap, the list should be: 20 -> 10 -> 15 -> 5
+        self.assertEqual(ll.get_head().get_data(), 20)
+        self.assertEqual(ll.get_head().get_next().get_data(), 10)
+        self.assertEqual(ll.get_head().get_next().get_next().get_data(), 15)
+        self.assertEqual(ll.get_head().get_next().get_next().get_next().get_data(), 5)
+
+        # Test swapping the head node with another node
+        ll = LinkedList(5)
+        ll.insert_start(10)
+        ll.insert_start(15)
+        # Now the list is: 15 -> 10 -> 5
+
+        ll.swap_node(15, 5)
+        # After swap, the list should be: 5 -> 10 -> 15
+        self.assertEqual(ll.get_head().get_data(), 5)
+        self.assertEqual(ll.get_head().get_next().get_data(), 10)
+        self.assertEqual(ll.get_head().get_next().get_next().get_data(), 15)
+
+        # Test swapping a node with itself (should do nothing)
+        ll = LinkedList(5)
+        ll.insert_start(10)
+        # Now the list is: 10 -> 5
+
+        original_head = ll.get_head()
+        ll.swap_node(10, 10)
+        # List should remain unchanged: 10 -> 5
+        self.assertEqual(ll.get_head(), original_head)
+        self.assertEqual(ll.get_head().get_data(), 10)
+        self.assertEqual(ll.get_head().get_next().get_data(), 5)
+
+        # Test swapping with a non-existent node
+        ll = LinkedList(5)
+        ll.insert_start(10)
+        # Now the list is: 10 -> 5
+
+        original_head = ll.get_head()
+        ll.swap_node(10, 20)  # 20 is not in the list
+        # List should remain unchanged: 10 -> 5
+        self.assertEqual(ll.get_head(), original_head)
+        self.assertEqual(ll.get_head().get_data(), 10)
+        self.assertEqual(ll.get_head().get_next().get_data(), 5)
+
+        # Test swapping adjacent nodes
+        ll = LinkedList(5)
+        ll.insert_start(10)
+        ll.insert_start(15)
+        # Now the list is: 15 -> 10 -> 5
+
+        ll.swap_node(15, 10)
+        # After swap, the list should be: 10 -> 15 -> 5
+        self.assertEqual(ll.get_head().get_data(), 10)
+        self.assertEqual(ll.get_head().get_next().get_data(), 15)
+        self.assertEqual(ll.get_head().get_next().get_next().get_data(), 5)
+
 if __name__ == '__main__':
     unittest.main()

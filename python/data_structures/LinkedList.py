@@ -34,3 +34,48 @@ class LinkedList:
                     current_node = None
                 else:
                     current_node = next_node
+
+
+    def swap_node(self, value1, value2):
+        node1 = self.get_head()
+        node2 = self.get_head()
+        node1_prev = None
+        node2_prev = None
+
+        # short circuit
+        if value1 is value2:
+            return
+
+        # find match 1
+        while node1 is not None:
+            if node1.get_data() is value1:
+                break
+            node1_prev = node1
+            node1 = node1.get_next()
+
+        # find match 2
+        while node2 is not None:
+            if node2.get_data() is value2:
+                break
+            node2_prev = node2
+            node2 = node2.get_next()
+
+        # make sure the elements are in the list
+        if node1 is None or node2 is None:
+            return
+
+        # update preceding node's pointers
+        if node1_prev is None:
+            self.head = node2
+        else:
+            node1_prev.set_next(node2)
+
+        if node2_prev is None:
+            self.head = node1
+        else:
+            node2_prev.set_next(node1)
+
+        # Update pointers
+        temp = node1.get_next()
+        node1.set_next(node2.get_next())
+        node2.set_next(temp)
