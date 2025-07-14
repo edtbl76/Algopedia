@@ -150,5 +150,55 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(ll.get_head().get_next().get_data(), 15)
         self.assertEqual(ll.get_head().get_next().get_next().get_data(), 5)
 
+    def test_list_nth_last_dual_list(self):
+        """Test list_nth_last_dual_list method"""
+        # Test with a list of multiple nodes
+        ll = LinkedList(5)
+        ll.insert_start(10)
+        ll.insert_start(15)
+        ll.insert_start(20)
+        # Now the list is: 20 -> 15 -> 10 -> 5
+
+        # Test getting the 1st element from the end (last element)
+        node = ll.list_nth_last_dual_list(1)
+        self.assertEqual(node.get_data(), 5)
+
+        # Test getting the 2nd element from the end
+        node = ll.list_nth_last_dual_list(2)
+        self.assertEqual(node.get_data(), 10)
+
+        # Test getting the 3rd element from the end
+        node = ll.list_nth_last_dual_list(3)
+        self.assertEqual(node.get_data(), 15)
+
+        # Test getting the 4th element from the end (first element)
+        node = ll.list_nth_last_dual_list(4)
+        self.assertEqual(node.get_data(), 20)
+
+    def test_list_nth_last_parallel_pointers(self):
+        """Test list_nth_last_parallel_pointers method"""
+        # Test with a list of multiple nodes
+        ll = LinkedList(5)
+        ll.insert_start(10)
+        ll.insert_start(15)
+        ll.insert_start(20)
+        # Now the list is: 20 -> 15 -> 10 -> 5
+
+        # Test getting the 1st element from the end (last element)
+        node = ll.list_nth_last_parallel_pointers(1)
+        self.assertEqual(node.get_data(), 5)
+
+        # Test getting the 2nd element from the end
+        node = ll.list_nth_last_parallel_pointers(2)
+        self.assertEqual(node.get_data(), 10)
+
+        # Test getting the 3rd element from the end
+        node = ll.list_nth_last_parallel_pointers(3)
+        self.assertEqual(node.get_data(), 15)
+
+        # Test getting the 4th element from the end (first element)
+        node = ll.list_nth_last_parallel_pointers(4)
+        self.assertEqual(node.get_data(), 20)
+
 if __name__ == '__main__':
     unittest.main()

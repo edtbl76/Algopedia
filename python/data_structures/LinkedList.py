@@ -79,3 +79,47 @@ class LinkedList:
         temp = node1.get_next()
         node1.set_next(node2.get_next())
         node2.set_next(temp)
+
+
+    def list_nth_last_dual_list(self, n):
+        # gets the nth element from the tail of the list.
+
+        # stores an entire representation of the list
+        # PRO -- easy to read
+        # CON -- wastes memory
+
+        ll_as_list = []
+        current_node = self.head
+
+        while current_node:
+            ll_as_list.append(current_node)
+            current_node = current_node.get_next()
+        return ll_as_list[len(ll_as_list) - n]
+
+    def list_nth_last_parallel_pointers(self, n):
+        # gets the nth element from the tail of the list.
+
+        # improved impl. because it uses 2 pointers moving at the same rate
+        # "tail pointer" moves n steps behind the first one.
+        current_node = None
+        tail_pointer = self.head
+        count = 1
+
+        # We'll iterate as long as the tail_pointer isn't None (i.e. it moves through the entire data structure)
+        while tail_pointer:
+            tail_pointer = tail_pointer.get_next()
+            count += 1
+
+            # Once the counter reaches n + 1, the second pointer enters the algorithm (n steps behind).
+            if count >= n + 1:
+                # if this is the introduction of the pointer, then init. it to the head of the structure.
+                # otherwise, move it to the next Node.
+                if current_node is None:
+                    current_node = self.head
+                else:
+                    current_node = current_node.get_next()
+
+        # Once tail_pointer reaches None, we've cycled through the entire structure and N should be positioned at
+        # the stop condition.
+        return current_node
+
