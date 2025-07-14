@@ -80,7 +80,8 @@ class LinkedList:
         node1.set_next(node2.get_next())
         node2.set_next(temp)
 
-
+    # list nth last v1 (naive)
+    #
     def list_nth_last_dual_list(self, n):
         # gets the nth element from the tail of the list.
 
@@ -96,6 +97,10 @@ class LinkedList:
             current_node = current_node.get_next()
         return ll_as_list[len(ll_as_list) - n]
 
+    # list nth last v2 (parallel pointers)
+    # - parallel pointers are useful unless you have to find the middle or other elements that
+    # - might waste space
+    #
     def list_nth_last_parallel_pointers(self, n):
         # gets the nth element from the tail of the list.
 
@@ -123,3 +128,33 @@ class LinkedList:
         # the stop condition.
         return current_node
 
+
+    # Moving 1 pointer at 2x speed as the other allows us to find the middle.
+    # - once the fast pointer reaches the end, the slow pointer is at the middle.
+    #
+    def find_middle(self):
+        fast_pointer = self.head
+        slow_pointer = self.head
+
+        while fast_pointer:
+            # (additional step, so that fast_pointer moves at 2x speed)
+            fast_pointer = fast_pointer.get_next()
+            if fast_pointer:
+                fast_pointer = fast_pointer.get_next()
+                slow_pointer = slow_pointer.get_next()
+        return slow_pointer
+
+
+    # Alternate solution
+    # this version of find_middle is harder to read and uses a ctr var so we move on odd loops only
+    def find_middle_half(self):
+        count = 0
+        fast_pointer = self.head
+        slow_pointer = self.head
+
+        while fast_pointer:
+            fast_pointer = fast_pointer.get_next()
+            if count % 2 != 0:
+                slow_pointer = slow_pointer.get_next()
+            count += 1
+        return slow_pointer

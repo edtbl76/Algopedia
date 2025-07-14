@@ -200,5 +200,89 @@ class TestLinkedList(unittest.TestCase):
         node = ll.list_nth_last_parallel_pointers(4)
         self.assertEqual(node.get_data(), 20)
 
+    def test_find_middle(self):
+        """Test find_middle method"""
+        # Test with odd number of nodes
+        ll = LinkedList(5)
+        ll.insert_start(10)
+        ll.insert_start(15)
+        ll.insert_start(20)
+        ll.insert_start(25)
+        # Now the list is: 25 -> 20 -> 15 -> 10 -> 5
+        # Middle node should be 15
+
+        node = ll.find_middle()
+        self.assertEqual(node.get_data(), 15)
+
+        # Test with even number of nodes
+        ll = LinkedList(5)
+        ll.insert_start(10)
+        ll.insert_start(15)
+        ll.insert_start(20)
+        # Now the list is: 20 -> 15 -> 10 -> 5
+        # Middle node should be 10 (the second of the two middle nodes)
+
+        node = ll.find_middle()
+        self.assertEqual(node.get_data(), 10)
+
+        # Test with single node
+        ll = LinkedList(5)
+        # List is just: 5
+        # Middle node should be 5
+
+        node = ll.find_middle()
+        self.assertEqual(node.get_data(), 5)
+
+        # Test with two nodes
+        ll = LinkedList(5)
+        ll.insert_start(10)
+        # Now the list is: 10 -> 5
+        # Middle node should be 5
+
+        node = ll.find_middle()
+        self.assertEqual(node.get_data(), 5)
+
+    def test_find_middle_half(self):
+        """Test find_middle_half method"""
+        # Test with odd number of nodes
+        ll = LinkedList(5)
+        ll.insert_start(10)
+        ll.insert_start(15)
+        ll.insert_start(20)
+        ll.insert_start(25)
+        # Now the list is: 25 -> 20 -> 15 -> 10 -> 5
+        # Middle node should be 15
+
+        node = ll.find_middle_half()
+        self.assertEqual(node.get_data(), 15)
+
+        # Test with even number of nodes
+        ll = LinkedList(5)
+        ll.insert_start(10)
+        ll.insert_start(15)
+        ll.insert_start(20)
+        # Now the list is: 20 -> 15 -> 10 -> 5
+        # Middle node should be 10 (the second of the two middle nodes)
+
+        node = ll.find_middle_half()
+        self.assertEqual(node.get_data(), 10)
+
+        # Test with single node
+        ll = LinkedList(5)
+        # List is just: 5
+        # Middle node should be 5
+
+        node = ll.find_middle_half()
+        self.assertEqual(node.get_data(), 5)
+
+        # Test with two nodes
+        ll = LinkedList(5)
+        ll.insert_start(10)
+        # Now the list is: 10 -> 5
+        # Middle node should be 5
+
+        node = ll.find_middle_half()
+        self.assertEqual(node.get_data(), 5)
+
 if __name__ == '__main__':
     unittest.main()
