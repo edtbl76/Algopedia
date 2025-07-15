@@ -1,6 +1,6 @@
 import unittest
 from data_structures.LinkedList import LinkedList
-from data_structures.Node import Node
+from data_structures.SinglePointNode import Node
 
 class TestLinkedList(unittest.TestCase):
     def test_init(self):
