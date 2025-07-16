@@ -1,20 +1,48 @@
+from typing import Any, Optional
+
+
 class Node:
-    def __init__(self, data, next=None, prev=None):
+    """
+    A node class for dual-linked data structures like dual linked lists
+    """
+
+
+    def __init__(self, data:Any , next_node: Optional['Node'] = None, prev_node: Optional['Node'] = None) -> None:
+        """
+        Init a new node
+        :param data: data to store in the node
+        :param next_node: reference to the next node (None by default)
+        :param prev_node: reference to the previous node (None by default)
+        """
+
         self.data = data
-        self.next = next
-        self.prev = prev
+        self.next = next_node
+        self.prev = prev_node
 
-    def get_next(self):
-        return self.next
+    @property
+    def data(self) -> Any:
+        """ data stored in the node """
+        return self._data
 
-    def set_next(self, next):
-        self.next = next
+    @data.setter
+    def data(self, value: Any) -> None:
+        self._data = value
 
-    def get_prev(self):
-        return self.prev
+    @property
+    def next(self) -> Optional['Node']:
+        """ reference to the next node in the sequence. """
+        return self._next
 
-    def set_prev(self, prev):
-        self.prev = prev
+    @next.setter
+    def next(self, next_node: Optional['Node']) -> None:
+        self._next = next_node
 
-    def get_data(self):
-        return self.data
+    @property
+    def prev(self) -> Optional['Node']:
+        """ reference to the previous node in the sequence. """
+        return self._prev
+
+    @prev.setter
+    def prev(self, prev_node: Optional['Node']):
+        self._prev = prev_node
+

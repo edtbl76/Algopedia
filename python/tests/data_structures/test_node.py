@@ -6,52 +6,52 @@ class TestNode(unittest.TestCase):
         """Test Node initialization"""
         # Test with only data
         node = Node(5)
-        self.assertEqual(node.get_data(), 5)
-        self.assertIsNone(node.get_next())
-        
+        self.assertEqual(node.data, 5)
+        self.assertIsNone(node.next)
+
         # Test with data and next node
         next_node = Node(10)
         node = Node(5, next_node)
-        self.assertEqual(node.get_data(), 5)
-        self.assertEqual(node.get_next(), next_node)
-    
-    def test_get_data(self):
-        """Test get_data method"""
+        self.assertEqual(node.data, 5)
+        self.assertEqual(node.next, next_node)
+
+    def test_data_property(self):
+        """Test data property"""
         node = Node("test_data")
-        self.assertEqual(node.get_data(), "test_data")
-        
+        self.assertEqual(node.data, "test_data")
+
         # Test with None data
         node = Node(None)
-        self.assertIsNone(node.get_data())
-    
-    def test_get_next(self):
-        """Test get_next method"""
+        self.assertIsNone(node.data)
+
+    def test_next_property(self):
+        """Test next property"""
         # Test with no next node
         node = Node(5)
-        self.assertIsNone(node.get_next())
-        
+        self.assertIsNone(node.next)
+
         # Test with next node
         next_node = Node(10)
         node = Node(5, next_node)
-        self.assertEqual(node.get_next(), next_node)
-    
-    def test_set_next(self):
-        """Test set_next method"""
+        self.assertEqual(node.next, next_node)
+
+    def test_next_setter(self):
+        """Test next setter"""
         node = Node(5)
         next_node = Node(10)
-        
+
         # Set next node
-        node.set_next(next_node)
-        self.assertEqual(node.get_next(), next_node)
-        
+        node.next = next_node
+        self.assertEqual(node.next, next_node)
+
         # Change next node
         new_next = Node(15)
-        node.set_next(new_next)
-        self.assertEqual(node.get_next(), new_next)
-        
+        node.next = new_next
+        self.assertEqual(node.next, new_next)
+
         # Set next to None
-        node.set_next(None)
-        self.assertIsNone(node.get_next())
+        node.next = None
+        self.assertIsNone(node.next)
 
 if __name__ == '__main__':
     unittest.main()

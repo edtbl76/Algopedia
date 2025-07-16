@@ -1,108 +1,129 @@
-from data_structures.TwoPointNode import Node
+from typing import Optional, Any
+from .TwoPointNode import Node
 
 
 class DoublyLinkedList:
-    def __init__(self):
-        self.head = None
-        self.tail = None
+    """
+    Implementation of a Doubly Linked List data structure.
+    Provides bidirectional traversal capabilities with nodes containing references
+    to both next and previous nodes.
+    """
+    def __init__(self) -> None:
+        self._head = None
+        self._tail = None
 
-    # Insert new node at head of list
-    def insert(self, value):
+
+    @property
+    def head(self) -> Optional[Node]:
+        """ Get head of list """
+        return self._head
+
+    @head.setter
+    def head(self, node: Optional[Node]) -> None:
+        """ sets the head node of the list """
+        self._head = node
+
+    @property
+    def tail(self) -> Optional[Node]:
+        """ Get tail of list """
+        return self._tail
+
+    @tail.setter
+    def tail(self, node: Optional[Node]) -> None:
+        """ sets the tail node of the list """
+        self._tail = node
+
+    def insert(self, value: Any) -> None:
+        """ inserts a new node at the head of the list """
         new_head = Node(value)
         current_head = self.head
 
-        if current_head is not None:
-            current_head.set_prev(new_head)
-            new_head.set_next(current_head)
+        if current_head:
+            current_head.prev = new_head
+            new_head.next = current_head
 
         self.head = new_head
 
-        if self.tail is None:
+        if not self.tail:
             self.tail = new_head
 
-    # Insert new node at tail of list
-    def append(self, value):
+
+    def append(self, value: Any) -> None:
+        """ Append a new node at the end of the list """
         new_tail = Node(value)
         current_tail = self.tail
 
-        if current_tail is not None:
-            current_tail.set_next(new_tail)
-            new_tail.set_prev(current_tail)
+        if current_tail:
+            current_tail.next = new_tail
+            new_tail.prev = current_tail
 
         self.tail = new_tail
-
-        if self.head is None:
+        if not self.head:
             self.head = new_tail
 
 
-    def remove_head(self):
-        removed = self.head
-
-        if removed is None:
+    def remove_head(self) -> Optional[Any]:
+        """ remove and return the value of the head node """
+        if not self.head:
             return None
 
-        self.head = removed.get_next()
+        removed = self.head
+        self.head = removed.next
 
-        if self.head is not None:
-            self.head.set_prev(None)
+        if self.head:
+            self.head.prev = None
 
         if removed == self.tail:
             self.remove_tail()
 
-        return removed.get_data()
+        return removed.data
 
-    def remove_tail(self):
+    def remove_tail(self) -> Optional[Any]:
+        """ remove and return the value of the tail node """
+        if not self.tail:
+            return None
+
         removed = self.tail
+        self.tail = removed.prev
 
-        if removed is None:
-            return None
-
-        self.tail = removed.get_prev()
-
-        if self.tail is not None:
-            self.tail.set_next(None)
+        if self.tail:
+            self.tail.next = None
 
         if removed == self.head:
             self.remove_head()
 
-        return removed.get_data()
+        return removed.data
 
 
-    def remove_node_by_value(self, value):
-        removed = None
+    def remove_by_value(self, value:Any) -> Optional[Node]:
+        """ Remove and return the first node w/ the specified value """
+        current = self.head
 
-        current_node = self.head
+        while current and current.data != value:
+            current = current.next
 
-        while current_node is not None:
-
-            if current_node.get_data() == value:
-                removed = current_node
-                break
-
-            current_node = current_node.get_next()
-
-        if removed is None:
+        if not current:
             return None
 
-        if removed == self.head:
+        if current == self.head:
             self.remove_head()
-        elif removed == self.tail:
+        elif current == self.tail:
             self.remove_tail()
         else:
-            removed_next = removed.get_next()
-            removed_prev = removed.get_prev()
-            removed_next.set_prev(removed_prev)
-            removed_prev.set_next(removed_next)
+            current.next.prev = current.prev
+            current.prev.next = current.next
 
-        return removed
+        return current
 
 
-    def stringify(self):
-        string_list = ""
-        current_node = self.head
-        while current_node:
-            if current_node.get_data() is not None:
-                string_list += str(current_node.get_data()) + "\n"
-            current_node = current_node.get_next()
-        return string_list
+    def to_string(self) -> str:
+        """Convert the list contents to a string representation."""
+        result = []
+        current = self.head
+        while current:
+            if current.data is not None:
+                result.append(str(current.data))
+            current = current.next
+        return '\n'.join(result) + '\n' if result else ''
+
 

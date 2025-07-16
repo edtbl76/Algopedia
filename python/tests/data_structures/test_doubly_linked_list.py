@@ -15,60 +15,60 @@ class TestDoublyLinkedList(unittest.TestCase):
         # Test inserting into an empty list
         dll = DoublyLinkedList()
         dll.insert(5)
-        self.assertEqual(dll.head.get_data(), 5)
-        self.assertEqual(dll.tail.get_data(), 5)
-        self.assertIsNone(dll.head.get_prev())
-        self.assertIsNone(dll.head.get_next())
+        self.assertEqual(dll.head.data, 5)
+        self.assertEqual(dll.tail.data, 5)
+        self.assertIsNone(dll.head.prev)
+        self.assertIsNone(dll.head.next)
         self.assertEqual(dll.head, dll.tail)
 
         # Test inserting into a non-empty list
         dll.insert(10)
-        self.assertEqual(dll.head.get_data(), 10)
-        self.assertEqual(dll.tail.get_data(), 5)
-        self.assertIsNone(dll.head.get_prev())
-        self.assertEqual(dll.head.get_next(), dll.tail)
-        self.assertEqual(dll.tail.get_prev(), dll.head)
-        self.assertIsNone(dll.tail.get_next())
+        self.assertEqual(dll.head.data, 10)
+        self.assertEqual(dll.tail.data, 5)
+        self.assertIsNone(dll.head.prev)
+        self.assertEqual(dll.head.next, dll.tail)
+        self.assertEqual(dll.tail.prev, dll.head)
+        self.assertIsNone(dll.tail.next)
 
         # Test inserting multiple values
         dll.insert(15)
-        self.assertEqual(dll.head.get_data(), 15)
-        self.assertEqual(dll.head.get_next().get_data(), 10)
-        self.assertEqual(dll.tail.get_data(), 5)
-        self.assertIsNone(dll.head.get_prev())
-        self.assertEqual(dll.head.get_next().get_prev(), dll.head)
-        self.assertEqual(dll.tail.get_prev().get_data(), 10)
-        self.assertIsNone(dll.tail.get_next())
+        self.assertEqual(dll.head.data, 15)
+        self.assertEqual(dll.head.next.data, 10)
+        self.assertEqual(dll.tail.data, 5)
+        self.assertIsNone(dll.head.prev)
+        self.assertEqual(dll.head.next.prev, dll.head)
+        self.assertEqual(dll.tail.prev.data, 10)
+        self.assertIsNone(dll.tail.next)
 
     def test_append(self):
         """Test append method"""
         # Test appending to an empty list
         dll = DoublyLinkedList()
         dll.append(5)
-        self.assertEqual(dll.head.get_data(), 5)
-        self.assertEqual(dll.tail.get_data(), 5)
-        self.assertIsNone(dll.head.get_prev())
-        self.assertIsNone(dll.head.get_next())
+        self.assertEqual(dll.head.data, 5)
+        self.assertEqual(dll.tail.data, 5)
+        self.assertIsNone(dll.head.prev)
+        self.assertIsNone(dll.head.next)
         self.assertEqual(dll.head, dll.tail)
 
         # Test appending to a non-empty list
         dll.append(10)
-        self.assertEqual(dll.head.get_data(), 5)
-        self.assertEqual(dll.tail.get_data(), 10)
-        self.assertIsNone(dll.head.get_prev())
-        self.assertEqual(dll.head.get_next(), dll.tail)
-        self.assertEqual(dll.tail.get_prev(), dll.head)
-        self.assertIsNone(dll.tail.get_next())
+        self.assertEqual(dll.head.data, 5)
+        self.assertEqual(dll.tail.data, 10)
+        self.assertIsNone(dll.head.prev)
+        self.assertEqual(dll.head.next, dll.tail)
+        self.assertEqual(dll.tail.prev, dll.head)
+        self.assertIsNone(dll.tail.next)
 
         # Test appending multiple values
         dll.append(15)
-        self.assertEqual(dll.head.get_data(), 5)
-        self.assertEqual(dll.head.get_next().get_data(), 10)
-        self.assertEqual(dll.tail.get_data(), 15)
-        self.assertIsNone(dll.head.get_prev())
-        self.assertEqual(dll.head.get_next().get_prev(), dll.head)
-        self.assertEqual(dll.tail.get_prev().get_data(), 10)
-        self.assertIsNone(dll.tail.get_next())
+        self.assertEqual(dll.head.data, 5)
+        self.assertEqual(dll.head.next.data, 10)
+        self.assertEqual(dll.tail.data, 15)
+        self.assertIsNone(dll.head.prev)
+        self.assertEqual(dll.head.next.prev, dll.head)
+        self.assertEqual(dll.tail.prev.data, 10)
+        self.assertIsNone(dll.tail.next)
 
     def test_remove_head(self):
         """Test remove_head method"""
@@ -93,12 +93,12 @@ class TestDoublyLinkedList(unittest.TestCase):
         # Now the list is: 15 <-> 10 <-> 5
         self.assertEqual(dll.remove_head(), 15)
         # Now the list should be: 10 <-> 5
-        self.assertEqual(dll.head.get_data(), 10)
-        self.assertEqual(dll.tail.get_data(), 5)
-        self.assertIsNone(dll.head.get_prev())
-        self.assertEqual(dll.head.get_next(), dll.tail)
-        self.assertEqual(dll.tail.get_prev(), dll.head)
-        self.assertIsNone(dll.tail.get_next())
+        self.assertEqual(dll.head.data, 10)
+        self.assertEqual(dll.tail.data, 5)
+        self.assertIsNone(dll.head.prev)
+        self.assertEqual(dll.head.next, dll.tail)
+        self.assertEqual(dll.tail.prev, dll.head)
+        self.assertIsNone(dll.tail.next)
 
     def test_remove_tail(self):
         """Test remove_tail method"""
@@ -123,27 +123,27 @@ class TestDoublyLinkedList(unittest.TestCase):
         # Now the list is: 5 <-> 10 <-> 15
         self.assertEqual(dll.remove_tail(), 15)
         # Now the list should be: 5 <-> 10
-        self.assertEqual(dll.head.get_data(), 5)
-        self.assertEqual(dll.tail.get_data(), 10)
-        self.assertIsNone(dll.head.get_prev())
-        self.assertEqual(dll.head.get_next(), dll.tail)
-        self.assertEqual(dll.tail.get_prev(), dll.head)
-        self.assertIsNone(dll.tail.get_next())
+        self.assertEqual(dll.head.data, 5)
+        self.assertEqual(dll.tail.data, 10)
+        self.assertIsNone(dll.head.prev)
+        self.assertEqual(dll.head.next, dll.tail)
+        self.assertEqual(dll.tail.prev, dll.head)
+        self.assertIsNone(dll.tail.next)
 
-    def test_remove_node_by_value(self):
-        """Test remove_node_by_value method"""
+    def test_remove_by_value(self):
+        """Test remove_by_value method"""
         # Test removing from an empty list
         dll = DoublyLinkedList()
-        self.assertIsNone(dll.remove_node_by_value(5))
+        self.assertIsNone(dll.remove_by_value(5))
         self.assertIsNone(dll.head)
         self.assertIsNone(dll.tail)
 
         # Test removing a non-existent value
         dll = DoublyLinkedList()
         dll.append(5)
-        self.assertIsNone(dll.remove_node_by_value(10))
-        self.assertEqual(dll.head.get_data(), 5)
-        self.assertEqual(dll.tail.get_data(), 5)
+        self.assertIsNone(dll.remove_by_value(10))
+        self.assertEqual(dll.head.data, 5)
+        self.assertEqual(dll.tail.data, 5)
 
         # Test removing the head
         dll = DoublyLinkedList()
@@ -151,15 +151,15 @@ class TestDoublyLinkedList(unittest.TestCase):
         dll.append(10)
         dll.append(15)
         # Now the list is: 5 <-> 10 <-> 15
-        removed = dll.remove_node_by_value(5)
+        removed = dll.remove_by_value(5)
         self.assertIsNotNone(removed)
         # Now the list should be: 10 <-> 15
-        self.assertEqual(dll.head.get_data(), 10)
-        self.assertEqual(dll.tail.get_data(), 15)
-        self.assertIsNone(dll.head.get_prev())
-        self.assertEqual(dll.head.get_next(), dll.tail)
-        self.assertEqual(dll.tail.get_prev(), dll.head)
-        self.assertIsNone(dll.tail.get_next())
+        self.assertEqual(dll.head.data, 10)
+        self.assertEqual(dll.tail.data, 15)
+        self.assertIsNone(dll.head.prev)
+        self.assertEqual(dll.head.next, dll.tail)
+        self.assertEqual(dll.tail.prev, dll.head)
+        self.assertIsNone(dll.tail.next)
 
         # Test removing the tail
         dll = DoublyLinkedList()
@@ -167,15 +167,15 @@ class TestDoublyLinkedList(unittest.TestCase):
         dll.append(10)
         dll.append(15)
         # Now the list is: 5 <-> 10 <-> 15
-        removed = dll.remove_node_by_value(15)
+        removed = dll.remove_by_value(15)
         self.assertIsNotNone(removed)
         # Now the list should be: 5 <-> 10
-        self.assertEqual(dll.head.get_data(), 5)
-        self.assertEqual(dll.tail.get_data(), 10)
-        self.assertIsNone(dll.head.get_prev())
-        self.assertEqual(dll.head.get_next(), dll.tail)
-        self.assertEqual(dll.tail.get_prev(), dll.head)
-        self.assertIsNone(dll.tail.get_next())
+        self.assertEqual(dll.head.data, 5)
+        self.assertEqual(dll.tail.data, 10)
+        self.assertIsNone(dll.head.prev)
+        self.assertEqual(dll.head.next, dll.tail)
+        self.assertEqual(dll.tail.prev, dll.head)
+        self.assertIsNone(dll.tail.next)
 
         # Test removing a middle node
         dll = DoublyLinkedList()
@@ -183,26 +183,26 @@ class TestDoublyLinkedList(unittest.TestCase):
         dll.append(10)
         dll.append(15)
         # Now the list is: 5 <-> 10 <-> 15
-        removed = dll.remove_node_by_value(10)
+        removed = dll.remove_by_value(10)
         self.assertIsNotNone(removed)
         # Now the list should be: 5 <-> 15
-        self.assertEqual(dll.head.get_data(), 5)
-        self.assertEqual(dll.tail.get_data(), 15)
-        self.assertIsNone(dll.head.get_prev())
-        self.assertEqual(dll.head.get_next(), dll.tail)
-        self.assertEqual(dll.tail.get_prev(), dll.head)
-        self.assertIsNone(dll.tail.get_next())
+        self.assertEqual(dll.head.data, 5)
+        self.assertEqual(dll.tail.data, 15)
+        self.assertIsNone(dll.head.prev)
+        self.assertEqual(dll.head.next, dll.tail)
+        self.assertEqual(dll.tail.prev, dll.head)
+        self.assertIsNone(dll.tail.next)
 
-    def test_stringify(self):
-        """Test stringify method"""
+    def test_to_string(self):
+        """Test to_string method"""
         # Test with an empty list
         dll = DoublyLinkedList()
-        self.assertEqual(dll.stringify(), "")
+        self.assertEqual(dll.to_string(), "")
 
         # Test with a single node
         dll = DoublyLinkedList()
         dll.append(5)
-        self.assertEqual(dll.stringify(), "5\n")
+        self.assertEqual(dll.to_string(), "5\n")
 
         # Test with multiple nodes
         dll = DoublyLinkedList()
@@ -210,7 +210,7 @@ class TestDoublyLinkedList(unittest.TestCase):
         dll.append(10)
         dll.append(15)
         # Now the list is: 5 <-> 10 <-> 15
-        self.assertEqual(dll.stringify(), "5\n10\n15\n")
+        self.assertEqual(dll.to_string(), "5\n10\n15\n")
 
         # Test with None values
         dll = DoublyLinkedList()
@@ -218,7 +218,7 @@ class TestDoublyLinkedList(unittest.TestCase):
         dll.append(10)
         dll.append(None)
         # Now the list is: None <-> 10 <-> None
-        self.assertEqual(dll.stringify(), "10\n")
+        self.assertEqual(dll.to_string(), "10\n")
 
 if __name__ == '__main__':
     unittest.main()
