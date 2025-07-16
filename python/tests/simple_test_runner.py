@@ -13,6 +13,7 @@ from tests.data_structures.test_linked_list import TestLinkedList
 from tests.data_structures.test_doubly_linked_list import TestDoublyLinkedList
 from tests.data_structures.test_queue import TestQueue
 from tests.data_structures.test_stack import TestStack
+from tests.data_structures.test_two_point_node import TestTwoPointNode
 
 if __name__ == '__main__':
     # Create a test suite with the test classes
@@ -22,6 +23,7 @@ if __name__ == '__main__':
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestDoublyLinkedList))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestQueue))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestStack))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestTwoPointNode))
 
     # Run the tests
     unittest.TextTestRunner(verbosity=2).run(test_suite)

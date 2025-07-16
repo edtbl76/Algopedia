@@ -6,7 +6,7 @@ from .SinglePointNode import Node
 class Stack:
     """A stack implementation using linked nodes with optional size limit."""
 
-    def __init__(self, limit: Optional[int] = None) -> None:
+    def __init__(self, limit: Optional[int]) -> None:
         """
         Initialize empty stack.
         Args:
@@ -78,3 +78,4 @@ class Stack:
             True if stack contains no elements, False otherwise
         """
         return self._size == 0
+
