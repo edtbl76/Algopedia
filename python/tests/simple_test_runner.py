@@ -11,6 +11,7 @@ sys.path.insert(0, project_root)
 from tests.data_structures.test_node import TestNode
 from tests.data_structures.test_linked_list import TestLinkedList
 from tests.data_structures.test_doubly_linked_list import TestDoublyLinkedList
+from tests.data_structures.test_queue import TestQueue
 
 if __name__ == '__main__':
     # Create a test suite with the test classes
@@ -18,6 +19,7 @@ if __name__ == '__main__':
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestNode))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestLinkedList))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestDoublyLinkedList))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestQueue))
 
     # Run the tests
     unittest.TextTestRunner(verbosity=2).run(test_suite)
