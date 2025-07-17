@@ -14,6 +14,8 @@ from tests.data_structures.test_doubly_linked_list import TestDoublyLinkedList
 from tests.data_structures.test_queue import TestQueue
 from tests.data_structures.test_stack import TestStack
 from tests.data_structures.test_two_point_node import TestTwoPointNode
+from tests.apps.tower_of_hanoi.test_named_stack import TestNamedStack
+from tests.apps.tower_of_hanoi.test_tower_of_hanoi import TestTowerOfHanoi
 
 if __name__ == '__main__':
     # Create a test suite with the test classes
@@ -24,6 +26,8 @@ if __name__ == '__main__':
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestQueue))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestStack))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestTwoPointNode))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestNamedStack))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestTowerOfHanoi))
 
     # Run the tests
     unittest.TextTestRunner(verbosity=2).run(test_suite)

@@ -31,7 +31,9 @@ if __name__ == '__main__':
         os.path.join(project_root, 'tests', 'data_structures', 'test_stack.py'),
         os.path.join(project_root, 'tests', 'data_structures', 'test_queue.py'),
         os.path.join(project_root, 'tests', 'data_structures', 'test_doubly_linked_list.py'),
-        os.path.join(project_root, 'tests', 'data_structures', 'test_two_point_node.py')
+        os.path.join(project_root, 'tests', 'data_structures', 'test_two_point_node.py'),
+        os.path.join(project_root, 'tests', 'apps', 'tower_of_hanoi', 'test_named_stack.py'),
+        os.path.join(project_root, 'tests', 'apps', 'tower_of_hanoi', 'test_tower_of_hanoi.py')
     ]
 
     # Run each test file

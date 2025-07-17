@@ -1,71 +1,101 @@
-#!/usr/bin/env python 3
+#!/usr/bin/env python3
+from dataclasses import dataclass
+from typing import Tuple, List
+
 from apps.tower_of_hanoi.NamedStack import NamedStack
 
-print("\n === Towers of Hanoi ===")
-
-# Set up "Board"
-left = NamedStack("Left")
-middle = NamedStack("Middle")
-right = NamedStack("Right")
-
-towers = [left, middle, right]
-
-# Set Up Game
-num_rings = int(input("\nHow many rings do you want to play with?\n"))
-
-while num_rings < 3:
-    num_rings = int(input("Enter a number greater than equal to 3\n"))
-
-for ring in range(num_rings, 0, -1):
-    left.push(ring)
-
-optimal_moves = (2**num_rings) - 1
-print(f"\nThe best solution to this game is {optimal_moves} moves.")
+@dataclass
+class GameConfig:
+    """ Configuration parameters for Tower of Hanoi game"""
+    min_rings: int = 3
+    max_rings: int = 10
+    tower_names: Tuple[str, ...] = ("Left", "Middle", "Right")
 
 
-## Helper Method
-def get_input():
-    choices = [tower.name[0] for tower in towers]
+class TowerOfHanoi:
+    """
+    Tower of Hanoi game implementation.
+    A classic puzzle game where rings must be moved between three towers
+    following specific rules.
+    """
 
-    while True:
-        for i in range(len(towers)):
-            name = towers[i].name
-            letter = choices[i]
-            print(f"Enter {letter} for {name}")
+    INVALID_MOVE_EMPTY = "\nInvalid Move: Source tower is empty"
+    INVALID_MOVE_SIZE = "\nInvalid Move: Cannot place larger ring on smaller ring"
+    TOWER_PROMPT = "\nWhich tower do you want to move {direction}?"
+    RING_PROMPT = "\nHow many rings do you want to play with [Between {min} and {max}]?\n"
 
-        user_input = input("")
+    def __init__(self) -> None:
+        self.config: GameConfig = GameConfig()
+        self.towers: List[NamedStack] = [NamedStack(name) for name in self.config.tower_names]
+        self.source:  NamedStack
+        self.auxiliary: NamedStack
+        self.target: NamedStack
+        self.source, self.auxiliary, self.target = self.towers
+        self.moves: int  = 0
+        self.num_rings = self._get_valid_ring_count()
+        self.optimal_moves: int = 0
+        self._initialize_game()
 
-        if user_input.capitalize() in choices:
-            for i in range(len(towers)):
-                if user_input is choices[i]:
-                    return towers[i]
+    def _get_valid_ring_count(self) -> int:
+        while True:
+            try:
+                prompt = self.RING_PROMPT.format(min=self.config.min_rings, max=self.config.max_rings)
+                rings = int(input(prompt))
+                if self.config.min_rings <= rings <= self.config.max_rings:
+                    return rings
+                print(f"Please enter a number between {self.config.min_rings} and {self.config.max_rings}")
+            except ValueError:
+                print("Please enter a valid number")
 
-### Play The Game ###
-moves = 0
+    def _initialize_game(self) -> None:
+        for ring in range(self.num_rings, 0, -1):
+            self.source.push(ring)
+        self.optimal_moves = (2 ** self.num_rings) - 1
+        print(f"\nThe best solution to this game is {self.optimal_moves} moves.")
 
-while right._size != num_rings:
-    print("\n\n\n=== Current Towers ===")
+    def _select_tower(self, direction: str) -> NamedStack:
+        while True:
+            print(self.TOWER_PROMPT.format(direction=direction))
+            for tower in self.towers:
+                print(f"Enter {tower.name[0]} for {tower.name}")
+            choice = input("").upper()
+            for tower in self.towers:
+                if choice == tower.name[0]:
+                    return tower
+            print("Invalid selection. Please try again.")
 
-    for tower in towers:
-        tower.display()
-
-    while True:
-        print("\nWhich tower do you want to move from?\n")
-        from_tower = get_input()
-
-        print("\nWhich tower do you want to move to?\n")
-        to_tower = get_input()
-
+    def _make_move(self, from_tower: NamedStack, to_tower: NamedStack) -> bool:
         if from_tower.is_empty():
-            print("\n\nInvalid Move. Try Again")
-        elif to_tower.is_empty() or from_tower.peek < to_tower.peek:
-            disk = from_tower.pop()
-            to_tower.push(disk)
-            moves += 1
-            break
-        else:
-            print("\n\nInvalid Move. Try Again")
+            print(self.INVALID_MOVE_EMPTY)
+            return False
+        if not to_tower.is_empty() and from_tower.peek >= to_tower.peek:
+            print(self.INVALID_MOVE_SIZE)
+            return False
 
-    print(
-        f"\n\nYou completed the game in {moves} moves, and the optimal number of moves is {optimal_moves}")
+        to_tower.push(from_tower.pop())
+        self.moves += 1
+        return True
 
+    def display_state(self) -> None:
+        print("\n=== Current Towers ===")
+        for tower in self.towers:
+            tower.display_contents()
+
+    def is_complete(self) -> bool:
+        return self.target._size == self.num_rings
+
+
+    def play(self) -> None:
+        """Start and run the Tower of Hanoi game"""
+        print("\n=== Towers of Hanoi ===")
+        while not self.is_complete():
+            self.display_state()
+            from_tower = self._select_tower("from")
+            to_tower = self._select_tower("to")
+
+            if self._make_move(from_tower, to_tower):
+                print(f"\nMoves: {self.moves} (Optimal: {self.optimal_moves})")
+
+if __name__ == "__main__":
+    game = TowerOfHanoi()
+    game.play()

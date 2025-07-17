@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional, Any, List
 from data_structures.Stack import Stack
 
 
@@ -13,7 +13,7 @@ class NamedStack(Stack):
             limit: Maximum number of elements allowed in stack. None for unlimited.
         """
         super().__init__(limit)
-        self._name = name
+        self._name: str  = name
 
     @property
     def name(self) -> str:
@@ -30,14 +30,35 @@ class NamedStack(Stack):
         Set a new name for the stack.
         Args:
             new_name: New name for the stack
+                Raises:
+            ValueError: If new_name is empty or contains only whitespace
+
         """
+        if not new_name or new_name.isspace():
+            raise ValueError("Stack name cannot be empty or whitespace")
         self._name = new_name
 
-    def display(self) -> None:
+
+    def _build_display_list(self) -> List[Any]:
+        """
+           Build a list of stack elements from top to bottom.
+           Returns:
+               List of stack elements in bottom-to-top order
+        """
+        display_list = []
         current = self._top
-        print_list = []
         while current:
-            print_list.append(current.data)
+            display_list.append(current.data)
             current = current.next
-        print_list.reverse()
-        print(f"{self.name} Stack: {print_list}")
+        display_list.reverse()
+        return display_list
+
+    def display_contents(self) -> None:
+        """ display stack contents from bottom to top """
+        contents = self._build_display_list()
+        print(f"{self.name} Stack: {contents}")
+
+
+    def __repr__(self) -> str:
+        """Return a detailed string representation of the stack."""
+        return f"NamedStack(name='{self.name}', contents={self._build_display_list()})"
