@@ -16,6 +16,11 @@ from tests.data_structures.test_stack import TestStack
 from tests.data_structures.test_two_point_node import TestTwoPointNode
 from tests.apps.tower_of_hanoi.test_named_stack import TestNamedStack
 from tests.apps.tower_of_hanoi.test_tower_of_hanoi import TestTowerOfHanoi
+# HashMap test classes
+from tests.data_structures.test_hash_entry import TestHashEntry
+from tests.data_structures.test_hash_function import TestHashFunction
+from tests.data_structures.test_simple_addition_hash import TestSimpleAdditionHash
+from tests.data_structures.test_hash_map import TestHashMap
 
 if __name__ == '__main__':
     # Create a test suite with the test classes
@@ -28,6 +33,11 @@ if __name__ == '__main__':
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestTwoPointNode))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestNamedStack))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestTowerOfHanoi))
+    # Add HashMap test classes
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestHashEntry))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestHashFunction))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestSimpleAdditionHash))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestHashMap))
 
     # Run the tests
     unittest.TextTestRunner(verbosity=2).run(test_suite)

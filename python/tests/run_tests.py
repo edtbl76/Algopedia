@@ -33,7 +33,12 @@ if __name__ == '__main__':
         os.path.join(project_root, 'tests', 'data_structures', 'test_doubly_linked_list.py'),
         os.path.join(project_root, 'tests', 'data_structures', 'test_two_point_node.py'),
         os.path.join(project_root, 'tests', 'apps', 'tower_of_hanoi', 'test_named_stack.py'),
-        os.path.join(project_root, 'tests', 'apps', 'tower_of_hanoi', 'test_tower_of_hanoi.py')
+        os.path.join(project_root, 'tests', 'apps', 'tower_of_hanoi', 'test_tower_of_hanoi.py'),
+        # HashMap tests
+        os.path.join(project_root, 'tests', 'data_structures', 'test_hash_entry.py'),
+        os.path.join(project_root, 'tests', 'data_structures', 'test_hash_function.py'),
+        os.path.join(project_root, 'tests', 'data_structures', 'test_simple_addition_hash.py'),
+        os.path.join(project_root, 'tests', 'data_structures', 'test_hash_map.py')
     ]
 
     # Run each test file
@@ -41,6 +46,16 @@ if __name__ == '__main__':
     for test_file in test_files:
         if not run_test_file(test_file, project_root):
             all_passed = False
+
+    # Run the HashMap tests using the dedicated runner
+    print("\nRunning HashMap tests using run_hashmap_tests.py")
+    hashmap_tests_path = os.path.join(project_root, 'tests', 'data_structures', 'run_hashmap_tests.py')
+    hashmap_result = subprocess.run([sys.executable, hashmap_tests_path], capture_output=True, text=True)
+    print(hashmap_result.stdout)
+    if hashmap_result.stderr:
+        print(f"Errors: {hashmap_result.stderr}")
+    if hashmap_result.returncode != 0:
+        all_passed = False
 
     # Print summary
     if all_passed:
