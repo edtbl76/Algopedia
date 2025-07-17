@@ -1,30 +1,26 @@
-"""
-TODO:
-- I probably want to break this out into a library so that we can have various hash_functions, collision
-mechanisms etc.
-"""
 from typing import Optional, List, Tuple, Any
 
+from data_structures.HashMap.ArrayBasedStorage import ArrayBasedStorage
 from data_structures.HashMap.HashEntry import HashEntry
 from data_structures.HashMap.HashFunction import HashFunction
 from data_structures.HashMap.SimpleAdditionHash import SimpleAdditionHash
+from data_structures.HashMap.StorageStrategy import StorageStrategy
 
 
 class HashMap:
-    """A hash map implementation supporting pluggable hash functions."""
+    """A hash map implementation supporting pluggable hash functions and storage strategies."""
 
-    EMPTY_SLOT = None
-    MAX_COLLISION_ATTEMPTS = 1000
-
-    def __init__(self, capacity: int, hash_function: Optional[HashFunction] = None) -> None:
-        """Initialize HashMap with given capacity and optional hash function.
+    def __init__(self, capacity: int, hash_function: Optional[HashFunction] = None,
+                 storage_strategy: Optional[StorageStrategy] = None) -> None:
+        """Initialize HashMap with given capacity, optional hash function, and storage strategy.
 
         Args:
             capacity: Initial size of the storage array
             hash_function: Custom hash function implementation (optional)
+            storage_strategy: Storage strategy implementation (optional, defaults to ArrayBasedStorage)
         """
         self._capacity = capacity
-        self._storage: List[Optional[HashEntry]] = [self.EMPTY_SLOT] * capacity
+        self._storage = storage_strategy or ArrayBasedStorage(capacity)
         self._hash_function = hash_function or SimpleAdditionHash()
         self._size = 0
 
@@ -33,32 +29,6 @@ class HashMap:
         """Map hash code to valid array index."""
         return hash_code % self._capacity
 
-    def _find_slot(self, key: str, for_insertion: bool = False) -> Tuple[int, Optional[HashEntry]]:
-        """Find appropriate slot for a key, handling collisions.
-
-        Args:
-            key: Key to find slot for
-            for_insertion: Whether this search is for insertion (affects collision handling)
-
-        Returns:
-            Tuple of (slot_index, current_entry)
-        """
-        collision_count = 0
-
-        while collision_count < self.MAX_COLLISION_ATTEMPTS:
-            hash_code = self._hash_function.handle_collision(key, collision_count)
-            index = self._compress_hash(hash_code)
-            current_entry = self._storage[index]
-
-            if current_entry is self.EMPTY_SLOT or current_entry.matches_key(key):
-                return index, current_entry
-
-            if for_insertion and current_entry is None:
-                return index, None
-
-            collision_count += 1
-
-        raise OverflowError("Hash map is full or maximum collision attempts reached")
 
     def __getitem__(self, key: str) -> Optional[Any]:
         """Retrieve value by key using dictionary syntax.
@@ -69,9 +39,9 @@ class HashMap:
         Returns:
             Value associated with key or None if not found
         """
-        index, entry = self._find_slot(key)
+        index, entry = self._storage.find_slot(key, self._hash_function, self._compress_hash)
 
-        if entry is self.EMPTY_SLOT or entry is None:
+        if entry is None:
             return None
 
         return entry.value
@@ -83,24 +53,44 @@ class HashMap:
             key: Key to store value under
             value: Value to store
         """
-        index, existing_entry = self._find_slot(key, for_insertion=True)
+        index, existing_entry = self._storage.find_slot(key, self._hash_function, self._compress_hash,
+                                                        for_insertion=True)
 
         new_entry = HashEntry(key=key, value=value)
-        self._storage[index] = new_entry
+        is_new_entry = self._storage.put(index, new_entry)
 
-        if existing_entry is self.EMPTY_SLOT:
+        if is_new_entry:
             self._size += 1
+
+    def __delitem__(self, key: str) -> None:
+        """Remove entry by key.
+
+        Args:
+            key: Key to remove
+        """
+        index, entry = self._storage.find_slot(key, self._hash_function, self._compress_hash)
+
+
+        if entry is not None:
+            if self._storage.remove(index, key):
+                self._size -= 1
 
     @property
     def values(self) -> List[Optional[Any]]:
-        """Get the underlying storage array.
+        """Get all stored values.
 
         Returns:
             List of stored values
         """
-        return [entry.value if entry else None for entry in self._storage]
+        return self._storage.get_all_values()
 
     @property
     def size(self) -> int:
         """Get number of stored key-value pairs."""
         return self._size
+
+    @property
+    def capacity(self) -> int:
+        """Get storage capacity."""
+        return self._capacity
+
