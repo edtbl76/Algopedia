@@ -4,7 +4,7 @@ from .SinglePointNode import Node
 
 
 class Stack:
-    """A stack implementation using linked nodes with optional size limit."""
+    """A LIFO (Last-In First-Out) stack implementation using linked nodes with optional size limit."""
 
     def __init__(self, limit: Optional[int]) -> None:
         """
