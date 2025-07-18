@@ -21,6 +21,9 @@ from tests.data_structures.test_hash_entry import TestHashEntry
 from tests.data_structures.test_hash_function import TestHashFunction
 from tests.data_structures.test_simple_addition_hash import TestSimpleAdditionHash
 from tests.data_structures.test_hash_map import TestHashMap
+# Algorithm test classes
+from tests.algorithms.test_find_max import TestFindMax
+from tests.algorithms.test_find_min import TestFindMin
 
 if __name__ == '__main__':
     # Create a test suite with the test classes
@@ -38,6 +41,9 @@ if __name__ == '__main__':
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestHashFunction))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestSimpleAdditionHash))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestHashMap))
+    # Add Algorithm test classes
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestFindMax))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestFindMin))
 
     # Run the tests
     unittest.TextTestRunner(verbosity=2).run(test_suite)

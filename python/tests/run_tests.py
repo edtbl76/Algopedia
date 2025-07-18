@@ -38,7 +38,10 @@ if __name__ == '__main__':
         os.path.join(project_root, 'tests', 'data_structures', 'test_hash_entry.py'),
         os.path.join(project_root, 'tests', 'data_structures', 'test_hash_function.py'),
         os.path.join(project_root, 'tests', 'data_structures', 'test_simple_addition_hash.py'),
-        os.path.join(project_root, 'tests', 'data_structures', 'test_hash_map.py')
+        os.path.join(project_root, 'tests', 'data_structures', 'test_hash_map.py'),
+        # Algorithm tests
+        os.path.join(project_root, 'tests', 'algorithms', 'test_find_max.py'),
+        os.path.join(project_root, 'tests', 'algorithms', 'test_find_min.py')
     ]
 
     # Run each test file
