@@ -41,7 +41,9 @@ if __name__ == '__main__':
         os.path.join(project_root, 'tests', 'data_structures', 'test_hash_map.py'),
         # Algorithm tests
         os.path.join(project_root, 'tests', 'algorithms', 'test_find_max.py'),
-        os.path.join(project_root, 'tests', 'algorithms', 'test_find_min.py')
+        os.path.join(project_root, 'tests', 'algorithms', 'test_find_min.py'),
+        os.path.join(project_root, 'tests', 'algorithms', 'test_factorial.py'),
+        os.path.join(project_root, 'tests', 'algorithms', 'test_iteration_recursion_comparison.py')
     ]
 
     # Run each test file
@@ -58,6 +60,16 @@ if __name__ == '__main__':
     if hashmap_result.stderr:
         print(f"Errors: {hashmap_result.stderr}")
     if hashmap_result.returncode != 0:
+        all_passed = False
+
+    # Run the Algorithm tests using the dedicated runner
+    print("\nRunning Algorithm tests using run_algorithm_tests.py")
+    algorithm_tests_path = os.path.join(project_root, 'tests', 'algorithms', 'run_algorithm_tests.py')
+    algorithm_result = subprocess.run([sys.executable, algorithm_tests_path], capture_output=True, text=True)
+    print(algorithm_result.stdout)
+    if algorithm_result.stderr:
+        print(f"Errors: {algorithm_result.stderr}")
+    if algorithm_result.returncode != 0:
         all_passed = False
 
     # Print summary

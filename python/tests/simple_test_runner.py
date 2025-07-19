@@ -24,6 +24,8 @@ from tests.data_structures.test_hash_map import TestHashMap
 # Algorithm test classes
 from tests.algorithms.test_find_max import TestFindMax
 from tests.algorithms.test_find_min import TestFindMin
+from tests.algorithms.test_factorial import TestFactorial
+from tests.algorithms.test_iteration_recursion_comparison import TestIterationRecursionComparison
 
 if __name__ == '__main__':
     # Create a test suite with the test classes
@@ -44,6 +46,8 @@ if __name__ == '__main__':
     # Add Algorithm test classes
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestFindMax))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestFindMin))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestFactorial))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestIterationRecursionComparison))
 
     # Run the tests
     unittest.TextTestRunner(verbosity=2).run(test_suite)
