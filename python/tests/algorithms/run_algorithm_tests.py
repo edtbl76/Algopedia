@@ -10,6 +10,7 @@ from tests.algorithms.test_find_max import TestFindMax
 from tests.algorithms.test_find_min import TestFindMin
 from tests.algorithms.test_factorial import TestFactorial
 from tests.algorithms.test_iteration_recursion_comparison import TestIterationRecursionComparison
+from tests.algorithms.test_power_set import TestPowerSet
 
 if __name__ == '__main__':
     # Create a test suite
@@ -21,6 +22,7 @@ if __name__ == '__main__':
     test_suite.addTest(loader.loadTestsFromTestCase(TestFindMin))
     test_suite.addTest(loader.loadTestsFromTestCase(TestFactorial))
     test_suite.addTest(loader.loadTestsFromTestCase(TestIterationRecursionComparison))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestPowerSet))
 
     # Run the tests
     runner = unittest.TextTestRunner(verbosity=2)
