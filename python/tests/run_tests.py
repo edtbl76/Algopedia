@@ -26,19 +26,8 @@ if __name__ == '__main__':
 
     # List of test files to run
     test_files = [
-        os.path.join(project_root, 'tests', 'data_structures', 'test_node.py'),
-        os.path.join(project_root, 'tests', 'data_structures', 'test_linked_list.py'),
-        os.path.join(project_root, 'tests', 'data_structures', 'test_stack.py'),
-        os.path.join(project_root, 'tests', 'data_structures', 'test_queue.py'),
-        os.path.join(project_root, 'tests', 'data_structures', 'test_doubly_linked_list.py'),
-        os.path.join(project_root, 'tests', 'data_structures', 'test_two_point_node.py'),
         os.path.join(project_root, 'tests', 'apps', 'tower_of_hanoi', 'test_named_stack.py'),
         os.path.join(project_root, 'tests', 'apps', 'tower_of_hanoi', 'test_tower_of_hanoi.py'),
-        # HashMap tests
-        os.path.join(project_root, 'tests', 'data_structures', 'test_hash_entry.py'),
-        os.path.join(project_root, 'tests', 'data_structures', 'test_hash_function.py'),
-        os.path.join(project_root, 'tests', 'data_structures', 'test_simple_addition_hash.py'),
-        os.path.join(project_root, 'tests', 'data_structures', 'test_hash_map.py'),
         # Algorithm tests
         os.path.join(project_root, 'tests', 'algorithms', 'test_find_max.py'),
         os.path.join(project_root, 'tests', 'algorithms', 'test_find_min.py'),
@@ -51,6 +40,16 @@ if __name__ == '__main__':
     for test_file in test_files:
         if not run_test_file(test_file, project_root):
             all_passed = False
+
+    # Run the Data Structure tests using the dedicated runner
+    print("\nRunning Data Structure tests using run_data_structure_tests.py")
+    data_structure_tests_path = os.path.join(project_root, 'tests', 'data_structures', 'run_data_structure_tests.py')
+    data_structure_result = subprocess.run([sys.executable, data_structure_tests_path], capture_output=True, text=True)
+    print(data_structure_result.stdout)
+    if data_structure_result.stderr:
+        print(f"Errors: {data_structure_result.stderr}")
+    if data_structure_result.returncode != 0:
+        all_passed = False
 
     # Run the HashMap tests using the dedicated runner
     print("\nRunning HashMap tests using run_hashmap_tests.py")
