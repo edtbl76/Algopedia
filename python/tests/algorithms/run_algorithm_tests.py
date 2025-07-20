@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 from tests.algorithms.test_find_max import TestFindMax
 from tests.algorithms.test_find_min import TestFindMin
 from tests.algorithms.test_factorial import TestFactorial
+from tests.algorithms.test_fibonacci import TestFibonacci
 from tests.algorithms.test_flatten_list import TestFlattenList
 from tests.algorithms.test_iteration_recursion_comparison import TestIterationRecursionComparison
 from tests.algorithms.test_power_set import TestPowerSet
@@ -22,6 +23,7 @@ if __name__ == '__main__':
     test_suite.addTest(loader.loadTestsFromTestCase(TestFindMax))
     test_suite.addTest(loader.loadTestsFromTestCase(TestFindMin))
     test_suite.addTest(loader.loadTestsFromTestCase(TestFactorial))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestFibonacci))
     test_suite.addTest(loader.loadTestsFromTestCase(TestFlattenList))
     test_suite.addTest(loader.loadTestsFromTestCase(TestIterationRecursionComparison))
     test_suite.addTest(loader.loadTestsFromTestCase(TestPowerSet))
