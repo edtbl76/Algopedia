@@ -5,7 +5,7 @@ import os
 # Add the project root directory to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
-from algorithms.fibonacci import fibonacci_basic, fibonacci_memoization
+from algorithms.fibonacci import fibonacci_basic, fibonacci_memoization, fibonacci_iterative
 
 
 class TestFibonacci(unittest.TestCase):
@@ -49,13 +49,39 @@ class TestFibonacci(unittest.TestCase):
         self.assertEqual(fibonacci_memoization(20), 6765)
         self.assertEqual(fibonacci_memoization(25), 75025)
 
+    def test_fibonacci_iterative_base_cases(self):
+        """Test fibonacci_iterative with base cases"""
+        self.assertEqual(fibonacci_iterative(0), 0)
+        self.assertEqual(fibonacci_iterative(1), 1)
+
+    def test_fibonacci_iterative_small_numbers(self):
+        """Test fibonacci_iterative with small positive numbers"""
+        self.assertEqual(fibonacci_iterative(2), 1)
+        self.assertEqual(fibonacci_iterative(3), 2)
+        self.assertEqual(fibonacci_iterative(4), 3)
+        self.assertEqual(fibonacci_iterative(5), 5)
+        self.assertEqual(fibonacci_iterative(6), 8)
+        self.assertEqual(fibonacci_iterative(7), 13)
+
+    def test_fibonacci_iterative_larger_numbers(self):
+        """Test fibonacci_iterative with larger numbers"""
+        self.assertEqual(fibonacci_iterative(15), 610)
+        self.assertEqual(fibonacci_iterative(20), 6765)
+        self.assertEqual(fibonacci_iterative(25), 75025)
+        self.assertEqual(fibonacci_iterative(30), 832040)
+
     def test_fibonacci_consistency(self):
-        """Test that both implementations produce the same results for small numbers"""
+        """Test that all three implementations produce the same results for small numbers"""
         for n in range(11):  # Test up to 10 to avoid exponential slowdown
             basic_result = fibonacci_basic(n)
             memo_result = fibonacci_memoization(n)
+            iterative_result = fibonacci_iterative(n)
             self.assertEqual(basic_result, memo_result, 
-                           f"Results differ for n={n}: basic={basic_result}, memo={memo_result}")
+                           f"Basic and memo results differ for n={n}: basic={basic_result}, memo={memo_result}")
+            self.assertEqual(basic_result, iterative_result, 
+                           f"Basic and iterative results differ for n={n}: basic={basic_result}, iterative={iterative_result}")
+            self.assertEqual(memo_result, iterative_result, 
+                           f"Memo and iterative results differ for n={n}: memo={memo_result}, iterative={iterative_result}")
 
     def test_fibonacci_memoization_with_explicit_cache(self):
         """Test fibonacci_memoization with explicit memory dictionary"""
@@ -75,7 +101,7 @@ class TestFibonacci(unittest.TestCase):
         # First call should populate cache
         fibonacci_memoization(10, cache)
         initial_cache_size = len(cache)
-        
+
         # Second call with smaller number should reuse cache
         result = fibonacci_memoization(8, cache)
         self.assertEqual(result, 21)
@@ -93,16 +119,25 @@ class TestFibonacci(unittest.TestCase):
                            f"Fibonacci property violated at n={n}: F({n})={fn} != F({n-1})+F({n-2})={fn_1}+{fn_2}")
 
     def test_fibonacci_known_values(self):
-        """Test against known Fibonacci values"""
+        """Test all implementations against known Fibonacci values"""
         known_values = {
             0: 0, 1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 8, 7: 13, 8: 21, 9: 34, 10: 55,
             11: 89, 12: 144, 13: 233, 14: 377, 15: 610, 16: 987, 17: 1597, 18: 2584,
             19: 4181, 20: 6765
         }
-        
+
         for n, expected in known_values.items():
             with self.subTest(n=n):
-                self.assertEqual(fibonacci_memoization(n), expected)
+                # Test memoization implementation
+                self.assertEqual(fibonacci_memoization(n), expected, 
+                               f"Memoization failed for n={n}")
+                # Test iterative implementation
+                self.assertEqual(fibonacci_iterative(n), expected, 
+                               f"Iterative failed for n={n}")
+                # Test basic implementation only for smaller values to avoid timeout
+                if n <= 10:
+                    self.assertEqual(fibonacci_basic(n), expected, 
+                                   f"Basic failed for n={n}")
 
 
 if __name__ == '__main__':

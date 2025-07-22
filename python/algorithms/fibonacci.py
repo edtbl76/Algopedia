@@ -113,3 +113,80 @@ def fibonacci_memoization(n: int, memory: Optional[Dict[int, int]] = _SENTINEL) 
     # Cache the result before returning to avoid recalculation
     memory[n] = result
     return result
+
+def fibonacci_iterative(n: int) -> int:
+    """
+    Calculate the nth Fibonacci number using iterative approach with dynamic array building.
+
+    This implementation builds the Fibonacci sequence iteratively by maintaining
+    a list of computed values, starting with the base cases [0, 1] and extending
+    as needed. This approach provides O(n) time complexity while storing all
+    intermediate results, making it memory-intensive but useful when multiple
+    Fibonacci numbers might be needed.
+    The Fibonacci sequence: F(0)=0, F(1)=1, F(n)=F(n-1)+F(n-2) for n>1
+
+    Time Complexity: O(n) - builds sequence up to nth position
+    Space Complexity: O(n) - stores all computed Fibonacci numbers up to n
+
+    Args:
+        n: A non-negative integer representing the position in Fibonacci sequence
+
+    Returns:
+        The nth Fibonacci number
+
+    Examples:
+        >>> fibonacci_iterative(0)
+        0
+        >>> fibonacci_iterative(1)
+        1
+        >>> fibonacci_iterative(8)
+        21
+    """
+
+
+    """
+    
+        Magic Number Elimination:
+        ------------------------
+        The initial values [0, 1] are extracted into a named constant to improve
+        maintainability. In large codebases, magic numbers scattered throughout
+        code become problematic because:
+        - They're hard to locate and modify if the algorithm needs adjustment
+        - Their meaning isn't immediately clear to other developers
+        - They can be accidentally duplicated with slight variations
+        - Testing and debugging becomes more difficult
+        Using named constants makes the code self-documenting and centralizes
+        these critical values for easier maintenance.
+        
+        I opted to add this as an example of production code. It's not necessary for a small example like this.
+        
+    """
+    INITIAL_FIBONACCI_VALUES = [0, 1]
+    fibonacci_sequence = INITIAL_FIBONACCI_VALUES.copy()
+
+    last_computed_index = len(fibonacci_sequence) - 1
+
+    if n <= last_computed_index:
+        return fibonacci_sequence[n]
+
+    while n > last_computed_index:
+        next_fibonacci = fibonacci_sequence[-1] + fibonacci_sequence[-2]
+        fibonacci_sequence.append(next_fibonacci)
+        last_computed_index = len(fibonacci_sequence) - 1
+
+    return fibonacci_sequence[n]
+
+
+""" TODO - Implement dynamic programming and tabulation algorithms
+    - Dynamic programming: F(n) = F(n-1) + F(n-2) for n > 1
+    - Tabulation: F(n) = F(n-1) + F(n-2) + F(n-3) + ... + F(1) for n > 2
+    - Both algorithms have exponential time complexity due to redundant calculations
+    - Both algorithms have linear space complexity due to recursion stack depth
+    - Both algorithms are not optimal for optimal performance due to redundant calculations
+    - Both algorithms are not optimal for memory usage due to caching intermediate results"""
+# def fibonacci_dynamic_programming(n: int) -> int:
+#     pass
+#
+# def fibonacci_tabulation(n: int) -> int:
+#     pass
+
