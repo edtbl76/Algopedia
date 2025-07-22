@@ -12,6 +12,7 @@ from tests.algorithms.test_factorial import TestFactorial
 from tests.algorithms.test_fibonacci import TestFibonacci
 from tests.algorithms.test_flatten_list import TestFlattenList
 from tests.algorithms.test_iteration_recursion_comparison import TestIterationRecursionComparison
+from tests.algorithms.test_multiplication import TestMultiplication
 from tests.algorithms.test_palindrome import TestPalindrome
 from tests.algorithms.test_power_set import TestPowerSet
 from tests.algorithms.test_sum_digits import TestSumDigits
@@ -28,6 +29,7 @@ if __name__ == '__main__':
     test_suite.addTest(loader.loadTestsFromTestCase(TestFibonacci))
     test_suite.addTest(loader.loadTestsFromTestCase(TestFlattenList))
     test_suite.addTest(loader.loadTestsFromTestCase(TestIterationRecursionComparison))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestMultiplication))
     test_suite.addTest(loader.loadTestsFromTestCase(TestPalindrome))
     test_suite.addTest(loader.loadTestsFromTestCase(TestPowerSet))
     test_suite.addTest(loader.loadTestsFromTestCase(TestSumDigits))
