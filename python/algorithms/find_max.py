@@ -1,7 +1,9 @@
+from typing import List
+
 from data_structures.LinkedList import LinkedList
 
 
-def find_max(linked_list: LinkedList) -> int:
+def find_max_ll(linked_list: LinkedList) -> int:
     """
     Find the maximum value in a linked list.
 
@@ -41,3 +43,68 @@ def find_max(linked_list: LinkedList) -> int:
             maximum_value = current.data
 
     return maximum_value
+
+
+def find_maximum_iterative(values: list) -> int | None:
+    """
+    Find the maximum value in a list using iterative approach.
+
+    This algorithm iterates through the list once, maintaining a running
+    maximum value and updating it when a larger value is encountered..
+
+    Time Complexity: O(n) - where n is the number of elements in the list.
+                    Each element is visited exactly once.
+
+    Space Complexity: O(1) - only uses constant additional space regardless
+                     of input size.
+
+    Args:
+        values: List of integers to search through
+
+    Returns:
+        The maximum value found in the list, or None if the list is empty
+    """
+
+    if len(values) == 0:
+        return None
+
+    maximum_value: int = values[0]
+    for value in values[1:]:
+        if value > maximum_value:
+            maximum_value = value
+
+    return maximum_value
+
+def find_maximum_recursive(values: List[int], maximum_value: int = None) -> int | None:
+    """
+     Find the maximum value in a list using recursive approach.
+
+     This algorithm recursively processes the list by comparing the first element
+     with the current maximum and recursively processing the remaining elements.
+
+     Time Complexity: O(n) - where n is the number of elements in the list.
+                     Each element is processed exactly once through recursive calls.
+
+     Space Complexity: O(n) - due to the call stack depth, which grows linearly
+                      with the input size (each recursive call adds a frame).
+
+     Args:
+         values: List of integers to search through
+         maximum_value: Current maximum value found so far (used internally for recursion)
+
+     Returns:
+         The maximum value found in the list, or None if the list is empty
+     """
+
+    # Base case: if the list is empty, return the current maximum
+    if len(values) == 0:
+        return maximum_value
+
+    head_value: int = values[0]
+    remaining_values: List[int] = values[1:]
+
+    if maximum_value is None or head_value > maximum_value:
+        maximum_value = head_value
+
+    # recursive step: process the remaining elements with the updated minimum
+    return find_maximum_recursive(remaining_values, maximum_value)
