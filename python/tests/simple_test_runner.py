@@ -33,6 +33,8 @@ from tests.algorithms.test_fibonacci import TestFibonacci
 from tests.algorithms.test_flatten_list import TestFlattenList
 from tests.algorithms.test_power_set import TestPowerSet
 from tests.algorithms.test_iteration_recursion_comparison import TestIterationRecursionComparison
+# Search and Sort test classes
+from tests.search_and_sort.test_naive_pattern_search import TestNaivePatternSearch
 
 if __name__ == '__main__':
     # Create a test suite with the test classes
@@ -68,6 +70,9 @@ if __name__ == '__main__':
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestFlattenList))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestPowerSet))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestIterationRecursionComparison))
+
+    # Search and Sort test classes
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestNaivePatternSearch))
 
     # Run the tests
     unittest.TextTestRunner(verbosity=2).run(test_suite)
