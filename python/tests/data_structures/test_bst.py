@@ -1,17 +1,17 @@
 import unittest
-from data_structures.BST import build_balanced_bst_from_sorted_array, NODE_DATA_KEY, LEFT_CHILD_KEY, RIGHT_CHILD_KEY
+from data_structures.BST import build_balanced_bst, find_depth_iterative, find_depth_recursive, NODE_DATA_KEY, LEFT_CHILD_KEY, RIGHT_CHILD_KEY
 
 
 class TestBST(unittest.TestCase):
 
     def test_empty_array(self):
         """Test BST creation from empty array"""
-        result = build_balanced_bst_from_sorted_array([])
+        result = build_balanced_bst([])
         self.assertIsNone(result)
 
     def test_single_element(self):
         """Test BST creation from single element array"""
-        result = build_balanced_bst_from_sorted_array([5])
+        result = build_balanced_bst([5])
         expected = {
             NODE_DATA_KEY: 5,
             LEFT_CHILD_KEY: None,
@@ -21,7 +21,7 @@ class TestBST(unittest.TestCase):
 
     def test_two_elements(self):
         """Test BST creation from two element array"""
-        result = build_balanced_bst_from_sorted_array([1, 2])
+        result = build_balanced_bst([1, 2])
         expected = {
             NODE_DATA_KEY: 2,
             LEFT_CHILD_KEY: {
@@ -35,7 +35,7 @@ class TestBST(unittest.TestCase):
 
     def test_three_elements(self):
         """Test BST creation from three element array"""
-        result = build_balanced_bst_from_sorted_array([1, 2, 3])
+        result = build_balanced_bst([1, 2, 3])
         expected = {
             NODE_DATA_KEY: 2,
             LEFT_CHILD_KEY: {
@@ -53,7 +53,7 @@ class TestBST(unittest.TestCase):
 
     def test_five_elements(self):
         """Test BST creation from five element array"""
-        result = build_balanced_bst_from_sorted_array([1, 2, 3, 4, 5])
+        result = build_balanced_bst([1, 2, 3, 4, 5])
         expected = {
             NODE_DATA_KEY: 3,
             LEFT_CHILD_KEY: {
@@ -79,7 +79,7 @@ class TestBST(unittest.TestCase):
 
     def test_seven_elements(self):
         """Test BST creation from seven element array"""
-        result = build_balanced_bst_from_sorted_array([1, 2, 3, 4, 5, 6, 7])
+        result = build_balanced_bst([1, 2, 3, 4, 5, 6, 7])
         expected = {
             NODE_DATA_KEY: 4,
             LEFT_CHILD_KEY: {
@@ -113,7 +113,7 @@ class TestBST(unittest.TestCase):
 
     def test_negative_numbers(self):
         """Test BST creation with negative numbers"""
-        result = build_balanced_bst_from_sorted_array([-3, -1, 0, 2, 4])
+        result = build_balanced_bst([-3, -1, 0, 2, 4])
         expected = {
             NODE_DATA_KEY: 0,
             LEFT_CHILD_KEY: {
@@ -139,7 +139,7 @@ class TestBST(unittest.TestCase):
 
     def test_duplicate_values(self):
         """Test BST creation with duplicate values"""
-        result = build_balanced_bst_from_sorted_array([1, 1, 2, 2, 3])
+        result = build_balanced_bst([1, 1, 2, 2, 3])
         expected = {
             NODE_DATA_KEY: 2,
             LEFT_CHILD_KEY: {
@@ -165,7 +165,7 @@ class TestBST(unittest.TestCase):
 
     def test_string_values(self):
         """Test BST creation with string values"""
-        result = build_balanced_bst_from_sorted_array(['a', 'b', 'c'])
+        result = build_balanced_bst(['a', 'b', 'c'])
         expected = {
             NODE_DATA_KEY: 'b',
             LEFT_CHILD_KEY: {
@@ -185,7 +185,7 @@ class TestBST(unittest.TestCase):
         """Test BST creation with larger array"""
         # Test with 15 elements to ensure proper balancing
         input_array = list(range(1, 16))  # [1, 2, 3, ..., 15]
-        result = build_balanced_bst_from_sorted_array(input_array)
+        result = build_balanced_bst(input_array)
 
         # Verify root is the middle element
         self.assertEqual(result[NODE_DATA_KEY], 8)
@@ -223,7 +223,7 @@ class TestBST(unittest.TestCase):
 
         for array in test_arrays:
             with self.subTest(array=array):
-                result = build_balanced_bst_from_sorted_array(array)
+                result = build_balanced_bst(array)
                 self.assertTrue(validate_bst(result), f"BST property violated for array {array}")
 
     def test_height_balance(self):
@@ -256,8 +256,57 @@ class TestBST(unittest.TestCase):
 
         for array in test_arrays:
             with self.subTest(array=array):
-                result = build_balanced_bst_from_sorted_array(array)
+                result = build_balanced_bst(array)
                 self.assertTrue(is_balanced(result), f"Tree not balanced for array {array}")
+
+
+    def test_find_depth_iterative_empty(self):
+        """Test finding depth of an empty tree using iterative approach"""
+        tree = None
+        with self.assertRaises(TypeError):
+            find_depth_iterative(tree)
+
+    def test_find_depth_recursive_empty(self):
+        """Test finding depth of an empty tree using recursive approach"""
+        tree = None
+        self.assertEqual(find_depth_recursive(tree), 0)
+
+    def test_find_depth_single_node(self):
+        """Test finding depth of a single node tree"""
+        tree = build_balanced_bst([5])
+        self.assertEqual(find_depth_iterative(tree), 1)
+        self.assertEqual(find_depth_recursive(tree), 1)
+
+    def test_find_depth_balanced_tree(self):
+        """Test finding depth of a balanced tree"""
+        # Tree with 7 elements should have depth 3
+        tree = build_balanced_bst([1, 2, 3, 4, 5, 6, 7])
+        self.assertEqual(find_depth_iterative(tree), 3)
+        self.assertEqual(find_depth_recursive(tree), 3)
+
+    def test_find_depth_larger_tree(self):
+        """Test finding depth of a larger balanced tree"""
+        # Tree with 15 elements should have depth 4
+        tree = build_balanced_bst(list(range(1, 16)))
+        self.assertEqual(find_depth_iterative(tree), 4)
+        self.assertEqual(find_depth_recursive(tree), 4)
+
+    def test_find_depth_comparison(self):
+        """Test that both depth-finding methods return the same result"""
+        test_arrays = [
+            [1, 2, 3],
+            [1, 2, 3, 4, 5, 6, 7],
+            list(range(1, 16)),  # 15 elements
+            list(range(1, 32))   # 31 elements
+        ]
+
+        for array in test_arrays:
+            with self.subTest(array=array):
+                tree = build_balanced_bst(array)
+                iterative_depth = find_depth_iterative(tree)
+                recursive_depth = find_depth_recursive(tree)
+                self.assertEqual(iterative_depth, recursive_depth, 
+                                f"Depth methods returned different results for array {array}")
 
 
 if __name__ == '__main__':
