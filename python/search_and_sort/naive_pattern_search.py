@@ -11,8 +11,7 @@ What are the things we need to consider when designing a pattern search algorith
 - How do we handle edge cases?
 - How do we handle multiple matches?
 """
-
-
+from _ast import pattern
 
 
 def naive_pattern_search_character(text: str, pattern: str) -> list[int]:
@@ -201,7 +200,7 @@ def naive_pattern_search_slice(text: str, pattern: str) -> list[int]:
 
 
 
-def naive_pattern_search_optimized(text: str, pattern: str) -> list[int]:
+def naive_pattern_search_tunable(text: str, pattern: str, slice_threshold: int = 4) -> list[int]:
     """
     Find all occurrences of a pattern in text using an optimized approach.
 
@@ -218,9 +217,10 @@ def naive_pattern_search_optimized(text: str, pattern: str) -> list[int]:
     Args:
         text: The text to search in
         pattern: The pattern to search for
-
+        slice_threshold: The threshold for using slice vs. character comparison (default: 4)
     Returns:
         A list of indices where the pattern was found
+
     """
     if not pattern:
         return []
@@ -234,7 +234,7 @@ def naive_pattern_search_optimized(text: str, pattern: str) -> list[int]:
         return []
 
     # Threshold for using slice vs. character comparison (can be tuned)
-    SLICE_THRESHOLD = 4
+    SLICE_THRESHOLD = slice_threshold
 
     # For very short patterns, slicing may be more efficient
     if pattern_length <= SLICE_THRESHOLD:
@@ -253,4 +253,5 @@ def naive_pattern_search_optimized(text: str, pattern: str) -> list[int]:
                 matches.append(i)
 
     return matches
+
 
