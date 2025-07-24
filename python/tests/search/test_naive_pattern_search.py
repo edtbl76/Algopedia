@@ -1,10 +1,10 @@
 import unittest
-from search_and_sort.naive_pattern_search import (
+from search.naive_pattern_search import (
     naive_pattern_search_slice,
     naive_pattern_search_character,
     naive_pattern_search_safe_bounds,
     naive_pattern_search_counting,
-    naive_pattern_search_optimized
+    naive_pattern_search_tunable
 )
 
 class TestNaivePatternSearch(unittest.TestCase):
@@ -26,7 +26,7 @@ class TestNaivePatternSearch(unittest.TestCase):
             naive_pattern_search_character,
             naive_pattern_search_safe_bounds,
             naive_pattern_search_counting,
-            naive_pattern_search_optimized
+            naive_pattern_search_tunable
         ]:
             with self.subTest(search_func=search_func.__name__):
                 result = search_func(self.text_simple, "")
@@ -39,7 +39,7 @@ class TestNaivePatternSearch(unittest.TestCase):
             naive_pattern_search_character,
             naive_pattern_search_safe_bounds,
             naive_pattern_search_counting,
-            naive_pattern_search_optimized
+            naive_pattern_search_tunable
         ]:
             with self.subTest(search_func=search_func.__name__):
                 result = search_func("", "pattern")
@@ -52,7 +52,7 @@ class TestNaivePatternSearch(unittest.TestCase):
             naive_pattern_search_character,
             naive_pattern_search_safe_bounds,
             naive_pattern_search_counting,
-            naive_pattern_search_optimized
+            naive_pattern_search_tunable
         ]:
             with self.subTest(search_func=search_func.__name__):
                 result = search_func("abc", "abcdef")
@@ -65,7 +65,7 @@ class TestNaivePatternSearch(unittest.TestCase):
             naive_pattern_search_character,
             naive_pattern_search_safe_bounds,
             naive_pattern_search_counting,
-            naive_pattern_search_optimized
+            naive_pattern_search_tunable
         ]:
             with self.subTest(search_func=search_func.__name__):
                 result = search_func(self.text_simple, "cde")
@@ -78,7 +78,7 @@ class TestNaivePatternSearch(unittest.TestCase):
             naive_pattern_search_character,
             naive_pattern_search_safe_bounds,
             naive_pattern_search_counting,
-            naive_pattern_search_optimized
+            naive_pattern_search_tunable
         ]:
             with self.subTest(search_func=search_func.__name__):
                 result = search_func(self.text_repeated, "aba")
@@ -91,7 +91,7 @@ class TestNaivePatternSearch(unittest.TestCase):
             naive_pattern_search_character,
             naive_pattern_search_safe_bounds,
             naive_pattern_search_counting,
-            naive_pattern_search_optimized
+            naive_pattern_search_tunable
         ]:
             with self.subTest(search_func=search_func.__name__):
                 result = search_func(self.text_with_overlap, "aa")
@@ -104,7 +104,7 @@ class TestNaivePatternSearch(unittest.TestCase):
             naive_pattern_search_character,
             naive_pattern_search_safe_bounds,
             naive_pattern_search_counting,
-            naive_pattern_search_optimized
+            naive_pattern_search_tunable
         ]:
             with self.subTest(search_func=search_func.__name__):
                 result = search_func(self.text_simple, "xyz")
@@ -117,7 +117,7 @@ class TestNaivePatternSearch(unittest.TestCase):
             naive_pattern_search_character,
             naive_pattern_search_safe_bounds,
             naive_pattern_search_counting,
-            naive_pattern_search_optimized
+            naive_pattern_search_tunable
         ]:
             with self.subTest(search_func=search_func.__name__):
                 result = search_func(self.text_simple, "abc")
@@ -130,7 +130,7 @@ class TestNaivePatternSearch(unittest.TestCase):
             naive_pattern_search_character,
             naive_pattern_search_safe_bounds,
             naive_pattern_search_counting,
-            naive_pattern_search_optimized
+            naive_pattern_search_tunable
         ]:
             with self.subTest(search_func=search_func.__name__):
                 result = search_func(self.text_simple, "efg")
@@ -143,7 +143,7 @@ class TestNaivePatternSearch(unittest.TestCase):
             naive_pattern_search_character,
             naive_pattern_search_safe_bounds,
             naive_pattern_search_counting,
-            naive_pattern_search_optimized
+            naive_pattern_search_tunable
         ]:
             with self.subTest(search_func=search_func.__name__):
                 result = search_func(self.text_simple, "ABC")
@@ -156,7 +156,7 @@ class TestNaivePatternSearch(unittest.TestCase):
             naive_pattern_search_character,
             naive_pattern_search_safe_bounds,
             naive_pattern_search_counting,
-            naive_pattern_search_optimized
+            naive_pattern_search_tunable
         ]:
             with self.subTest(search_func=search_func.__name__):
                 result = search_func(self.text_long, "the")
@@ -169,7 +169,7 @@ class TestNaivePatternSearch(unittest.TestCase):
             naive_pattern_search_character,
             naive_pattern_search_safe_bounds,
             naive_pattern_search_counting,
-            naive_pattern_search_optimized
+            naive_pattern_search_tunable
         ]:
             with self.subTest(search_func=search_func.__name__):
                 result = search_func(self.text_simple, self.text_simple)

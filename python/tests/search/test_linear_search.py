@@ -1,5 +1,5 @@
 import unittest
-from search_and_sort.linear_search import (
+from search.linear_search import (
     linear_search,
     linear_search_duplicates,
     linear_search_duplicates_pythonic,

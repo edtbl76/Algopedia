@@ -1,5 +1,5 @@
 import unittest
-from search_and_sort.naive_pattern_search_v3_find_replace import (
+from search.naive_pattern_search_v3_find_replace import (
     _chars_match,
     naive_find_replace_character,
     naive_find_replace_counting,

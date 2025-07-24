@@ -34,8 +34,8 @@ if __name__ == '__main__':
         os.path.join(project_root, 'tests', 'algorithms', 'test_factorial.py'),
         os.path.join(project_root, 'tests', 'algorithms', 'test_iteration_recursion_comparison.py'),
         # Search and Sort tests
-        os.path.join(project_root, 'tests', 'search_and_sort', 'test_naive_pattern_search.py'),
-        os.path.join(project_root, 'tests', 'search_and_sort', 'test_linear_search.py')
+        os.path.join(project_root, 'tests', 'search', 'test_naive_pattern_search.py'),
+        os.path.join(project_root, 'tests', 'search', 'test_linear_search.py')
     ]
 
     # Run each test file
@@ -74,9 +74,9 @@ if __name__ == '__main__':
     if algorithm_result.returncode != 0:
         all_passed = False
 
-    # Run the Search and Sort tests using the dedicated runner
-    print("\nRunning Search and Sort tests using run_search_and_sort_tests.py")
-    search_and_sort_tests_path = os.path.join(project_root, 'tests', 'search_and_sort', 'run_search_and_sort_tests.py')
+    # Run the Search tests using the dedicated runner
+    print("\nRunning Search tests using run_search_tests.py")
+    search_and_sort_tests_path = os.path.join(project_root, 'tests', 'search', 'run_search_tests.py')
     search_and_sort_result = subprocess.run([sys.executable, search_and_sort_tests_path], capture_output=True, text=True)
     print(search_and_sort_result.stdout)
     if search_and_sort_result.stderr:

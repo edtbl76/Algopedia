@@ -6,11 +6,10 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 # Import the test modules
-# Commenting out the original import as it's causing an error
-# from tests.search_and_sort.test_naive_pattern_search import TestNaivePatternSearch
-from tests.search_and_sort.test_naive_pattern_search_v2 import TestNaivePatternSearchV2, TestCharsMatch as TestCharsMatchV2
-from tests.search_and_sort.test_naive_pattern_search_v3 import TestNaivePatternSearchV3, TestCharsMatch as TestCharsMatchV3, TestHelperFunctions
-from tests.search_and_sort.test_linear_search import TestLinearSearch
+from tests.search.test_naive_pattern_search import TestNaivePatternSearch
+from tests.search.test_naive_pattern_search_v2 import TestNaivePatternSearchV2, TestCharsMatch as TestCharsMatchV2
+from tests.search.test_naive_pattern_search_v3 import TestNaivePatternSearchV3, TestCharsMatch as TestCharsMatchV3, TestHelperFunctions
+from tests.search.test_linear_search import TestLinearSearch
 
 if __name__ == '__main__':
     # Create a test suite
@@ -18,7 +17,7 @@ if __name__ == '__main__':
 
     # Add the test cases
     loader = unittest.TestLoader()
-    # test_suite.addTest(loader.loadTestsFromTestCase(TestNaivePatternSearch))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestNaivePatternSearch))
     test_suite.addTest(loader.loadTestsFromTestCase(TestNaivePatternSearchV2))
     test_suite.addTest(loader.loadTestsFromTestCase(TestCharsMatchV2))
     test_suite.addTest(loader.loadTestsFromTestCase(TestNaivePatternSearchV3))
@@ -33,7 +32,7 @@ if __name__ == '__main__':
     # Print a summary
     print(f"\nRan {result.testsRun} tests")
     if result.wasSuccessful():
-        print("All search and sort tests passed!")
+        print("All search tests passed!")
     else:
         print(f"Failed tests: {len(result.failures)}")
         print(f"Errors: {len(result.errors)}")

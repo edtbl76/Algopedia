@@ -34,7 +34,7 @@ from tests.algorithms.test_flatten_list import TestFlattenList
 from tests.algorithms.test_power_set import TestPowerSet
 from tests.algorithms.test_iteration_recursion_comparison import TestIterationRecursionComparison
 # Search and Sort test classes
-from tests.search_and_sort.test_naive_pattern_search import TestNaivePatternSearch
+from tests.search.test_naive_pattern_search import TestNaivePatternSearch
 
 if __name__ == '__main__':
     # Create a test suite with the test classes

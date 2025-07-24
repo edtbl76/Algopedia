@@ -1,5 +1,5 @@
 import unittest
-from search_and_sort.naive_pattern_search_v2 import (
+from search.naive_pattern_search_v2 import (
     _chars_match,
     naive_pattern_search_character,
     naive_pattern_search_counting,
@@ -182,7 +182,7 @@ class TestNaivePatternSearchV2(unittest.TestCase):
                 # Case sensitive (explicit)
                 result = search_func(self.text_mixed_case, "bCd", case_sensitive=True)
                 self.assertEqual(result, [1])
-                
+
                 # Case insensitive
                 result = search_func(self.text_mixed_case, "BcD", case_sensitive=False)
                 self.assertEqual(result, [1])
@@ -219,17 +219,17 @@ class TestNaivePatternSearchV2(unittest.TestCase):
         short_pattern = "abc"
         result1 = naive_pattern_search_tunable(self.text_simple, short_pattern)
         self.assertEqual(result1, [0])
-        
+
         # Test with a pattern longer than the default threshold
         long_pattern = "abcde"
         result2 = naive_pattern_search_tunable(self.text_simple, long_pattern)
         self.assertEqual(result2, [0])
-        
+
         # Test with a custom threshold that changes the algorithm selection
         # Setting threshold to 2 should make "abc" use character comparison instead of slicing
         result3 = naive_pattern_search_tunable(self.text_simple, short_pattern, slice_threshold=2)
         self.assertEqual(result3, [0])
-        
+
         # Setting threshold to 10 should make "abcde" use slicing instead of character comparison
         result4 = naive_pattern_search_tunable(self.text_simple, long_pattern, slice_threshold=10)
         self.assertEqual(result4, [0])
