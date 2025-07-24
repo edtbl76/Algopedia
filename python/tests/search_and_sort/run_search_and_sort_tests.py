@@ -10,6 +10,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 # from tests.search_and_sort.test_naive_pattern_search import TestNaivePatternSearch
 from tests.search_and_sort.test_naive_pattern_search_v2 import TestNaivePatternSearchV2, TestCharsMatch as TestCharsMatchV2
 from tests.search_and_sort.test_naive_pattern_search_v3 import TestNaivePatternSearchV3, TestCharsMatch as TestCharsMatchV3, TestHelperFunctions
+from tests.search_and_sort.test_linear_search import TestLinearSearch
 
 if __name__ == '__main__':
     # Create a test suite
@@ -23,6 +24,7 @@ if __name__ == '__main__':
     test_suite.addTest(loader.loadTestsFromTestCase(TestNaivePatternSearchV3))
     test_suite.addTest(loader.loadTestsFromTestCase(TestCharsMatchV3))
     test_suite.addTest(loader.loadTestsFromTestCase(TestHelperFunctions))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestLinearSearch))
 
     # Run the tests
     runner = unittest.TextTestRunner(verbosity=2)

@@ -34,7 +34,8 @@ if __name__ == '__main__':
         os.path.join(project_root, 'tests', 'algorithms', 'test_factorial.py'),
         os.path.join(project_root, 'tests', 'algorithms', 'test_iteration_recursion_comparison.py'),
         # Search and Sort tests
-        os.path.join(project_root, 'tests', 'search_and_sort', 'test_naive_pattern_search.py')
+        os.path.join(project_root, 'tests', 'search_and_sort', 'test_naive_pattern_search.py'),
+        os.path.join(project_root, 'tests', 'search_and_sort', 'test_linear_search.py')
     ]
 
     # Run each test file
