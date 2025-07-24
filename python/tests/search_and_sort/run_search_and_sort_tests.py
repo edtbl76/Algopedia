@@ -8,7 +8,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 # Import the test modules
 # Commenting out the original import as it's causing an error
 # from tests.search_and_sort.test_naive_pattern_search import TestNaivePatternSearch
-from tests.search_and_sort.test_naive_pattern_search_v2 import TestNaivePatternSearchV2, TestCharsMatch
+from tests.search_and_sort.test_naive_pattern_search_v2 import TestNaivePatternSearchV2, TestCharsMatch as TestCharsMatchV2
+from tests.search_and_sort.test_naive_pattern_search_v3 import TestNaivePatternSearchV3, TestCharsMatch as TestCharsMatchV3, TestHelperFunctions
 
 if __name__ == '__main__':
     # Create a test suite
@@ -18,7 +19,10 @@ if __name__ == '__main__':
     loader = unittest.TestLoader()
     # test_suite.addTest(loader.loadTestsFromTestCase(TestNaivePatternSearch))
     test_suite.addTest(loader.loadTestsFromTestCase(TestNaivePatternSearchV2))
-    test_suite.addTest(loader.loadTestsFromTestCase(TestCharsMatch))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestCharsMatchV2))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestNaivePatternSearchV3))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestCharsMatchV3))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestHelperFunctions))
 
     # Run the tests
     runner = unittest.TextTestRunner(verbosity=2)

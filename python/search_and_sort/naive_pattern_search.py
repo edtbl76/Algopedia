@@ -14,7 +14,7 @@ What are the things we need to consider when designing a pattern search algorith
 from _ast import pattern
 
 
-def naive_pattern_search_character(text: str, pattern: str) -> list[int]:
+def naive_pattern_search_character(text: str, pattern: str, replacement: str = None) -> list[int] | str:
     """
     Find all occurrences of a pattern in text using character-by-character comparison
     with early termination.
@@ -56,7 +56,7 @@ def naive_pattern_search_character(text: str, pattern: str) -> list[int]:
     return matches
 
 
-def naive_pattern_search_counting(text: str, pattern: str) -> list[int]:
+def naive_pattern_search_counting(text: str, pattern: str, replacement: str = None) -> list[int] | str:
     """
     Find all occurrences of a pattern in text by counting matching characters.
 
@@ -103,8 +103,7 @@ def naive_pattern_search_counting(text: str, pattern: str) -> list[int]:
     return matches
 
 
-
-def naive_pattern_search_safe_bounds(text: str, pattern: str) -> list[int]:
+def naive_pattern_search_safe_bounds(text: str, pattern: str, replacement: str = None) -> list[int] | str:
     """
     Find all occurrences of a pattern in text with explicit bounds checking.
 
@@ -146,10 +145,18 @@ def naive_pattern_search_safe_bounds(text: str, pattern: str) -> list[int]:
         if pattern_index == pattern_length:
             matches.append(text_index)
 
-    return matches
+    if replacement is None:
+        return matches
+
+    # Perform replacements from end to start to avoid index shifting
+    result = list(text)
+    for idx in reversed(matches):
+        result[idx:idx + len(pattern)] = replacement
+
+    return ''.join(result)
 
 
-def naive_pattern_search_slice(text: str, pattern: str) -> list[int]:
+def naive_pattern_search_slice(text: str, pattern: str, replacement: str = None) -> list[int] | str:
     """
     Find all occurrences of a pattern in text using string slicing. This is slightly faster than character-by-character
     comparison.
@@ -200,7 +207,8 @@ def naive_pattern_search_slice(text: str, pattern: str) -> list[int]:
 
 
 
-def naive_pattern_search_tunable(text: str, pattern: str, slice_threshold: int = 4) -> list[int]:
+def naive_pattern_search_tunable(text: str, pattern: str, replacement: str = None, slice_threshold: int = 4) -> list[
+                                                                                                                    int] | str:
     """
     Find all occurrences of a pattern in text using an optimized approach.
 
