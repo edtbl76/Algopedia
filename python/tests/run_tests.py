@@ -35,7 +35,8 @@ if __name__ == '__main__':
         os.path.join(project_root, 'tests', 'algorithms', 'test_iteration_recursion_comparison.py'),
         # Search and Sort tests
         os.path.join(project_root, 'tests', 'search', 'test_naive_pattern_search.py'),
-        os.path.join(project_root, 'tests', 'search', 'test_linear_search.py')
+        os.path.join(project_root, 'tests', 'search', 'test_linear_search.py'),
+        os.path.join(project_root, 'tests', 'sort', 'test_bubble_sort.py')
     ]
 
     # Run each test file
@@ -76,12 +77,22 @@ if __name__ == '__main__':
 
     # Run the Search tests using the dedicated runner
     print("\nRunning Search tests using run_search_tests.py")
-    search_and_sort_tests_path = os.path.join(project_root, 'tests', 'search', 'run_search_tests.py')
-    search_and_sort_result = subprocess.run([sys.executable, search_and_sort_tests_path], capture_output=True, text=True)
-    print(search_and_sort_result.stdout)
-    if search_and_sort_result.stderr:
-        print(f"Errors: {search_and_sort_result.stderr}")
-    if search_and_sort_result.returncode != 0:
+    search_tests_path = os.path.join(project_root, 'tests', 'search', 'run_search_tests.py')
+    search_result = subprocess.run([sys.executable, search_tests_path], capture_output=True, text=True)
+    print(search_result.stdout)
+    if search_result.stderr:
+        print(f"Errors: {search_result.stderr}")
+    if search_result.returncode != 0:
+        all_passed = False
+
+    # Run the Sort tests using the dedicated runner
+    print("\nRunning Sort tests using run_sort_tests.py")
+    sort_tests_path = os.path.join(project_root, 'tests', 'sort', 'run_sort_tests.py')
+    sort_result = subprocess.run([sys.executable, sort_tests_path], capture_output=True, text=True)
+    print(sort_result.stdout)
+    if sort_result.stderr:
+        print(f"Errors: {sort_result.stderr}")
+    if sort_result.returncode != 0:
         all_passed = False
 
     # Print summary
