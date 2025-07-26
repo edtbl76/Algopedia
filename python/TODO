@@ -7,3 +7,13 @@
 - Insertion Sort
 - Introsort
 
+# Enhancements
+- update sorting algorithms to support injection of comparison_functions
+- (i.e. rather than >, we can use < to swap the order, or we can support
+- (specific business logic for custom comparisons)
+
+- Fibonacci
+-- tabulation
+-- Matrix exponentiation
+-- Binet's formula
+-- Space-optimized

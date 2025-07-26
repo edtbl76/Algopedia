@@ -7,6 +7,12 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 
 from algorithms.fibonacci import fibonacci_basic, fibonacci_memoization, fibonacci_iterative
 
+# TODO: Update tests when new Fibonacci implementations are added:
+# - Tabulation (bottom-up dynamic programming)
+# - Matrix exponentiation
+# - Binet's formula
+# - Space-optimized iterative
+
 
 class TestFibonacci(unittest.TestCase):
     def test_fibonacci_basic_base_cases(self):
@@ -138,6 +144,38 @@ class TestFibonacci(unittest.TestCase):
                 if n <= 10:
                     self.assertEqual(fibonacci_basic(n), expected, 
                                    f"Basic failed for n={n}")
+
+    def test_fibonacci_basic_negative_numbers(self):
+        """Test fibonacci_basic with negative numbers (should use absolute value)"""
+        self.assertEqual(fibonacci_basic(-1), 1)
+        self.assertEqual(fibonacci_basic(-2), 1)
+        self.assertEqual(fibonacci_basic(-3), 2)
+        self.assertEqual(fibonacci_basic(-5), 5)
+        # Verify that negative numbers produce the same result as their absolute value
+        for n in range(1, 8):
+            self.assertEqual(fibonacci_basic(-n), fibonacci_basic(n),
+                           f"Negative and positive results differ for n={n}")
+
+    def test_fibonacci_memoization_negative_numbers(self):
+        """Test fibonacci_memoization with negative numbers (should use absolute value)"""
+        self.assertEqual(fibonacci_memoization(-1), 1)
+        self.assertEqual(fibonacci_memoization(-5), 5)
+        self.assertEqual(fibonacci_memoization(-10), 55)
+        # Verify that negative numbers produce the same result as their absolute value
+        for n in range(1, 15):
+            self.assertEqual(fibonacci_memoization(-n), fibonacci_memoization(n),
+                           f"Negative and positive results differ for n={n}")
+
+    def test_fibonacci_iterative_negative_numbers(self):
+        """Test fibonacci_iterative with negative numbers (should use absolute value)"""
+        self.assertEqual(fibonacci_iterative(-1), 1)
+        self.assertEqual(fibonacci_iterative(-5), 5)
+        self.assertEqual(fibonacci_iterative(-10), 55)
+        self.assertEqual(fibonacci_iterative(-20), 6765)
+        # Verify that negative numbers produce the same result as their absolute value
+        for n in range(1, 20):
+            self.assertEqual(fibonacci_iterative(-n), fibonacci_iterative(n),
+                           f"Negative and positive results differ for n={n}")
 
 
 if __name__ == '__main__':

@@ -29,6 +29,9 @@ def fibonacci_basic(n: int) -> int:
         5
     """
 
+    # Handle negative numbers by using absolute value
+    n = abs(n)
+
     # Base cases: F(0) = 0 and F(1) = 1
     if n <= 1:
         return n
@@ -93,6 +96,9 @@ def fibonacci_memoization(n: int, memory: Optional[Dict[int, int]] = _SENTINEL) 
         >>> len(cache)  # Cache now contains intermediate results
         6
     """
+
+    # Handle negative numbers by using absolute value
+    n = abs(n)
 
     # Initialize memory dict if sentinel was passed (no explicit memory provided)
     if memory is _SENTINEL:
@@ -161,6 +167,9 @@ def fibonacci_iterative(n: int) -> int:
         I opted to add this as an example of production code. It's not necessary for a small example like this.
         
     """
+    # Handle negative numbers by using absolute value
+    n = abs(n)
+
     INITIAL_FIBONACCI_VALUES = [0, 1]
     fibonacci_sequence = INITIAL_FIBONACCI_VALUES.copy()
 
@@ -177,16 +186,17 @@ def fibonacci_iterative(n: int) -> int:
     return fibonacci_sequence[n]
 
 
-""" TODO - Implement dynamic programming and tabulation algorithms
-    - Dynamic programming: F(n) = F(n-1) + F(n-2) for n > 1
-    - Tabulation: F(n) = F(n-1) + F(n-2) + F(n-3) + ... + F(1) for n > 2
-    - Both algorithms have exponential time complexity due to redundant calculations
-    - Both algorithms have linear space complexity due to recursion stack depth
-    - Both algorithms are not optimal for optimal performance due to redundant calculations
-    - Both algorithms are not optimal for memory usage due to caching intermediate results"""
-# def fibonacci_dynamic_programming(n: int) -> int:
-#     pass
-#
-# def fibonacci_tabulation(n: int) -> int:
-#     pass
+""" TODO - Implement additional Fibonacci algorithms
+    - Tabulation (bottom-up dynamic programming): Build table from F(0) to F(n)
+    - Matrix exponentiation: Use matrix multiplication for O(log n) complexity  
+    - Binet's formula: Direct calculation using golden ratio (floating point precision issues)
+    - Space-optimized iterative: O(1) space using only two variables
+    
+    Performance characteristics:
+    - Tabulation: O(n) time, O(n) space - bottom-up approach, no recursion
+    - Matrix exponentiation: O(log n) time, O(1) space - fastest for large n
+    - Binet's formula: O(1) time, O(1) space - precision limited
+    - Space-optimized: O(n) time, O(1) space - best space efficiency
+"""
+
 
