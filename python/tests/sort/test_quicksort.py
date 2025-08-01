@@ -1,7 +1,7 @@
 import unittest
-from sort.quicksort import (
-    quicksort,
-    quicksort_iterative,
+from sort.quicksort import quicksort, quicksort_iterative
+from sort.PartitionStrategy import (
+    PartitionStrategy,
     LomutoPartition,
     HoarePartition,
     ThreeWayPartition,
@@ -10,9 +10,9 @@ from sort.quicksort import (
     SedgewickPartition,
     DualPivotPartition,
     FatPivotPartition,
-    HybridPartition,
-    PartitionUtils
+    HybridPartition
 )
+from sort.PivotStrategy import PivotStrategy
 
 class TestQuickSort(unittest.TestCase):
     """Test cases for quicksort implementation with various partition strategies."""
@@ -212,22 +212,6 @@ class TestQuickSort(unittest.TestCase):
         quicksort_iterative(test_list)  # No strategy specified, should use Lomuto
         self.assertEqual(test_list, [11, 12, 22, 25, 34, 64, 90])
 
-    def test_partition_utils(self):
-        """Test PartitionUtils.lomuto_partition_with_pivot method."""
-        # Test with random list
-        test_list = [64, 34, 25, 12, 22, 11, 90]
-        pivot_index = 3  # pivot is 12
-        result_index = PartitionUtils.lomuto_partition_with_pivot(test_list, 0, len(test_list) - 1, pivot_index)
-
-        # After partitioning, all elements before result_index should be < 12
-        # and all elements after should be >= 12
-        for i in range(result_index):
-            self.assertLess(test_list[i], 12)
-        for i in range(result_index, len(test_list)):
-            self.assertGreaterEqual(test_list[i], 12)
-
-        # The pivot should be at result_index
-        self.assertEqual(test_list[result_index], 12)
 
     def test_fat_pivot_with_key_function(self):
         """Test FatPivotPartition with custom key functions."""
@@ -267,6 +251,25 @@ class TestQuickSort(unittest.TestCase):
             ("Charlie", 35)
         ]
         self.assertEqual(test_list, expected)
+
+    def test_pivot_strategies(self):
+        """Test different pivot strategies with Lomuto partition."""
+        # Create a custom subclass of LomutoPartition that uses a specific pivot strategy
+        class CustomLomutoPartition(LomutoPartition):
+            def __init__(self, pivot_strategy):
+                self.pivot_strategy = pivot_strategy
+
+            def partition(self, values, start, end, pivot_strategy=None):
+                # Override the pivot_strategy parameter with our custom one
+                return super().partition(values, start, end, self.pivot_strategy)
+
+        # Test each pivot strategy with Lomuto partition
+        for pivot_strategy in PivotStrategy:
+            with self.subTest(pivot_strategy=pivot_strategy.value):
+                test_list = self.random_list.copy()
+                custom_lomuto = CustomLomutoPartition(pivot_strategy)
+                quicksort(test_list, partition_strategy=custom_lomuto)
+                self.assertEqual(test_list, [11, 12, 22, 25, 34, 64, 90])
 
 if __name__ == '__main__':
     unittest.main()
