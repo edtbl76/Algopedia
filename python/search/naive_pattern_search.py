@@ -11,7 +11,6 @@ What are the things we need to consider when designing a pattern search algorith
 - How do we handle edge cases?
 - How do we handle multiple matches?
 """
-from _ast import pattern
 
 
 def naive_pattern_search_character(text: str, pattern: str, replacement: str = None) -> list[int] | str:
