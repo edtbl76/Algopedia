@@ -16,6 +16,7 @@ from tests.algorithms.test_multiplication import TestMultiplication
 from tests.algorithms.test_palindrome import TestPalindrome
 from tests.algorithms.test_power_set import TestPowerSet
 from tests.algorithms.test_sum_digits import TestSumDigits
+from tests.algorithms.test_backpack import TestBackpack
 
 if __name__ == '__main__':
     # Create a test suite
@@ -33,6 +34,7 @@ if __name__ == '__main__':
     test_suite.addTest(loader.loadTestsFromTestCase(TestPalindrome))
     test_suite.addTest(loader.loadTestsFromTestCase(TestPowerSet))
     test_suite.addTest(loader.loadTestsFromTestCase(TestSumDigits))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestBackpack))
 
     # Run the tests
     runner = unittest.TextTestRunner(verbosity=2)
