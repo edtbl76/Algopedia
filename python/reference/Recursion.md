@@ -5,6 +5,7 @@ on solutions to smaller instances of the same problem. Think of it like a set of
 contains a smaller version of itself until you reach the smallest, innermost doll. In programming, this translates to a 
 function calling itself, either directly or indirectly, until a specific base case is reached.
 
+---
 ## How Recursion Works
 
 ### **Breaking Down the Problem** 
@@ -21,7 +22,7 @@ Every recursive function must have a base case, which is a condition that stops 
 solution without further recursive calls. Without a base case, the function would call itself indefinitely, possibly 
 leading to a stack overflow error. 
 
-
+---
 ## Advantages of Recursion
 
 ### **Concise Solutions** 
@@ -37,7 +38,7 @@ and graphs) or for algorithms like sorting and searching that can be easily brok
 
 When applied appropriately, recursion can result in code that is easier to write and read.
 
-
+---
 ## Disadvantages of Recursion
 
 ### **Increased Memory Usage** 
@@ -54,12 +55,14 @@ error.
 In some cases, recursive functions might be slower than their iterative counterparts due to the overhead of function 
 calls. However, some languages optimize for tail recursion. 
 
+
+
 ### **Debugging Challenges** 
 
 Tracing the execution flow of a recursive function can be more challenging compared to an iterative solution.
 
 
-
+---
 ## Examples of Recursion
 
 ### **Factorial** 
@@ -83,3 +86,44 @@ to visit each node and its children systematically.
 This search algorithm efficiently finds a target value in a sorted array by repeatedly dividing the array in half 
 using recursion.
 
+
+---
+## Special Notes
+
+### Tail Recursion
+
+Tail recursion is a special form of recursion where the recursive call is the very last operation performed
+in the function. There are no additional steps after the recursive call returns. 
+
+#### **Key Characteristics**
+
+- Recursive Call is the final statement in the function
+- NO additional operations. 
+- The function essentially "passes through" the result directly. 
+
+#### Importance. 
+
+**TCO (Tail Call Optimization** 
+Some languages optimize til recursion 
+- reuses current stack frame instead of creating a new one
+- converts recursion into iteration behind the scenes (more performant)
+- eliminates risk of stack overflow
+- reduces memory usage to O(1) instead of O(n)
+
+TCO gives you the performance of iteration (and more!) w/ the conciseness of recursion, provided
+the developers understand it. 
+
+```python
+# Tail recursive (optimizable)
+def factorial_tail(n, accumulator=1):
+    if n <= 1:
+        return accumulator
+    return factorial_tail(n - 1, n * accumulator)  # Last operation
+
+# Non-tail recursive 
+def factorial_regular(n):
+    if n <= 1:
+        return 1
+    return n * factorial_regular(n - 1)  # Multiplication happens AFTER recursive call
+
+```

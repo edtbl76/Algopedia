@@ -37,6 +37,25 @@ This approach usually mirrors or outlines the natural recursive structure of the
 4. Solutions to subproblems are used to compute solutions for increasingly larger subproblems
 
 
+### Memoization vs. Tabulation
+
+| Characteristic | Memoization (Top-Down) | Tabulation (Bottom-Up) |
+|----------------|------------------------|------------------------|
+| **Approach** | Recursive with caching | Iterative with table filling |
+| **Direction** | Starts from main problem, breaks down | Starts from base cases, builds up |
+| **Implementation** | Uses recursion + storage (hash map/array) | Uses loops + storage (array/table) |
+| **Memory Usage** | Only stores computed subproblems | Stores all subproblems (even unused ones) |
+| **Space Complexity** | Often more space-efficient | May use more space for complete table |
+| **Call Stack** | Uses recursion stack (risk of overflow) | No recursion stack overhead |
+| **Computation** | Lazy evaluation (computes only when needed) | Eager evaluation (computes all subproblems) |
+| **Code Readability** | More intuitive, mirrors recursive structure | Less intuitive initially, but more structured |
+| **Performance** | Slight overhead from function calls | Generally faster due to iterative nature |
+| **Debugging** | Can be harder to debug due to recursion | Easier to debug with step-by-step iteration |
+| **Base Cases** | Handled naturally in recursive calls | Must be explicitly initialized |
+| **Order Dependency** | Automatic (handled by recursion) | Must carefully determine computation order |
+| **Stack Overflow Risk** | Yes (deep recursion) | No (iterative approach) |
+| **When to Use** | When only some subproblems need solving | When most/all subproblems need solving |
+
 ## Benefits
 
 ### **Efficiency**
