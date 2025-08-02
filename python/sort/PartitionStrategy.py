@@ -4,11 +4,11 @@ Performance Characteristics Summary:
 | Strategy        | Best Use Case           | Advantage                    | Disadvantage                |
 |-----------------|-------------------------|------------------------------|-----------------------------|
 | Lomuto          | Teaching/simple code    | Easy to understand           | More swaps than Hoare       |
-| Hoare           | General performance     | Fewer swaps                  | More complex implementation |
-| 3-Way           | Many duplicates         | Handles duplicates optimally | Overhead for unique elements|
 | Random          | Adversarial inputs      | Avoids worst-case            | Random number generation    |
 | Median-of-3     | General use             | Better pivot selection       | Pivot selection overhead    |
+| Hoare           | General performance     | Fewer swaps                  | More complex implementation |
 | Sedgewick       | Balanced implementation | Simpler than Hoare           | Slightly more swaps         |
+| 3-Way           | Many duplicates         | Handles duplicates optimally | Overhead for unique elements|
 | Dual-pivot      | Large arrays            | Can be faster than single    | Complex implementation      |
 | Fat-pivot       | Complex objects         | Handles multi-key sorting    | Overhead for simple data    |
 
@@ -535,9 +535,104 @@ class DualPivotPartition:
     - Optimal for large arrays with diverse elements
 
     Best for: Large arrays, production systems requiring maximum performance
+
+    Examples:
+        Basic dual-pivot partitioning:
+        >>> partition = DualPivotPartition()
+        >>> values = [64, 34, 25, 12, 22, 11, 90]
+        >>> pivot_pos = partition.partition(values, 0, 6)
+        >>> print(f"Middle partition boundary at position {pivot_pos}")
+        Middle partition boundary at position 5
+        >>> print("Values after partitioning:", values)
+        Values after partitioning: [11, 34, 25, 12, 22, 64, 90]
+        >>> # Three partitions created:
+        >>> # < pivot1 (64): [11, 34, 25, 12, 22] at positions [0, 4]
+        >>> # = pivot1 range: [64] at position [5]
+        >>> # > pivot2 (90): [90] at position [6]
+
+        Partitioning with equal pivots:
+        >>> values = [3, 2, 8, 5, 9, 1, 7, 4, 3]
+        >>> pivot_pos = partition.partition(values, 0, 8)
+        >>> print(f"Middle partition boundary at position {pivot_pos}")
+        Middle partition boundary at position 2
+        >>> print("Values after partitioning:", values)
+        Values after partitioning: [1, 2, 3, 3, 5, 7, 4, 8, 9]
+        >>> # When pivots are equal (both 3), creates three regions:
+        >>> # < 3: [1, 2] at positions [0, 1]
+        >>> # = 3: [3, 3] at positions [2, 3]
+        >>> # > 3: [5, 7, 4, 8, 9] at positions [4, 8]
+
+
+        Subarray partitioning (indices 1 to 6):
+        >>> values = [99, 7, 3, 8, 1, 9, 2, 88]
+        >>> pivot_pos = partition.partition(values, 1, 6)  # Partition [7, 3, 8, 1, 9, 2]
+        >>> print(f"Middle partition boundary at position {pivot_pos}")
+        Middle partition boundary at position 2
+        >>> print("Values after partitioning:", values)
+        Values after partitioning: [99, 1, 2, 3, 7, 8, 9, 88]
+        >>> # Only indices [1, 6] were affected: [1, 2, 3, 7, 8, 9]
+        >>> # < pivot1 (2): [1] at position [1]
+        >>> # Middle partition: [2, 3, 7] at positions [2, 4]
+        >>> # > pivot2 (7): [8, 9] at positions [5, 6]
+
+
+        Edge case - two elements:
+        >>> values = [42, 17]
+        >>> pivot_pos = partition.partition(values, 0, 1)
+        >>> print(f"Pivot at position {pivot_pos}, values: {values}")
+        Pivot at position 0, values: [17, 42]
+        >>> # With two elements, one becomes pivot1, other becomes pivot2
+
+        Edge case - single element:
+        >>> values = [42]
+        >>> pivot_pos = partition.partition(values, 0, 0)
+        >>> print(f"Single element at position {pivot_pos}: {values[pivot_pos]}")
+        Single element at position 0: 42
+
+        Performance comparison example (conceptual):
+        >>> # Array with many elements close to two distinct values
+        >>> values = [10, 11, 10, 50, 51, 10, 50, 11, 51, 10]
+        >>> pivot_pos = partition.partition(values, 0, 9)
+        >>> print("Dual-pivot efficiently separates around two natural pivots")
+        >>> print("Result:", values)
+        Dual-pivot efficiently separates around two natural pivots
+        Result: [10, 10, 10, 10, 11, 11, 50, 50, 51, 51]
+        >>> # Dual-pivot excels when data naturally clusters around two values
+        >>> # Single-pivot would require more recursive calls to achieve same result
+
+        Custom pivot strategies:
+        >>> from sort.PivotStrategy import PivotStrategy
+        >>> values = [64, 34, 25, 12, 22, 11, 90]
+        >>> # Use median-of-three for first pivot, random for second
+        >>> pivot_pos = partition.partition(values, 0, 6,
+        ...                               PivotStrategy.MEDIAN_OF_THREE,
+        ...                               PivotStrategy.RANDOM)
+        >>> print("Custom pivot strategies can improve performance on specific data patterns")
+        Custom pivot strategies can improve performance on specific data patterns
+
+    Algorithm Steps:
+        1. Ensure pivot1 <= pivot2 by swapping start and end elements if needed
+        2. Select two pivot indices using the specified strategies
+        3. Initialize three pointers: less (elements < pivot1), great (elements > pivot2), k (current)
+        4. Iterate through elements with pointer k:
+           - If element < pivot1: swap to less partition, increment less and k
+           - If element > pivot2: swap to great partition, decrement great, decrement k (recheck)
+           - Otherwise: just increment k (element is in middle partition)
+        5. Place pivots in their final positions
+        6. Return boundary position for compatibility with single-pivot interface
+
+    Performance Benefits:
+        - Reduces the number of recursive calls by creating three partitions instead of two
+        - Particularly effective on arrays with elements that cluster around two values
+        - Can achieve better cache locality due to fewer recursive calls
+        - Used in Java's TimSort hybrid algorithm for optimal performance
+
+    Time Complexity: O(n) where n = end - start + 1
+    Space Complexity: O(1) - partitions in-place
     """
 
-    def partition(self, values: List[Any], start: int, end: int,
+    @staticmethod
+    def partition(values: List[Any], start: int, end: int,
                   pivot_strategy1: PivotStrategy = PivotStrategy.FIRST,
                   pivot_strategy2: PivotStrategy = PivotStrategy.LAST) -> int:
         """
