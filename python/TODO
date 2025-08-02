@@ -2,6 +2,10 @@
 - Knuth Morris Pratt
 - Boyer Moore Skip Table
 
+# SP
+- Floyd-Warshall
+- Bellman-Ford
+
 # Sort
 - Timsort
 - Insertion Sort

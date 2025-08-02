@@ -1,3 +1,5 @@
+# TAGS: Recursion, Iteration
+
 def is_palindrome(text: str) -> bool:
     """
     Check if a string is a palindrome using iterative two-pointer approach.

@@ -1,3 +1,5 @@
+# TAGS: Recursion
+
 from typing import List, Any
 
 def flatten_list(values: List[Any]) -> List[Any]:

@@ -1,4 +1,5 @@
-from typing import List
+# TAGS: Dynamic Programming, Recursion
+
 """
 Backpack/Knapsack Problem Implementation
 
@@ -18,7 +19,7 @@ Example Problem:
 - Optimal solution: Take items with weights [2, 3, 5] for total value = 13
 
 """
-
+from typing import List
 
 def recursive_backpack(weight_max: int, weights: List[int], values: List[int], item_index: int = 0) -> int:
     """

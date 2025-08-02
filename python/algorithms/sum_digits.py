@@ -1,3 +1,5 @@
+# TAGS: Recursion, Iteration
+
 def sum_digits_iterative(n: int) -> int:
     """
     Calculate the sum of digits in a non-negative integer using iterative approach.

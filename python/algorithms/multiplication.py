@@ -1,3 +1,5 @@
+# TAGS: Recursion, Iteration
+
 def multiplication(multiplicand: int, multiplier: int) -> int:
     """
     Multiply two integers using iterative addition approach.
