@@ -17,8 +17,13 @@
 - (specific business logic for custom comparisons)
 
 
+
 - Fibonacci
 -- tabulation
 -- Matrix exponentiation
 -- Binet's formula
 -- Space-optimized
+
+
+- Loose Thoughts
+-- Levenshtein Distnce
