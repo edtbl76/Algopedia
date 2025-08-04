@@ -10,6 +10,7 @@ from tests.search.test_naive_pattern_search import TestNaivePatternSearch
 from tests.search.test_naive_pattern_search_v2 import TestNaivePatternSearchV2, TestCharsMatch as TestCharsMatchV2
 from tests.search.test_naive_pattern_search_v3 import TestNaivePatternSearchV3, TestCharsMatch as TestCharsMatchV3, TestHelperFunctions
 from tests.search.test_linear_search import TestLinearSearch
+from tests.search.test_breadth_first_search import TestBreadthFirstSearch
 
 if __name__ == '__main__':
     # Create a test suite
@@ -24,6 +25,7 @@ if __name__ == '__main__':
     test_suite.addTest(loader.loadTestsFromTestCase(TestCharsMatchV3))
     test_suite.addTest(loader.loadTestsFromTestCase(TestHelperFunctions))
     test_suite.addTest(loader.loadTestsFromTestCase(TestLinearSearch))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestBreadthFirstSearch))
 
     # Run the tests
     runner = unittest.TextTestRunner(verbosity=2)
