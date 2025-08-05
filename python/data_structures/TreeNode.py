@@ -76,8 +76,6 @@ class TraversalType(Enum):
     PREORDER_RECURSIVE = "preorder_recursive"
     INORDER = "inorder"
     POSTORDER = "postorder"
-    BREADTH_FIRST = "breadth_first"
-    DEPTH_FIRST = "depth_first"
 
     def traverse(self, root: 'TreeNode', visitor: Callable[['TreeNode'], None]) -> None:
         """
