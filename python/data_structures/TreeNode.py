@@ -379,3 +379,90 @@ class TreeNode:
         Space Complexity: O(1) - no additional memory used
         """
         print(node.value)
+
+    def print_tree(self, prefix: str = "", is_last: bool = True) -> None:
+        """
+        Print a visual representation of the tree structure.
+
+        Uses ASCII characters to create a tree-like visualization with proper
+        indentation and connecting lines. This method recursively prints the
+        entire subtree rooted at this node.
+
+        Args:
+            prefix: String prefix for current line (used internally for recursion)
+            is_last: Whether this node is the last child of its parent
+
+        Time Complexity: O(n) where n is the number of nodes in the subtree
+        Space Complexity: O(h) where h is the height of the tree (recursion stack)
+
+        Example output:
+            1
+            ├── 2
+            │   ├── 4
+            │   └── 5
+            └── 3
+                └── 6
+        """
+        # Print current node with appropriate connector
+        connector = "└── " if is_last else "├── "
+        print(f"{prefix}{connector}{self.value}")
+
+        # Calculate prefix for children
+        child_prefix = prefix + ("    " if is_last else "│   ")
+
+        # Print all children except the last one
+        for i, child in enumerate(self.children[:-1]):
+            if child is not None:
+                child.print_tree(child_prefix, False)
+
+        # Print the last child (if any exist)
+        if self.children:
+            last_child = self.children[-1]
+            if last_child is not None:
+                last_child.print_tree(child_prefix, True)
+
+    @staticmethod
+    def print_path(path: Optional[List['TreeNode']],
+                   separator: str = " -> ",
+                   show_indices: bool = False) -> None:
+        """
+        Print a formatted representation of a path through the tree.
+
+        Takes a list of TreeNode objects (typically from a search result)
+        and prints them in a readable format showing the traversal path.
+
+        Args:
+            path: List of TreeNode objects representing a path (None for no path)
+            separator: String to separate node values in output (default: " -> ")
+            show_indices: Whether to show the index of each node in the path
+
+        Time Complexity: O(p) where p is the length of the path
+        Space Complexity: O(1) - only uses temporary variables
+
+        Examples:
+            >>> TreeNode.print_path([node1, node2, node3])
+            Path: 1 -> 2 -> 3
+
+            >>> TreeNode.print_path([node1, node2, node3], show_indices=True)
+            Path: [0] 1 -> [1] 2 -> [2] 3
+
+            >>> TreeNode.print_path(None)
+            No path found
+        """
+        if path is None:
+            print("No path found")
+            return
+
+        if not path:
+            print("Empty path")
+            return
+
+        # Build the path string
+        if show_indices:
+            path_elements = [f"[{i}] {node.value}" for i, node in enumerate(path)]
+        else:
+            path_elements = [str(node.value) for node in path]
+
+        path_string = separator.join(path_elements)
+        print(f"Path: {path_string}")
+

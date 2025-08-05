@@ -273,5 +273,98 @@ class TestTreeNode(unittest.TestCase):
         with self.assertRaises(ValueError):
             node.traverse(CustomTraversalType.CUSTOM)
 
+    def test_print_tree(self):
+        """Test print_tree method"""
+        # Create a simple tree
+        root = TreeNode(1)
+        child1 = TreeNode(2)
+        child2 = TreeNode(3)
+        grandchild1 = TreeNode(4)
+        grandchild2 = TreeNode(5)
+
+        root.add_child(child1)
+        root.add_child(child2)
+        child1.add_child(grandchild1)
+        child1.add_child(grandchild2)
+
+        # Redirect stdout to capture print output
+        captured_output = StringIO()
+        sys.stdout = captured_output
+
+        # Print the tree
+        root.print_tree()
+
+        # Reset stdout
+        sys.stdout = sys.__stdout__
+
+        # Expected output
+        expected_output = "└── 1\n    ├── 2\n    │   ├── 4\n    │   └── 5\n    └── 3"
+
+        # Check that the tree was printed correctly
+        self.assertEqual(captured_output.getvalue().strip(), expected_output)
+
+    def test_print_path(self):
+        """Test print_path method"""
+        # Create nodes
+        node1 = TreeNode(1)
+        node2 = TreeNode(2)
+        node3 = TreeNode(3)
+
+        # Test with a valid path
+        path = [node1, node2, node3]
+
+        # Redirect stdout to capture print output
+        captured_output = StringIO()
+        sys.stdout = captured_output
+
+        # Print the path
+        TreeNode.print_path(path)
+
+        # Reset stdout
+        sys.stdout = sys.__stdout__
+
+        # Check that the path was printed correctly
+        self.assertEqual(captured_output.getvalue().strip(), "Path: 1 -> 2 -> 3")
+
+        # Test with a valid path and custom separator
+        captured_output = StringIO()
+        sys.stdout = captured_output
+
+        TreeNode.print_path(path, separator=" => ")
+
+        sys.stdout = sys.__stdout__
+
+        self.assertEqual(captured_output.getvalue().strip(), "Path: 1 => 2 => 3")
+
+        # Test with a valid path and show_indices=True
+        captured_output = StringIO()
+        sys.stdout = captured_output
+
+        TreeNode.print_path(path, show_indices=True)
+
+        sys.stdout = sys.__stdout__
+
+        self.assertEqual(captured_output.getvalue().strip(), "Path: [0] 1 -> [1] 2 -> [2] 3")
+
+        # Test with None path
+        captured_output = StringIO()
+        sys.stdout = captured_output
+
+        TreeNode.print_path(None)
+
+        sys.stdout = sys.__stdout__
+
+        self.assertEqual(captured_output.getvalue().strip(), "No path found")
+
+        # Test with empty path
+        captured_output = StringIO()
+        sys.stdout = captured_output
+
+        TreeNode.print_path([])
+
+        sys.stdout = sys.__stdout__
+
+        self.assertEqual(captured_output.getvalue().strip(), "Empty path")
+
 if __name__ == '__main__':
     unittest.main()
