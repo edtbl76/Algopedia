@@ -13,6 +13,7 @@ from tests.data_structures.test_hash_map import TestHashMap
 from tests.data_structures.test_array_based_storage import TestArrayBasedStorage
 from tests.data_structures.test_separate_chaining import TestSeparateChaining
 from tests.data_structures.test_storage_strategy import TestStorageStrategy
+from tests.data_structures.test_simple_hash_map import TestSimpleHashMap
 
 if __name__ == '__main__':
     # Create a test suite
@@ -27,6 +28,7 @@ if __name__ == '__main__':
     test_suite.addTest(loader.loadTestsFromTestCase(TestArrayBasedStorage))
     test_suite.addTest(loader.loadTestsFromTestCase(TestSeparateChaining))
     test_suite.addTest(loader.loadTestsFromTestCase(TestStorageStrategy))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestSimpleHashMap))
 
     # Run the tests
     runner = unittest.TextTestRunner(verbosity=2)
