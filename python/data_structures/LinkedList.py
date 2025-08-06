@@ -25,6 +25,13 @@ class LinkedList:
         new_node.next = self.head
         self.head = new_node
 
+    def append(self, value: Any) -> None:
+        """ Append a new node w/ given value at the end of the list """
+        current = self.head
+        while current.next:
+            current = current.next
+        current.next = Node(value)
+
     def stringify(self) -> str:
         """Convert the list contents to a string representation."""
         nodes = []

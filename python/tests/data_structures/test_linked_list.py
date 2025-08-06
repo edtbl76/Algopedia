@@ -86,6 +86,34 @@ class TestLinkedList(unittest.TestCase):
         ll.remove(20)  # 20 is not in the list
         self.assertEqual(ll.head, original_head)  # Head should remain unchanged
 
+    def test_append(self):
+        """Test append method"""
+        # Test appending to a list with one node
+        ll = LinkedList(5)
+        ll.append(10)
+        # List should be: 5 -> 10
+        self.assertEqual(ll.head.data, 5)
+        self.assertEqual(ll.head.next.data, 10)
+        self.assertIsNone(ll.head.next.next)
+        
+        # Test appending multiple nodes
+        ll.append(15)
+        ll.append(20)
+        # List should be: 5 -> 10 -> 15 -> 20
+        self.assertEqual(ll.head.data, 5)
+        self.assertEqual(ll.head.next.data, 10)
+        self.assertEqual(ll.head.next.next.data, 15)
+        self.assertEqual(ll.head.next.next.next.data, 20)
+        self.assertIsNone(ll.head.next.next.next.next)
+        
+        # Test appending to an empty list (with None as head data)
+        ll = LinkedList()
+        ll.append(5)
+        # List should be: None -> 5
+        self.assertIsNone(ll.head.data)
+        self.assertEqual(ll.head.next.data, 5)
+        self.assertIsNone(ll.head.next.next)
+
     def test_swap(self):
         """Test swap method"""
         # Test swapping nodes in the middle of the list
