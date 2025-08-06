@@ -26,4 +26,13 @@
 
 
 - Loose Thoughts
--- Levenshtein Distnce
+-- Levenshtein Distance
+
+
+- Collision Strategies (Hash)
+-- Separate Chaining
+-- Linear Probing
+-- Quadratic Probing
+-- Double Hashing
+-- Robin Hood
+-- Cuckoo Hashing
