@@ -1,7 +1,95 @@
 from typing import List, Any, Optional
 
 
-def binary_search(arr: List[Any], target: Any) -> Optional[int]:
+def binary_search_iterative(arr: List[Any], target):
+    """
+    Perform binary search on a sorted array using iterative approach.
+
+    This is the most efficient and recommended binary search implementation.
+    Unlike recursive approaches, it uses constant O(1) space and avoids
+    function call overhead. The iterative approach uses two pointers (left/right)
+    to maintain the search boundaries without creating new arrays or recursive calls.
+
+    Binary search is a divide-and-conquer algorithm that efficiently searches
+    for a target value in a sorted array by repeatedly dividing the search
+    interval in half. If the target is less than the middle element, the search
+    continues in the lower half; otherwise, it continues in the upper half.
+
+    REQUIREMENTS:
+    - Array must be sorted in ascending order
+    - Elements must be comparable (support <, >, == operators)
+
+    ADVANTAGES OVER OTHER IMPLEMENTATIONS:
+    - Space efficient: O(1) space vs O(log n) for recursive approaches
+    - No function call overhead: iterative loop is faster than recursion
+    - No array slicing: avoids O(n) space and time overhead of creating subarrays
+    - Stack overflow safe: no recursion depth limits
+    - Cache friendly: better memory access patterns than recursive calls
+
+    Time Complexity: O(log n) - halves search space each iteration
+    Space Complexity: O(1) - only uses constant extra space for variables
+
+    Args:
+        arr: Sorted list of comparable elements to search in
+        target: Element to search for
+
+    Returns:
+        Index of target element if found, None otherwise
+
+    Example:
+        >>> binary_search_iterative([1, 3, 5, 7, 9, 11], 7)
+        3
+        >>> binary_search_iterative([1, 3, 5, 7, 9, 11], 4)
+        None
+        >>> binary_search_iterative([], 5)
+        None
+        >>> binary_search_iterative([42], 42)
+        0
+    """
+    # Handle edge case: empty array
+    # Early return for empty arrays avoids unnecessary computation
+    # and prevents potential issues with len(arr) - 1 when len(arr) = 0
+    if not arr:
+        return None
+
+    # Initialize search boundaries
+    # left: leftmost index of current search range (inclusive)
+    # right: rightmost index of current search range (inclusive)
+    # These pointers define the current search window
+    left = 0
+    right = len(arr) - 1
+
+    # Main search loop: continue while search space is valid
+    # Condition left <= right ensures we haven't exhausted the search space
+    # When left > right, it means no valid elements remain to check\
+    while left <= right:
+        # Calculate middle index with overflow protection
+        # Using left + (right - left) // 2 instead of (left + right) // 2
+        # prevents integer overflow in languages like C/C++/Java where
+        # left + right might exceed maximum integer value
+        # In Python, integers have unlimited precision, but this is good practice
+        mid = left + (right - left) // 2
+
+        # Compare middle element w/ search target
+        if arr[mid] == target:
+            # Hit! You sank my battleship!
+            return mid
+        elif arr[mid] < target:
+            # If middle element is less than target,
+            # then it must be in the upper/right half of the search range (if it exists)
+            # slide the left boundary to exclude the current middle and everything to the left.
+            left = mid + 1
+        else:
+            # If middle element is greater than target,
+            # then it must be in the lower/left half of the search range (if it exists)
+            # slide the right boundary to exclude the current middle and everything to the right.
+            right = mid - 1
+
+    # The while loop terminates when left > right, indicating no match was found.
+    # Search space is exhausted, so no match was found.
+    return None
+
+def binary_search_recursive(arr: List[Any], target: Any) -> Optional[int]:
     """
     Perform binary search on a sorted array using recursive slicing approach.
 
@@ -30,11 +118,11 @@ def binary_search(arr: List[Any], target: Any) -> Optional[int]:
         Index of target element if found, None otherwise
 
     Example:
-        >>> binary_search([1, 3, 5, 7, 9, 11], 7)
+        >>> binary_search_recursive([1, 3, 5, 7, 9, 11], 7)
         3
-        >>> binary_search([1, 3, 5, 7, 9, 11], 4)
+        >>> binary_search_recursive([1, 3, 5, 7, 9, 11], 4)
         None
-        >>> binary_search([], 5)
+        >>> binary_search_recursive([], 5)
         None
     """
 
@@ -66,7 +154,7 @@ def binary_search(arr: List[Any], target: Any) -> Optional[int]:
         # - +1: accounts for the slice starting at mid+1
         # - sliced_result: the index returned from recursive call on sliced array
 
-        right_result = binary_search(arr[mid + 1:], target)
+        right_result = binary_search_recursive(arr[mid + 1:], target)
         return None if right_result is None else mid + 1 + right_result
     else:
         # Search left half - index remains relative to original array start
@@ -75,7 +163,7 @@ def binary_search(arr: List[Any], target: Any) -> Optional[int]:
         # When we slice with arr[:mid], the sliced array starts at index 0,
         # same as the original array. Therefore, any index returned by the
         # recursive call is already correct relative to the original array.
-        return binary_search(arr[:mid], target)
+        return binary_search_recursive(arr[:mid], target)
 
 
 def binary_search_two_pointer(arr: List[Any], left: int, right: int, target: Any) -> Optional[int]:
@@ -143,3 +231,8 @@ def binary_search_two_pointer(arr: List[Any], left: int, right: int, target: Any
         return binary_search_two_pointer(arr, mid+1, right, target)
     else:
         return binary_search_two_pointer(arr, left, mid-1, target)
+
+
+
+
+
