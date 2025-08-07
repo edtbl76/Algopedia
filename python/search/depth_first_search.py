@@ -2,6 +2,20 @@
 from typing import Optional, Tuple, List
 
 from data_structures.TreeNode import TreeNode
+"""
+Pre-order Depth-First Search (DFS) Implementation for General Trees
+
+This module implements pre-order DFS traversal where:
+- Each node is processed BEFORE visiting its children
+- Children are visited left-to-right 
+- Works with general trees (nodes can have any number of children)
+
+Pre-order traversal order: Root → Left subtree → Right subtree (recursively)
+For general trees: Current node → Child1 → Child2 → ... → ChildN
+
+Both recursive and iterative implementations are provided, with variants
+that return either the full path or just the target node.
+"""
 
 
 def dfs_recursive(root_node: Optional[TreeNode], target: int, path: Tuple[TreeNode, ...] = ()) -> Optional[Tuple[TreeNode, ...]]:

@@ -63,7 +63,6 @@ class TraversalType(Enum):
         INORDER: Left subtree, node, right subtree
         POSTORDER: Children first, then node
         BREADTH_FIRST: Level-by-level traversal
-        DEPTH_FIRST: Deep exploration before backtracking
 
     Time Complexity: O(n) for all traversal methods
     Space Complexity:

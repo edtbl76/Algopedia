@@ -1,3 +1,6 @@
+# TODO
+- update TreeNode for BFS search
+
 # Search
 - Knuth Morris Pratt
 - Boyer Moore Skip Table
@@ -36,3 +39,16 @@
 -- Double Hashing
 -- Robin Hood
 -- Cuckoo Hashing
+
+
+- Complex Traversal
+-- boundary traversal
+-- diagonal traversal
+-- vertical order traversal
+-- zigzag traversal
+
+
+- Divide and Conquer
+-- Strassen's Matrix Multiplication
+-- Closest Pair of Points
+-- Karatsuba Multiplication
