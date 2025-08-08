@@ -2,6 +2,7 @@
   <dictionary name="project">
     <words>
       <w>introsort</w>
+      <w>levelorder</w>
       <w>lomuto</w>
       <w>sedgewick</w>
     </words>

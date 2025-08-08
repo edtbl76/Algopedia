@@ -19,7 +19,7 @@
 - (i.e. rather than >, we can use < to swap the order, or we can support
 - (specific business logic for custom comparisons)
 
-
+- consider extracting some of the helpers into their own library (i.e. the SupportComparison in BinarySearchTree
 
 - Fibonacci
 -- tabulation
