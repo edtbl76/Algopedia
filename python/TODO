@@ -20,6 +20,7 @@
 - (specific business logic for custom comparisons)
 
 - consider extracting some of the helpers into their own library (i.e. the SupportComparison in BinarySearchTree
+- (Vertex) add support for label
 
 - Fibonacci
 -- tabulation
