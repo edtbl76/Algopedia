@@ -1,5 +1,5 @@
 import unittest
-from search.tree_depth_first_search import dfs_recursive, dfs_iterative, dfs_recursive_return_node, dfs_iterative_return_node
+from search.tree.tree_depth_first_search import dfs_recursive, dfs_iterative, dfs_recursive_return_node, dfs_iterative_return_node
 from data_structures.TreeNode import TreeNode
 
 

@@ -1,5 +1,5 @@
 import unittest
-from search.tree_breadth_first_search import bfs_simple, bfs_cycle_protection
+from search.tree.tree_breadth_first_search import bfs_simple, bfs_cycle_protection
 from data_structures.TreeNode import TreeNode
 
 
