@@ -9,10 +9,12 @@ parent-child index calculations.
 The heap maintains the max heap property: for any node i,
 heap[i] >= heap[2*i] and heap[i] >= heap[2*i + 1]
 """
-from typing import Optional, List
+from typing import Optional
+
+from data_structures.Heap.Heap import BaseHeap
 
 
-class MaxHeap:
+class MaxHeap(BaseHeap):
     """
     A max heap implementation using a list-based binary heap.
 
@@ -28,100 +30,6 @@ class MaxHeap:
         size (int): Current number of elements in the heap
     """
 
-    # Constant for heap indexing strategy
-    # 1-based indexing for easier parent-child calculations.
-    # Includes a placeholder None at index 0.
-    _ROOT_INDEX = 1
-
-    def __init__(self) -> None:
-        """
-        Initialize an empty max heap.
-
-        Creates a heap with a placeholder None at index 0 to enable
-        1-based indexing for easier parent-child calculations.
-
-        Time Complexity: O(1)
-        Space Complexity: O(1)
-        """
-        self.heap: List[Optional[int]] = [None]
-        self.size: int = 0
-
-
-    def add(self, value: int) -> None:
-        """
-        Add a new value to the heap while maintaining max heap property.
-
-        The new element is initially added at the end of the heap (bottom level)
-        and then bubbled up through heapify_up to restore heap property.
-
-        Args:
-            value (int): The integer value to add to the heap
-
-        Time Complexity: O(log n) - worst case bubbles up to root
-        Space Complexity: O(1) - only uses constant extra space
-        """
-        self.size += 1
-        self.heap.append(value)
-        self.heapify_up()
-
-    def heapify_up(self) -> None:
-        """
-        Restore max heap property by bubbling up the last added element.
-
-        Starting from the newly added element at the end, compare with parent
-        and swap if current element is larger. Continue until heap property
-        is restored or we reach the root.
-
-        Time Complexity: O(log n) - maximum height of tree traversal
-        Space Complexity: O(1) - only uses constant extra space
-        """
-        current_index = self.size
-
-        # Continue until we reach root (index 1) or find the correct position
-        while current_index > self._ROOT_INDEX:
-            parent_index = self._get_parent_index(current_index)
-
-            # if current element > parent, swap!
-            if self.heap[current_index] > self.heap[parent_index]:
-                self._swap(current_index, parent_index)
-
-                # Moves the index up to the parent to bubble up
-                current_index = parent_index
-            else:
-                # The heap property is restored, so we can exit
-                break
-
-    def heapify_down(self) -> None:
-        """
-        Restore max heap property by bubbling down from the root.
-
-        Starting from the root, compare with children and swap with the larger child
-        if the current node is smaller. Continue until heap property is restored
-        or we reach a leaf node.
-
-        Time Complexity: O(log n) - maximum height of tree traversal
-        Space Complexity: O(1) - only uses constant extra space
-        """
-        current_index = self._ROOT_INDEX
-
-        # Continue until we reach a leaf node or find the correct position
-        while self._has_child(current_index):
-
-            # Find the largest child index
-            largest_child_index = self._get_largest_child_index(current_index)
-
-            # get the current and largest child values
-            child = self.heap[largest_child_index]
-            parent = self.heap[current_index]
-
-            # swap if current element is smaller than largest child
-            if child > parent:
-                self._swap(current_index, largest_child_index)
-                current_index = largest_child_index
-            else:
-                # The heap property is restored, so we can exit
-                break
-
     def remove_max(self) -> Optional[int]:
         """
         Remove and return the maximum element from the heap.
@@ -135,112 +43,42 @@ class MaxHeap:
         Time Complexity: O(log n) - heapify_down operation
         Space Complexity: O(1) - only uses constant extra space
         """
-        if self.size == 0:
-            return None
+        return self._remove_root()
 
-        max_value = self.heap[self._ROOT_INDEX]
 
-        # short circuit if we're removing the only element
-        if self.size == 1:
-            self.heap.pop()
-            self.size = 0
-            return max_value
-
-        # Replace root with last element and remove last element
-        self.heap[self._ROOT_INDEX] = self.heap[self.size]
-        self.size -= 1
-        self.heap.pop()
-        self.heapify_down()
-        return max_value
-
-    ### Helper Methods ###
-
-    @staticmethod
-    def _get_parent_index(index: int) -> int:
+    def _should_swap_up(self, child_index: int, parent_index: int) -> bool:
         """
-        Calculate the parent index for a given node index.
+        Determine if child should be swapped with parent during heapify_up..
 
-        In a 1-based indexed heap, parent of node i is at index i // 2.
+        FOr max heap: swap if child > parent.
 
         Args:
-            index (int): Index of the child node
+            child_index (int): Index of the child node
+            parent_index (int): Index of the parent node
 
         Returns:
-            int: Index of the parent node
-
-        Time Complexity: O(1)
-        Space Complexity: O(1)
+            bool: True if swap should occur, False otherwise
         """
-        return index // 2
+        return self.heap[child_index] > self.heap[parent_index]
 
-    @staticmethod
-    def _get_left_child_index(index: int) -> int:
+
+    def _should_swap_down(self, parent_index: int, child_index: int) -> bool:
         """
-        Calculate the left child index for a given node index.
+        Determine if parent should be swapped with child during heapify_down.
 
-        In a 1-based indexed heap, left child of node i is at index 2 * i.
+        FOr max heap: swap if child > parent.
 
         Args:
-            index (int): Index of the parent node
+            child_index (int): Index of the child node
+            parent_index (int): Index of the parent node
 
         Returns:
-            int: Index of the left child node
-
-        Time Complexity: O(1)
-        Space Complexity: O(1)
+            bool: True if swap should occur, False otherwise
         """
-        return 2 * index
-
-    @staticmethod
-    def _get_right_child_index(index: int) -> int:
-        """
-        Calculate the right child index for a given node index.
-
-        In a 1-based indexed heap, right child of node i is at index 2 * i + 1.
-
-        Args:
-            index (int): Index of the parent node
-
-        Returns:
-            int: Index of the right child node
-
-        Time Complexity: O(1)
-        Space Complexity: O(1)
-        """
-        return 2 * index + 1
-
-    def _swap(self, index1: int, index2: int) -> None:
-        """
-        Swap two elements in the heap at given indices.
-
-        Uses Python's tuple unpacking for efficient in-place swapping.
-
-        Args:
-            index1 (int): Index of first element to swap
-            index2 (int): Index of second element to swap
-
-        Time Complexity: O(1)
-        Space Complexity: O(1)
-        """
-        self.heap[index1], self.heap[index2] = self.heap[index2], self.heap[index1]
+        return self.heap[child_index] > self.heap[parent_index]
 
 
-    def _has_child(self, index: int) -> bool:
-        """
-        Check if a node at given index has at least one child.
-
-        Args:
-            index (int): Index of the node to check
-
-        Returns:
-            bool: True if node has at least one child, False otherwise
-
-        Time Complexity: O(1)
-        Space Complexity: O(1)
-        """
-        return self._get_left_child_index(index) <= self.size
-
-    def _get_largest_child_index(self, index: int) -> int:
+    def _get_target_child_index(self, index: int) -> int:
         """
         Get the index of the largest child of the given node.
 
