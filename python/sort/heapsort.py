@@ -17,9 +17,9 @@ For heap implementation details, see MaxHeap.py.
 """
 
 
-from typing import List, Optional
+from typing import List
 
-from data_structures.MaxHeap import MaxHeap
+from data_structures.Heap.MaxHeap import MaxHeap
 
 
 def heapsort(arr: List[int], ascending: bool = True) -> List[int]:

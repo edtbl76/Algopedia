@@ -1,5 +1,5 @@
 import unittest
-from data_structures.MaxHeap import MaxHeap
+from data_structures.Heap.MaxHeap import MaxHeap
 
 
 class TestMaxHeap(unittest.TestCase):

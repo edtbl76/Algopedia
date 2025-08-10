@@ -17,6 +17,7 @@ from tests.algorithms.test_palindrome import TestPalindrome
 from tests.algorithms.test_power_set import TestPowerSet
 from tests.algorithms.test_sum_digits import TestSumDigits
 from tests.algorithms.test_backpack import TestBackpack
+from tests.algorithms.test_longest_common_subsequence import TestLongestCommonSubsequence
 
 if __name__ == '__main__':
     # Create a test suite
@@ -35,6 +36,7 @@ if __name__ == '__main__':
     test_suite.addTest(loader.loadTestsFromTestCase(TestPowerSet))
     test_suite.addTest(loader.loadTestsFromTestCase(TestSumDigits))
     test_suite.addTest(loader.loadTestsFromTestCase(TestBackpack))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestLongestCommonSubsequence))
 
     # Run the tests
     runner = unittest.TextTestRunner(verbosity=2)

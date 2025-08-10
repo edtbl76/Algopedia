@@ -28,6 +28,10 @@ class MaxHeap:
         size (int): Current number of elements in the heap
     """
 
+    # Constant for heap indexing strategy
+    # 1-based indexing for easier parent-child calculations.
+    # Includes a placeholder None at index 0.
+    _ROOT_INDEX = 1
 
     def __init__(self) -> None:
         """
@@ -74,7 +78,7 @@ class MaxHeap:
         current_index = self.size
 
         # Continue until we reach root (index 1) or find the correct position
-        while current_index > 1:
+        while current_index > self._ROOT_INDEX:
             parent_index = self._get_parent_index(current_index)
 
             # if current element > parent, swap!
@@ -98,7 +102,7 @@ class MaxHeap:
         Time Complexity: O(log n) - maximum height of tree traversal
         Space Complexity: O(1) - only uses constant extra space
         """
-        current_index = 1
+        current_index = self._ROOT_INDEX
 
         # Continue until we reach a leaf node or find the correct position
         while self._has_child(current_index):
@@ -134,7 +138,7 @@ class MaxHeap:
         if self.size == 0:
             return None
 
-        max_value = self.heap[1]
+        max_value = self.heap[self._ROOT_INDEX]
 
         # short circuit if we're removing the only element
         if self.size == 1:
@@ -143,7 +147,7 @@ class MaxHeap:
             return max_value
 
         # Replace root with last element and remove last element
-        self.heap[1] = self.heap[self.size]
+        self.heap[self._ROOT_INDEX] = self.heap[self.size]
         self.size -= 1
         self.heap.pop()
         self.heapify_down()
