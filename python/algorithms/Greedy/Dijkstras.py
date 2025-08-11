@@ -20,7 +20,6 @@ Key properties:
 - Space complexity: O(V) for distance tracking and priority queue
 
 """
-import math
 from heapq import heappop, heappush
 from typing import Dict
 
@@ -32,7 +31,7 @@ from data_structures.Vertex import Vertex
 INFINITY = float('inf')
 
 
-def dijkstra(graph: Graph, start: Vertex) -> Dict[Vertex, int]:
+def dijkstra(graph: Graph, start: Vertex) -> Dict[Vertex, int | float]:
     """
     Find shortest paths from a source vertex to all other vertices using Dijkstra's algorithm.
 
@@ -78,7 +77,7 @@ def dijkstra(graph: Graph, start: Vertex) -> Dict[Vertex, int]:
 
     # Init distance dict w/ all vertices set to the infinity constant.
     # Only vertices that are reachable from source/start will be updated w/ finite distances.
-    distances: Dict[Vertex, int] = {vertex: INFINITY for vertex in graph.vertices.values()}
+    distances: Dict[Vertex, int | float] = {vertex: INFINITY for vertex in graph.vertices.values()}
 
     # Initialize priority queue with source vertex and distance 0
     distances[start] = 0

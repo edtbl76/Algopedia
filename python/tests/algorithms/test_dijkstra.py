@@ -6,7 +6,7 @@ import math
 # Add the project root directory to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
-from algorithms.Greedy.Dykstras import dijkstra, INFINITY
+from algorithms.Greedy.Dijkstras import dijkstra, INFINITY
 from data_structures.Graph import Graph
 from data_structures.Vertex import Vertex
 
