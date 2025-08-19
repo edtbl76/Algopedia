@@ -94,6 +94,16 @@ if __name__ == '__main__':
         print(f"Errors: {sort_result.stderr}")
     if sort_result.returncode != 0:
         all_passed = False
+        
+    # Run the Data Science tests using the dedicated runner
+    print("\nRunning Data Science tests using run_data_science_tests.py")
+    data_science_tests_path = os.path.join(project_root, 'tests', 'data_science', 'run_data_science_tests.py')
+    data_science_result = subprocess.run([sys.executable, data_science_tests_path], capture_output=True, text=True)
+    print(data_science_result.stdout)
+    if data_science_result.stderr:
+        print(f"Errors: {data_science_result.stderr}")
+    if data_science_result.returncode != 0:
+        all_passed = False
 
     # Print summary
     if all_passed:
