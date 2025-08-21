@@ -58,3 +58,13 @@
 -- Kruskal
 -- Prim
 
+Data Science
+- Calculate independent and dependent versions of multiplication rule
+-- independent
+--- P(A | B) = P(A)
+--- P(B | A) = P(B)
+--- P (A and B) = P(A) * P(B)
+--Dependent
+--- P (A and B) = P(A) * P(B | A)
+- Bayes Theorem
+-- P (B | A) =  (P(A|B) * P(B)) / P(A)
