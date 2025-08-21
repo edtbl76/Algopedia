@@ -5,7 +5,8 @@ import os
 # Add the project root directory to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
-from data_science.addition_rule import addition_rule_probability, _calculate_probability
+from data_science.addition_rule import addition_rule_probability
+from data_science.utilities import calculate_probability
 
 
 class TestAdditionRule(unittest.TestCase):
@@ -14,7 +15,7 @@ class TestAdditionRule(unittest.TestCase):
         state_space = {1, 2, 3, 4, 5, 6}  # Die roll
         event = {2, 4, 6}  # Even numbers
         
-        result = _calculate_probability(event, state_space)
+        result = calculate_probability(event, state_space)
         self.assertEqual(result, 0.5)  # 3/6 = 0.5
     
     def test_calculate_probability_empty_event(self):
@@ -22,7 +23,7 @@ class TestAdditionRule(unittest.TestCase):
         state_space = {1, 2, 3, 4, 5, 6}
         event = set()
         
-        result = _calculate_probability(event, state_space)
+        result = calculate_probability(event, state_space)
         self.assertEqual(result, 0.0)  # 0/6 = 0
     
     def test_calculate_probability_full_event(self):
@@ -30,7 +31,7 @@ class TestAdditionRule(unittest.TestCase):
         state_space = {1, 2, 3, 4, 5, 6}
         event = {1, 2, 3, 4, 5, 6}
         
-        result = _calculate_probability(event, state_space)
+        result = calculate_probability(event, state_space)
         self.assertEqual(result, 1.0)  # 6/6 = 1
     
     def test_calculate_probability_empty_state_space(self):
@@ -39,7 +40,7 @@ class TestAdditionRule(unittest.TestCase):
         event = {1, 2, 3}
         
         with self.assertRaises(ValueError):
-            _calculate_probability(event, state_space)
+            calculate_probability(event, state_space)
     
     def test_calculate_probability_non_subset(self):
         """Test probability calculation when event is not a subset of state space"""
@@ -49,7 +50,7 @@ class TestAdditionRule(unittest.TestCase):
         # The function counts all elements in the event, even those not in state space
         # This is how the implementation works, though it might be logically incorrect
         # in probability theory (event should be subset of state space)
-        result = _calculate_probability(event, state_space)
+        result = calculate_probability(event, state_space)
         self.assertEqual(result, 1.0)  # 4/4 = 1.0 (counts all elements in event)
     
     def test_addition_rule_disjoint_events(self):

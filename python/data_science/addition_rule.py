@@ -25,6 +25,8 @@ in the state space are equally likely (each outcome has probability 1/|state_spa
 """
 
 from typing import Any, Set
+from data_science.utilities import calculate_probability
+
 
 def addition_rule_probability(event_a: Set[Any], event_b: Set[Any], state_space: Set[Any]) -> float:
     """
@@ -54,50 +56,19 @@ def addition_rule_probability(event_a: Set[Any], event_b: Set[Any], state_space:
         0.6666666666666667  # P(even OR high) = 4/6 = 2/3
     """
     # Calculate individual probabilities - O(1) operations
-    probability_a: float = _calculate_probability(event_a, state_space)
-    probability_b: float = _calculate_probability(event_b, state_space)
+    probability_a: float = calculate_probability(event_a, state_space)
+    probability_b: float = calculate_probability(event_b, state_space)
 
     # Find intersection of events - O(min(|A|, |B|)) operation
     intersection_events: Set[Any] = event_a.intersection(event_b)
 
     # Calculate probability of intersection - O(1) operation
-    probability_intersection: float = _calculate_probability(intersection_events, state_space)
+    probability_intersection: float = calculate_probability(intersection_events, state_space)
 
     # Apply addition rule: P(A ∪ B) = P(A) + P(B) - P(A ∩ B)
     # Subtract intersection to avoid double-counting overlapping outcomes
     return probability_a + probability_b - probability_intersection
 
-### HELPERS ###
-
-def _calculate_probability(event: Set[Any], state_space: Set[Any]) -> float:
-    """
-    Calculate probability of an event in a discrete uniform probability space.
-
-    Assumes all outcomes in the state space are equally likely, so probability
-    is calculated as the ratio of favorable outcomes to total outcomes.
-
-    Time Complexity: O(1) - uses built-in len() which is constant time for sets
-    Space Complexity: O(1) - only stores scalar values
-
-    Args:
-        event (Set[Any]): Set of favorable outcomes
-        state_space (Set[Any]): Complete set of all possible outcomes
-
-    Returns:
-        float: Probability of the event (number between 0 and 1)
-
-    Raises:
-        ValueError: If state_space is empty (division by zero prevention)
-
-    Note:
-        This function assumes a uniform distribution where each outcome
-        has equal probability of 1/|state_space|.
-    """
-    if len(state_space) == 0:
-        raise ValueError("State space cannot be empty")
-
-    # Classical probability: favorable outcomes / total outcomes
-    return len(event) / len(state_space)
 
 
 

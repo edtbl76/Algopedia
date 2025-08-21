@@ -7,6 +7,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 
 # Import the test modules
 from tests.data_science.test_addition_rule import TestAdditionRule
+from tests.data_science.test_multiplication_rule import TestMultiplicationRule
 
 if __name__ == '__main__':
     # Create a test suite
@@ -15,6 +16,7 @@ if __name__ == '__main__':
     # Add the test cases
     loader = unittest.TestLoader()
     test_suite.addTest(loader.loadTestsFromTestCase(TestAdditionRule))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestMultiplicationRule))
     
     # Run the tests
     runner = unittest.TextTestRunner(verbosity=2)
