@@ -57,3 +57,15 @@
 - Greedy
 -- Kruskal
 -- Prim
+
+
+- Probability Distributions
+-- Bernouli's (coin flip, success failure)
+-- Binomial (k successe sin n trials)
+-- Poisson Distribution (rare events in fixed time / space)
+-- Uniform Discrete Distribution (all outcomes equally likely)
+-- PMF (Probability Mass function) Over a range.
+    --- PMF --> discrete random variables
+-- CDF (Cumulative Distribution Function)
+-- probability density functions
+    --- continuous random variables.
