@@ -33,6 +33,11 @@ from tests.algorithms.test_fibonacci import TestFibonacci
 from tests.algorithms.test_flatten_list import TestFlattenList
 from tests.algorithms.test_power_set import TestPowerSet
 from tests.algorithms.test_iteration_recursion_comparison import TestIterationRecursionComparison
+# Combinatorics test classes
+from tests.algorithms.Combinatorics.test_permutations import TestPermutations
+from tests.algorithms.Combinatorics.test_combinations import TestCombinations
+from tests.algorithms.Combinatorics.utils.test_validation import TestValidation
+from tests.algorithms.Combinatorics.utils.test_optimization import TestOptimization
 # Search and Sort test classes
 from tests.search.test_naive_pattern_search import TestNaivePatternSearch
 
@@ -70,6 +75,12 @@ if __name__ == '__main__':
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestFlattenList))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestPowerSet))
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestIterationRecursionComparison))
+
+    # Combinatorics test classes
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestPermutations))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestCombinations))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestValidation))
+    test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestOptimization))
 
     # Search and Sort test classes
     test_suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestNaivePatternSearch))

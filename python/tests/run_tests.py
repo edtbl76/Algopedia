@@ -33,6 +33,11 @@ if __name__ == '__main__':
         os.path.join(project_root, 'tests', 'algorithms', 'test_find_min.py'),
         os.path.join(project_root, 'tests', 'algorithms', 'test_factorial.py'),
         os.path.join(project_root, 'tests', 'algorithms', 'test_iteration_recursion_comparison.py'),
+        # Combinatorics tests
+        os.path.join(project_root, 'tests', 'algorithms', 'Combinatorics', 'test_permutations.py'),
+        os.path.join(project_root, 'tests', 'algorithms', 'Combinatorics', 'test_combinations.py'),
+        os.path.join(project_root, 'tests', 'algorithms', 'Combinatorics', 'utils', 'test_validation.py'),
+        os.path.join(project_root, 'tests', 'algorithms', 'Combinatorics', 'utils', 'test_optimization.py'),
         # Search and Sort tests
         os.path.join(project_root, 'tests', 'search', 'test_naive_pattern_search.py'),
         os.path.join(project_root, 'tests', 'search', 'test_linear_search.py'),

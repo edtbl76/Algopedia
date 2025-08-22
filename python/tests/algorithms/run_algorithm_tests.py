@@ -19,6 +19,11 @@ from tests.algorithms.test_sum_digits import TestSumDigits
 from tests.algorithms.test_backpack import TestBackpack
 from tests.algorithms.test_longest_common_subsequence import TestLongestCommonSubsequence
 from tests.algorithms.test_dijkstra import TestDijkstra
+# Import Combinatorics test modules
+from tests.algorithms.Combinatorics.test_permutations import TestPermutations
+from tests.algorithms.Combinatorics.test_combinations import TestCombinations
+from tests.algorithms.Combinatorics.utils.test_validation import TestValidation
+from tests.algorithms.Combinatorics.utils.test_optimization import TestOptimization
 
 if __name__ == '__main__':
     # Create a test suite
@@ -39,6 +44,12 @@ if __name__ == '__main__':
     test_suite.addTest(loader.loadTestsFromTestCase(TestBackpack))
     test_suite.addTest(loader.loadTestsFromTestCase(TestLongestCommonSubsequence))
     test_suite.addTest(loader.loadTestsFromTestCase(TestDijkstra))
+    
+    # Add Combinatorics test cases
+    test_suite.addTest(loader.loadTestsFromTestCase(TestPermutations))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestCombinations))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestValidation))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestOptimization))
 
     # Run the tests
     runner = unittest.TextTestRunner(verbosity=2)
