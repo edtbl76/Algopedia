@@ -60,7 +60,6 @@
 
 
 - Probability Distributions
--- Bernouli's (coin flip, success failure)
 -- Binomial (k successe sin n trials)
 -- Poisson Distribution (rare events in fixed time / space)
 -- Uniform Discrete Distribution (all outcomes equally likely)
