@@ -6,7 +6,7 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 from data_science.addition_rule import addition_rule_probability
-from data_science.utilities import calculate_probability
+from data_science.probability.utilities import calculate_probability
 
 
 class TestAdditionRule(unittest.TestCase):

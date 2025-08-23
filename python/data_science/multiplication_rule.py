@@ -1,5 +1,5 @@
 """
-Multiplication Rule for Probability Calculations
+Multiplication Rule for probability Calculations
 
 This module implements the multiplication rule for probability theory, which calculates
 the probability of the intersection of two events (both events occurring together).
@@ -37,7 +37,7 @@ Example Applications:
 
 
 from typing import Any, Set
-from data_science.utilities import calculate_probability
+from data_science.probability.utilities import calculate_probability
 
 
 def multiplication_rule_for_independent_events(event_a: Set[Any], event_b: Set[Any], state_space: Set[Any]) -> float:
@@ -52,7 +52,7 @@ def multiplication_rule_for_independent_events(event_a: Set[Any], event_b: Set[A
         state_space: Complete set of all possible outcomes
 
     Returns:
-        Probability of both events occurring
+        probability of both events occurring
     """
     # Apply multiplication rule for independent events: P(A ∩ B) = P(A) × P(B)
     return calculate_probability(event_a, state_space) * calculate_probability(event_b, state_space)
@@ -71,7 +71,7 @@ def multiplication_rule_for_dependent_events(event_a: Set[Any], event_b: Set[Any
         state_space: Complete set of all possible outcomes
 
     Returns:
-        Probability of both events occurring
+        probability of both events occurring
 
     Raises:
         ValueError: If event A has zero probability (cannot calculate conditional probability)
@@ -223,7 +223,7 @@ def _calculate_intersection_probability(event_a: Set[Any], event_b: Set[Any], st
         state_space: Complete set of all possible outcomes
 
     Returns:
-        Probability of both events occurring together
+        probability of both events occurring together
     """
     intersection_events: Set[Any] = event_a.intersection(event_b)
     return calculate_probability(intersection_events, state_space)

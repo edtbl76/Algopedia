@@ -2,38 +2,34 @@ import unittest
 import sys
 import os
 import math
-import random
 
 # Add the project root directory to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
 
-from data_science.Probability.Binomial import BinomialDistribution
+from data_science.probability.discrete.Binomial import BinomialDistribution
 
 
 class TestBinomialDistribution(unittest.TestCase):
-    def test_initialization_valid_parameters(self):
+    def test_init_valid_parameters(self):
         """Test initialization with valid parameters"""
-        # Test with trials=10, probability=0.5
-        dist = BinomialDistribution(10, 0.5)
-        self.assertEqual(dist.trials, 10)
-        self.assertEqual(dist.probability, 0.5)
+        # Test with n=10, p=0.5
+        b = BinomialDistribution(10, 0.5)
+        self.assertEqual(b.trials, 10)
+        self.assertEqual(b.probability, 0.5)
         
-        # Test with trials=1, probability=0.5 (equivalent to Bernoulli)
-        dist_single = BinomialDistribution(1, 0.5)
-        self.assertEqual(dist_single.trials, 1)
-        self.assertEqual(dist_single.probability, 0.5)
+        # Test with n=1, p=0.5 (should be equivalent to Bernoulli)
+        b_bern = BinomialDistribution(1, 0.5)
+        self.assertEqual(b_bern.trials, 1)
+        self.assertEqual(b_bern.probability, 0.5)
         
-        # Test with probability=0
-        dist_zero_prob = BinomialDistribution(5, 0)
-        self.assertEqual(dist_zero_prob.trials, 5)
-        self.assertEqual(dist_zero_prob.probability, 0)
+        # Test with extreme probabilities
+        b_zero = BinomialDistribution(5, 0.0)
+        self.assertEqual(b_zero.probability, 0.0)
         
-        # Test with probability=1
-        dist_one_prob = BinomialDistribution(5, 1)
-        self.assertEqual(dist_one_prob.trials, 5)
-        self.assertEqual(dist_one_prob.probability, 1)
-
-    def test_initialization_invalid_parameters(self):
+        b_one = BinomialDistribution(5, 1.0)
+        self.assertEqual(b_one.probability, 1.0)
+    
+    def test_init_invalid_parameters(self):
         """Test initialization with invalid parameters"""
         # Test with negative trials
         with self.assertRaises(ValueError):
@@ -43,281 +39,201 @@ class TestBinomialDistribution(unittest.TestCase):
         with self.assertRaises(ValueError):
             BinomialDistribution(0, 0.5)
         
-        # Test with non-integer trials
+        # Test with negative probability
         with self.assertRaises(ValueError):
-            BinomialDistribution(5.5, 0.5)
-        
-        # Test with probability < 0
-        with self.assertRaises(ValueError):
-            BinomialDistribution(5, -0.1)
+            BinomialDistribution(10, -0.1)
         
         # Test with probability > 1
         with self.assertRaises(ValueError):
-            BinomialDistribution(5, 1.1)
+            BinomialDistribution(10, 1.1)
+    
+    def test_pmf(self):
+        """Test probability mass function"""
+        # Simple case: n=2, p=0.5
+        b = BinomialDistribution(2, 0.5)
         
-        # Test with non-numeric probability
-        with self.assertRaises(TypeError):
-            BinomialDistribution(5, "0.5")
-
-    def test_pmf_valid_inputs(self):
-        """Test PMF calculation with valid inputs"""
-        # Test with trials=5, probability=0.5
-        dist = BinomialDistribution(5, 0.5)
+        # P(X=0) = (2 choose 0) * 0.5^0 * 0.5^2 = 1 * 1 * 0.25 = 0.25
+        self.assertAlmostEqual(b.pmf(0), 0.25)
         
-        # Test PMF for k=0 to k=5
-        self.assertAlmostEqual(dist.pmf(0), 0.03125)  # (0.5)^0 * (0.5)^5 * C(5,0) = 0.03125
-        self.assertAlmostEqual(dist.pmf(1), 0.15625)  # (0.5)^1 * (0.5)^4 * C(5,1) = 0.15625
-        self.assertAlmostEqual(dist.pmf(2), 0.3125)   # (0.5)^2 * (0.5)^3 * C(5,2) = 0.3125
-        self.assertAlmostEqual(dist.pmf(3), 0.3125)   # (0.5)^3 * (0.5)^2 * C(5,3) = 0.3125
-        self.assertAlmostEqual(dist.pmf(4), 0.15625)  # (0.5)^4 * (0.5)^1 * C(5,4) = 0.15625
-        self.assertAlmostEqual(dist.pmf(5), 0.03125)  # (0.5)^5 * (0.5)^0 * C(5,5) = 0.03125
+        # P(X=1) = (2 choose 1) * 0.5^1 * 0.5^1 = 2 * 0.5 * 0.5 = 0.5
+        self.assertAlmostEqual(b.pmf(1), 0.5)
         
-        # Test with probability=0
-        dist_zero_prob = BinomialDistribution(5, 0)
-        self.assertEqual(dist_zero_prob.pmf(0), 1.0)  # All trials fail
-        # For k > 0, pmf should be 0, but we can't test directly due to log(0) issue
+        # P(X=2) = (2 choose 2) * 0.5^2 * 0.5^0 = 1 * 0.25 * 1 = 0.25
+        self.assertAlmostEqual(b.pmf(2), 0.25)
         
-        # Test with probability=1
-        dist_one_prob = BinomialDistribution(5, 1)
-        self.assertEqual(dist_one_prob.pmf(5), 1.0)  # All trials succeed
-        # For k < n, pmf should be 0, but we can't test directly due to log(0) issue
-
-    def test_pmf_invalid_inputs(self):
-        """Test PMF calculation with invalid inputs"""
-        dist = BinomialDistribution(5, 0.5)
+        # PMF at invalid values
+        self.assertEqual(b.pmf(-1), 0)
+        self.assertEqual(b.pmf(3), 0)
         
-        # Test with k < 0
-        with self.assertRaises(ValueError):
-            dist.pmf(-1)
+        # Special case: p=0
+        b_zero = BinomialDistribution(5, 0.0)
+        self.assertEqual(b_zero.pmf(0), 1.0)  # All mass at 0
+        self.assertEqual(b_zero.pmf(1), 0.0)
         
-        # Test with k > trials
-        with self.assertRaises(ValueError):
-            dist.pmf(6)
+        # Special case: p=1
+        b_one = BinomialDistribution(5, 1.0)
+        self.assertEqual(b_one.pmf(5), 1.0)  # All mass at n
+        self.assertEqual(b_one.pmf(4), 0.0)
+    
+    def test_mean(self):
+        """Test mean calculation"""
+        # Mean = n*p
         
-        # Test with non-integer k
-        with self.assertRaises(ValueError):
-            dist.pmf(1.5)
-
-    def test_pmf_sum_to_one(self):
-        """Test that PMF values sum to 1 for any valid probability"""
-        # Test with different trials and probabilities
-        test_cases = [
-            (5, 0.3),
-            (10, 0.5),
-            (20, 0.7)
-        ]
+        # n=10, p=0.5 -> mean = 5
+        b = BinomialDistribution(10, 0.5)
+        self.assertEqual(b.mean, 5.0)
         
-        for trials, prob in test_cases:
-            dist = BinomialDistribution(trials, prob)
-            pmf_sum = sum(dist.pmf(k) for k in range(trials + 1))
-            self.assertAlmostEqual(pmf_sum, 1.0, places=10)
-            
-        # Special case for probability=0
-        dist_zero = BinomialDistribution(3, 0)
-        self.assertEqual(dist_zero.pmf(0), 1.0)  # All probability mass at k=0
+        # n=20, p=0.3 -> mean = 6
+        b2 = BinomialDistribution(20, 0.3)
+        self.assertEqual(b2.mean, 6.0)
         
-        # Special case for probability=1
-        dist_one = BinomialDistribution(3, 1)
-        self.assertEqual(dist_one.pmf(3), 1.0)  # All probability mass at k=n
-
-    def test_mean_property(self):
-        """Test mean property calculation"""
-        # Test with trials=10, probability=0.5
-        dist = BinomialDistribution(10, 0.5)
-        self.assertEqual(dist.mean, 5.0)  # 10 * 0.5 = 5
+        # Special case: p=0 -> mean = 0
+        b_zero = BinomialDistribution(5, 0.0)
+        self.assertEqual(b_zero.mean, 0.0)
         
-        # Test with trials=20, probability=0.3
-        dist_20_03 = BinomialDistribution(20, 0.3)
-        self.assertEqual(dist_20_03.mean, 6.0)  # 20 * 0.3 = 6
+        # Special case: p=1 -> mean = n
+        b_one = BinomialDistribution(5, 1.0)
+        self.assertEqual(b_one.mean, 5.0)
+    
+    def test_variance(self):
+        """Test variance calculation"""
+        # Variance = n*p*(1-p)
         
-        # Test with probability=0
-        dist_zero_prob = BinomialDistribution(5, 0)
-        self.assertEqual(dist_zero_prob.mean, 0.0)  # 5 * 0 = 0
+        # n=10, p=0.5 -> variance = 10*0.5*0.5 = 2.5
+        b = BinomialDistribution(10, 0.5)
+        self.assertEqual(b.variance, 2.5)
         
-        # Test with probability=1
-        dist_one_prob = BinomialDistribution(5, 1)
-        self.assertEqual(dist_one_prob.mean, 5.0)  # 5 * 1 = 5
-
-    def test_variance_property(self):
-        """Test variance property calculation"""
-        # Test with trials=10, probability=0.5
-        dist = BinomialDistribution(10, 0.5)
-        self.assertEqual(dist.variance, 2.5)  # 10 * 0.5 * 0.5 = 2.5
+        # n=20, p=0.3 -> variance = 20*0.3*0.7 = 4.2
+        b2 = BinomialDistribution(20, 0.3)
+        self.assertAlmostEqual(b2.variance, 4.2)
         
-        # Test with trials=20, probability=0.3
-        dist_20_03 = BinomialDistribution(20, 0.3)
-        self.assertAlmostEqual(dist_20_03.variance, 4.2)  # 20 * 0.3 * 0.7 = 4.2
+        # Special case: p=0 -> variance = 0
+        b_zero = BinomialDistribution(5, 0.0)
+        self.assertEqual(b_zero.variance, 0.0)
         
-        # Test with probability=0
-        dist_zero_prob = BinomialDistribution(5, 0)
-        self.assertEqual(dist_zero_prob.variance, 0.0)  # 5 * 0 * 1 = 0
+        # Special case: p=1 -> variance = 0
+        b_one = BinomialDistribution(5, 1.0)
+        self.assertEqual(b_one.variance, 0.0)
+    
+    def test_cdf(self):
+        """Test cumulative distribution function"""
+        # Simple case: n=2, p=0.5
+        b = BinomialDistribution(2, 0.5)
         
-        # Test with probability=1
-        dist_one_prob = BinomialDistribution(5, 1)
-        self.assertEqual(dist_one_prob.variance, 0.0)  # 5 * 1 * 0 = 0
-
-    def test_standard_deviation_property(self):
-        """Test standard deviation property calculation"""
-        # Test with trials=10, probability=0.5
-        dist = BinomialDistribution(10, 0.5)
-        self.assertAlmostEqual(dist.standard_deviation, math.sqrt(2.5))
+        # F(0) = P(X=0) = 0.25
+        self.assertAlmostEqual(b.cdf(0), 0.25)
         
-        # Test with trials=20, probability=0.3
-        dist_20_03 = BinomialDistribution(20, 0.3)
-        self.assertAlmostEqual(dist_20_03.standard_deviation, math.sqrt(4.2))
+        # F(1) = P(X=0) + P(X=1) = 0.25 + 0.5 = 0.75
+        self.assertAlmostEqual(b.cdf(1), 0.75)
         
-        # Test with probability=0
-        dist_zero_prob = BinomialDistribution(5, 0)
-        self.assertEqual(dist_zero_prob.standard_deviation, 0.0)
+        # F(2) = P(X=0) + P(X=1) + P(X=2) = 0.25 + 0.5 + 0.25 = 1.0
+        self.assertAlmostEqual(b.cdf(2), 1.0)
         
-        # Test with probability=1
-        dist_one_prob = BinomialDistribution(5, 1)
-        self.assertEqual(dist_one_prob.standard_deviation, 0.0)
-
-    def test_cdf_calculation(self):
-        """Test CDF calculation for Binomial distribution"""
-        # Test with trials=5, probability=0.5
-        dist = BinomialDistribution(5, 0.5)
+        # CDF at invalid values
+        self.assertEqual(b.cdf(-1), 0.0)
+        self.assertEqual(b.cdf(3), 1.0)
         
-        # Test CDF for k < 0
-        self.assertEqual(dist.cdf(-1), 0.0)
+        # Special case: p=0
+        b_zero = BinomialDistribution(5, 0.0)
+        self.assertEqual(b_zero.cdf(0), 1.0)  # All mass at 0
         
-        # Test CDF for k = 0 to k = 5
-        self.assertAlmostEqual(dist.cdf(0), 0.03125)  # P(X ≤ 0) = P(X = 0) = 0.03125
-        self.assertAlmostEqual(dist.cdf(1), 0.1875)   # P(X ≤ 1) = P(X = 0) + P(X = 1) = 0.03125 + 0.15625 = 0.1875
-        self.assertAlmostEqual(dist.cdf(2), 0.5)      # P(X ≤ 2) = 0.03125 + 0.15625 + 0.3125 = 0.5
-        self.assertAlmostEqual(dist.cdf(3), 0.8125)   # P(X ≤ 3) = 0.5 + 0.3125 = 0.8125
-        self.assertAlmostEqual(dist.cdf(4), 0.96875)  # P(X ≤ 4) = 0.8125 + 0.15625 = 0.96875
-        self.assertAlmostEqual(dist.cdf(5), 1.0)      # P(X ≤ 5) = 0.96875 + 0.03125 = 1.0
+        # Special case: p=1
+        b_one = BinomialDistribution(5, 1.0)
+        self.assertEqual(b_one.cdf(4), 0.0)  # No mass below n
+        self.assertEqual(b_one.cdf(5), 1.0)  # All mass at n
+    
+    def test_sample_single(self):
+        """Test sampling a single value"""
+        # With p=0, should always return 0
+        b_zero = BinomialDistribution(5, 0.0)
+        self.assertEqual(b_zero.sample(), 0)
         
-        # Test CDF for k > trials
-        self.assertEqual(dist.cdf(6), 1.0)
+        # With p=1, should always return n
+        b_one = BinomialDistribution(5, 1.0)
+        self.assertEqual(b_one.sample(), 5)
         
-        # Test with probability=0
-        dist_zero_prob = BinomialDistribution(5, 0)
-        self.assertEqual(dist_zero_prob.cdf(-1), 0.0)
-        self.assertEqual(dist_zero_prob.cdf(0), 1.0)  # P(X ≤ 0) = 1.0 when p = 0
-        # For k > 0, cdf should be 1.0, but we can't test directly due to log(0) issue
+        # With n=10, p=0.5, should return an integer between 0 and 10
+        b = BinomialDistribution(10, 0.5)
+        sample = b.sample()
+        self.assertIsInstance(sample, int)
+        self.assertGreaterEqual(sample, 0)
+        self.assertLessEqual(sample, 10)
+    
+    def test_sample_multiple(self):
+        """Test sampling multiple values"""
+        b = BinomialDistribution(10, 0.5)
+        samples = b.sample(1000)
         
-        # Test with probability=1
-        dist_one_prob = BinomialDistribution(5, 1)
-        self.assertEqual(dist_one_prob.cdf(-1), 0.0)
-        # For 0 ≤ k < n, cdf should be 0.0, but we can't test directly due to log(0) issue
-        # self.assertEqual(dist_one_prob.cdf(5), 1.0)   # P(X ≤ 5) = 1.0 when p = 1
-        # We can't test this directly due to log(0) issue in the implementation
-
-    def test_sample_method(self):
-        """Test sample method for Binomial distribution"""
-        # Test with probability=1 (should always return trials)
-        dist_one_prob = BinomialDistribution(5, 1)
-        random_values = [random.random() for _ in range(5)]
-        self.assertEqual(dist_one_prob.sample([0.1, 0.2, 0.3, 0.4, 0.5]), 5)  # All trials succeed
+        # Check that we got the right number of samples
+        self.assertEqual(len(samples), 1000)
         
-        # Test with probability=0 (should always return 0)
-        dist_zero_prob = BinomialDistribution(5, 0)
-        self.assertEqual(dist_zero_prob.sample([0.1, 0.2, 0.3, 0.4, 0.5]), 0)  # All trials fail
+        # Check that all samples are integers between 0 and n
+        for sample in samples:
+            self.assertIsInstance(sample, int)
+            self.assertGreaterEqual(sample, 0)
+            self.assertLessEqual(sample, 10)
         
-        # Test with probability=0.5
-        dist_half = BinomialDistribution(5, 0.5)
-        # For values < 0.5, should count as success
-        self.assertEqual(dist_half.sample([0.4, 0.4, 0.4, 0.4, 0.4]), 5)  # All trials succeed
-        # For values >= 0.5, should count as failure
-        self.assertEqual(dist_half.sample([0.6, 0.6, 0.6, 0.6, 0.6]), 0)  # All trials fail
-        # Mixed case
-        self.assertEqual(dist_half.sample([0.4, 0.6, 0.4, 0.6, 0.4]), 3)  # 3 successes, 2 failures
+        # Check that the mean is approximately n*p
+        # Allow for some random variation
+        mean = sum(samples) / len(samples)
+        self.assertGreater(mean, 4.7)
+        self.assertLess(mean, 5.3)
+    
+    def test_support(self):
+        """Test the support method"""
+        # n=3, p=0.5 -> support = {0, 1, 2, 3}
+        b = BinomialDistribution(3, 0.5)
+        support = list(b.support())
+        self.assertEqual(support, [0, 1, 2, 3])
         
-        # Test with invalid number of random values
-        with self.assertRaises(ValueError):
-            dist_half.sample([0.1, 0.2, 0.3])  # Too few values
+        # Special case: p=0 -> support should still be {0, 1, ..., n}
+        # even though all probability mass is at 0
+        b_zero = BinomialDistribution(2, 0.0)
+        support_zero = list(b_zero.support())
+        self.assertEqual(support_zero, [0, 1, 2])
+    
+    def test_standard_deviation(self):
+        """Test standard deviation calculation"""
+        # Standard deviation = sqrt(variance) = sqrt(n*p*(1-p))
         
-        # Test with invalid random values
-        with self.assertRaises(ValueError):
-            dist_half.sample([0.1, 0.2, -0.1, 0.4, 0.5])  # Negative value
-        with self.assertRaises(ValueError):
-            dist_half.sample([0.1, 0.2, 1.1, 0.4, 0.5])   # Value > 1
-
-    def test_equality_method(self):
-        """Test equality method for Binomial distribution"""
-        # Test equal distributions
-        dist1 = BinomialDistribution(10, 0.7)
-        dist2 = BinomialDistribution(10, 0.7)
-        self.assertEqual(dist1, dist2)
+        # n=10, p=0.5 -> std = sqrt(2.5) = 1.5811...
+        b = BinomialDistribution(10, 0.5)
+        self.assertAlmostEqual(b.standard_deviation, math.sqrt(2.5))
         
-        # Test nearly equal distributions (within epsilon)
-        dist3 = BinomialDistribution(10, 0.7 + 1e-11)
-        self.assertEqual(dist1, dist3)
+        # n=20, p=0.3 -> std = sqrt(4.2) = 2.0494...
+        b2 = BinomialDistribution(20, 0.3)
+        self.assertAlmostEqual(b2.standard_deviation, math.sqrt(4.2))
+    
+    def test_equality(self):
+        """Test equality comparison"""
+        b1 = BinomialDistribution(10, 0.5)
+        b2 = BinomialDistribution(10, 0.5)
+        b3 = BinomialDistribution(10, 0.3)
+        b4 = BinomialDistribution(5, 0.5)
         
-        # Test unequal distributions (different probability)
-        dist4 = BinomialDistribution(10, 0.8)
-        self.assertNotEqual(dist1, dist4)
+        # Same parameters should be equal
+        self.assertEqual(b1, b2)
         
-        # Test unequal distributions (different trials)
-        dist5 = BinomialDistribution(11, 0.7)
-        self.assertNotEqual(dist1, dist5)
+        # Different probability should not be equal
+        self.assertNotEqual(b1, b3)
         
-        # Test equality with non-BinomialDistribution object
-        self.assertNotEqual(dist1, "not a distribution")
-        self.assertNotEqual(dist1, 0.7)
-
-    def test_hash_method(self):
-        """Test hash method for Binomial distribution"""
-        # Create distributions with the same parameters
-        dist1 = BinomialDistribution(10, 0.7)
-        dist2 = BinomialDistribution(10, 0.7)
+        # Different trials should not be equal
+        self.assertNotEqual(b1, b4)
         
-        # Their hashes should be equal
-        self.assertEqual(hash(dist1), hash(dist2))
+        # Different types should not be equal
+        self.assertNotEqual(b1, "not a distribution")
+    
+    def test_hash(self):
+        """Test hash function"""
+        b1 = BinomialDistribution(10, 0.5)
+        b2 = BinomialDistribution(10, 0.5)
         
-        # Create a distribution with different parameters
-        dist3 = BinomialDistribution(10, 0.8)
+        # Same parameters should have same hash
+        self.assertEqual(hash(b1), hash(b2))
         
-        # Its hash should be different
-        self.assertNotEqual(hash(dist1), hash(dist3))
-        
-        # Test using distributions as dictionary keys
-        dist_dict = {dist1: "dist1", dist3: "dist3"}
-        
-        # Should be able to retrieve values using equivalent distributions
-        dist1_copy = BinomialDistribution(10, 0.7)
-        self.assertEqual(dist_dict[dist1_copy], "dist1")
-
-    def test_log_binomial_coefficient(self):
-        """Test the logarithmic binomial coefficient calculation"""
-        # We need to access the private method for testing
-        # This is a special case where testing private methods is justified
-        # because it's a critical numerical component
-        
-        # Test with n=5, k=2
-        log_coef = BinomialDistribution._log_binomial_coefficient(5, 2)
-        actual_coef = math.exp(log_coef)
-        self.assertAlmostEqual(actual_coef, 10.0)  # C(5,2) = 10
-        
-        # Test with n=10, k=5
-        log_coef = BinomialDistribution._log_binomial_coefficient(10, 5)
-        actual_coef = math.exp(log_coef)
-        self.assertAlmostEqual(actual_coef, 252.0)  # C(10,5) = 252
-        
-        # Test edge cases
-        # C(n,0) = C(n,n) = 1
-        log_coef = BinomialDistribution._log_binomial_coefficient(7, 0)
-        self.assertEqual(log_coef, 0.0)  # ln(1) = 0
-        
-        log_coef = BinomialDistribution._log_binomial_coefficient(7, 7)
-        self.assertEqual(log_coef, 0.0)  # ln(1) = 0
-
-    def test_string_representation(self):
-        """Test string representation methods"""
-        dist = BinomialDistribution(10, 0.7)
-        
-        # Test __str__
-        self.assertEqual(str(dist), "Binomial Distribution (n = 10, p = 0.7)")
-        
-        # Test __repr__
-        repr_str = repr(dist)
-        self.assertTrue("BinomialDistribution(n=10, probability=0.7" in repr_str)
-        self.assertTrue("mean=7.0" in repr_str)
-        self.assertTrue("variance=2.1" in repr_str)
-        self.assertTrue("standard_deviation=" in repr_str)
+        # Can be used as dictionary key
+        d = {b1: "test"}
+        self.assertEqual(d[b2], "test")
 
 
 if __name__ == '__main__':

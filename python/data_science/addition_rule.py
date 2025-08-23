@@ -1,5 +1,5 @@
 """
-Addition Rule for Probability Calculations
+Addition Rule for probability Calculations
 
 This module implements the addition rule for probability theory, which calculates
 the probability of the union of two events. The addition rule states that:
@@ -25,7 +25,7 @@ in the state space are equally likely (each outcome has probability 1/|state_spa
 """
 
 from typing import Any, Set
-from data_science.utilities import calculate_probability
+from data_science.probability.utilities import calculate_probability
 
 
 def addition_rule_probability(event_a: Set[Any], event_b: Set[Any], state_space: Set[Any]) -> float:
@@ -43,7 +43,7 @@ def addition_rule_probability(event_a: Set[Any], event_b: Set[Any], state_space:
         state_space (Set[Any]): Complete set of all possible outcomes
 
     Returns:
-        float: Probability of event A or event B occurring (P(A ∪ B))
+        float: probability of event A or event B occurring (P(A ∪ B))
 
     Raises:
         ValueError: If state_space is empty (raised by helper function)
