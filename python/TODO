@@ -60,10 +60,6 @@
 
 
 - Probability Distributions
--- Poisson Distribution (rare events in fixed time / space)
 -- Uniform Discrete Distribution (all outcomes equally likely)
--- PMF (Probability Mass function) Over a range.
-    --- PMF --> discrete random variables
--- CDF (Cumulative Distribution Function)
 -- probability density functions
     --- continuous random variables.

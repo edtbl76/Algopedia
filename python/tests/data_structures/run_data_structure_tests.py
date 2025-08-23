@@ -17,6 +17,9 @@ from tests.data_structures.test_tree_node import TestTreeNode
 from tests.data_structures.test_binary_search_tree import TestBinarySearchTree
 from tests.data_structures.test_max_heap import TestMaxHeap
 from tests.data_structures.test_min_heap import TestMinHeap
+from tests.data_structures.test_graph import TestGraph
+from tests.data_structures.test_vertex import TestVertex
+from tests.data_structures.test_heap_base import TestHeapBase
 
 if __name__ == '__main__':
     # Create a test suite
@@ -35,6 +38,9 @@ if __name__ == '__main__':
     test_suite.addTest(loader.loadTestsFromTestCase(TestBinarySearchTree))
     test_suite.addTest(loader.loadTestsFromTestCase(TestMaxHeap))
     test_suite.addTest(loader.loadTestsFromTestCase(TestMinHeap))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestGraph))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestVertex))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestHeapBase))
 
     # Run the tests
     runner = unittest.TextTestRunner(verbosity=2)

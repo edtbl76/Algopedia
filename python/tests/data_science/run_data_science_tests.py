@@ -9,6 +9,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 from tests.data_science.test_addition_rule import TestAdditionRule
 from tests.data_science.test_multiplication_rule import TestMultiplicationRule
 from tests.data_science.Probability.test_bernoulli import TestBernoulliDistribution
+from tests.data_science.Probability.test_binomial import TestBinomialDistribution
+from tests.data_science.Probability.test_poisson import TestPoissonDistribution
 
 if __name__ == '__main__':
     # Create a test suite
@@ -19,6 +21,8 @@ if __name__ == '__main__':
     test_suite.addTest(loader.loadTestsFromTestCase(TestAdditionRule))
     test_suite.addTest(loader.loadTestsFromTestCase(TestMultiplicationRule))
     test_suite.addTest(loader.loadTestsFromTestCase(TestBernoulliDistribution))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestBinomialDistribution))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestPoissonDistribution))
     
     # Run the tests
     runner = unittest.TextTestRunner(verbosity=2)

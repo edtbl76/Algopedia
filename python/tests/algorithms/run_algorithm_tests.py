@@ -19,6 +19,7 @@ from tests.algorithms.test_sum_digits import TestSumDigits
 from tests.algorithms.test_backpack import TestBackpack
 from tests.algorithms.test_longest_common_subsequence import TestLongestCommonSubsequence
 from tests.algorithms.test_dijkstra import TestDijkstra
+from tests.algorithms.test_traveling_salesperson import TestTravelingSalesperson
 # Import Combinatorics test modules
 from tests.algorithms.Combinatorics.test_permutations import TestPermutations
 from tests.algorithms.Combinatorics.test_combinations import TestCombinations
@@ -44,6 +45,7 @@ if __name__ == '__main__':
     test_suite.addTest(loader.loadTestsFromTestCase(TestBackpack))
     test_suite.addTest(loader.loadTestsFromTestCase(TestLongestCommonSubsequence))
     test_suite.addTest(loader.loadTestsFromTestCase(TestDijkstra))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestTravelingSalesperson))
     
     # Add Combinatorics test cases
     test_suite.addTest(loader.loadTestsFromTestCase(TestPermutations))
