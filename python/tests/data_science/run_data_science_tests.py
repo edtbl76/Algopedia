@@ -11,6 +11,16 @@ from tests.data_science.test_multiplication_rule import TestMultiplicationRule
 from tests.data_science.Probability.test_bernoulli import TestBernoulliDistribution
 from tests.data_science.Probability.test_binomial import TestBinomialDistribution
 from tests.data_science.Probability.test_poisson import TestPoissonDistribution
+from tests.data_science.Probability.test_statistical_properties_utils import (
+    TestSampleValidator,
+    TestStatisticalCalculations,
+    TestResultAnalyzerUtil,
+    TestBaseConfigEnumsExceptions,
+)
+from tests.data_science.Probability.test_statistical_properties_expectation_variance import (
+    TestExpectationOperator,
+    TestVarianceOperator,
+)
 
 if __name__ == '__main__':
     # Create a test suite
@@ -23,6 +33,13 @@ if __name__ == '__main__':
     test_suite.addTest(loader.loadTestsFromTestCase(TestBernoulliDistribution))
     test_suite.addTest(loader.loadTestsFromTestCase(TestBinomialDistribution))
     test_suite.addTest(loader.loadTestsFromTestCase(TestPoissonDistribution))
+    # Add statistical_properties tests
+    test_suite.addTest(loader.loadTestsFromTestCase(TestSampleValidator))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestStatisticalCalculations))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestResultAnalyzerUtil))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestBaseConfigEnumsExceptions))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestExpectationOperator))
+    test_suite.addTest(loader.loadTestsFromTestCase(TestVarianceOperator))
     
     # Run the tests
     runner = unittest.TextTestRunner(verbosity=2)
